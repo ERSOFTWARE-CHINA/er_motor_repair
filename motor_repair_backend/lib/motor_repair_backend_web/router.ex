@@ -11,6 +11,7 @@ defmodule MotorRepairBackendWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    resources "/user", UserController, except: [:new, :edit]
   end
 
   scope "/", MotorRepairBackendWeb do
