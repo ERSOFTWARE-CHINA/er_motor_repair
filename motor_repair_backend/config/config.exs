@@ -22,6 +22,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :motor_repair_backend, MotorRepairBackend.Guardian,
+  issuer: "motor_repair_backend",
+  secret_key: "j0/ssJf0441VW/25glbSth1H85SFj7PfmbRGpeH+AbXmmHkGDtmuTnw3HXu+kJxz"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

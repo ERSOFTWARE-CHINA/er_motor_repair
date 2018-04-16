@@ -1,0 +1,30 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: en\n"
+
+#, elixir-format
+#: lib/restful_backend_web/controllers/login_controller.ex:23
+#: lib/restful_backend_web/controllers/login_controller.ex:34
+
+msgid "Invalid token."
+msgstr "请提供有效的验证信息。"
+
+msgid "cannot find user."
+msgstr "未找到用户，请尝试重新登陆。"
+
+msgid "root is needed."
+msgstr "超级用户才能执行该操作！"
+
+msgid "admin is needed."
+msgstr "管理员用户才能执行该操作！"
+
+msgid "project is disabled."
+msgstr "项目处于禁用状态时，无法执行操作。"

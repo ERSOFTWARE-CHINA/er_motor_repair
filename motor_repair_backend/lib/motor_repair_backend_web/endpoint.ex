@@ -21,6 +21,8 @@ defmodule MotorRepairBackendWeb.Endpoint do
 
   plug Plug.Logger
 
+  plug MotorRepairBackendWeb.CORS
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],

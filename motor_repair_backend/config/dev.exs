@@ -53,6 +53,6 @@ config :motor_repair_backend, MotorRepairBackend.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "motor_repair_backend_dev",
+  database: "motor_repair_dev",
   hostname: if(is_nil(System.get_env("DB_ENV_POSTGRES_HOST")), do: "localhost", else: System.get_env("DB_ENV_POSTGRES_HOST")),
   pool_size: 10

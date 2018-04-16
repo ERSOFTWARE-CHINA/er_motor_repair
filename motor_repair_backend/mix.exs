@@ -20,7 +20,7 @@ defmodule MotorRepairBackend.Mixfile do
   def application do
     [
       mod: {MotorRepairBackend.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :corsica]
     ]
   end
 
@@ -40,7 +40,17 @@ defmodule MotorRepairBackend.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      # custom deps
+      {:comeonin, "~> 4.0"},
+      {:pbkdf2_elixir, "~> 0.12"},
+      {:scrivener_ecto, "~> 1.2.3"},
+      {:corsica, "~> 1.0"},
+      {:guardian, "~> 1.0"},
+      {:arc, "~> 0.8.0"},
+      {:arc_ecto, "~> 0.7.0"},
+      {:quantum, ">= 2.2.0"},
+      {:timex, "~> 3.0"}
     ]
   end
 

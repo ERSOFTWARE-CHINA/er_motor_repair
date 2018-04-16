@@ -7,7 +7,7 @@ To start your Phoenix server:
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
 
-## 使用docker启动
+## 使用docker启动应用与数据库
 
   * sudo docker-compose up -d web
   * sudo docker-compose run web mix deps.get
@@ -15,3 +15,7 @@ To start your Phoenix server:
   * sudo docker-compose run web mix ecto.migrate
   * sudo docker-compose restart web
   * sudo docker-compose logs -f web
+
+## 仅使用docker启动数据库
+
+  * sh createDB.sh
