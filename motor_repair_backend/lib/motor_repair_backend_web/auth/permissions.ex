@@ -1,4 +1,4 @@
-defmodule RestfulApiWeb.Permissions do
+defmodule MotorRepairBackendWeb.Permissions do
 	alias MotorRepairBackendWeb.Permissions
 	use Guardian, otp_app: :restful_backend,
 		permissions: %{

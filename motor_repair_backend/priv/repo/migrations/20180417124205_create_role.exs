@@ -1,8 +1,8 @@
-defmodule MotorRepairBackend.Repo.Migrations.CreateUser do
+defmodule MotorRepairBackend.Repo.Migrations.CreateRole do
   use Ecto.Migration
 
   def change do
-    create table(:users) do
+    create table(:roles) do
       add :name, :string
 
       timestamps()

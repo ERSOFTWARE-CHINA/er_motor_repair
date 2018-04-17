@@ -11,7 +11,13 @@ defmodule MotorRepairBackendWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    resources "/user", UserController, except: [:new, :edit]
+  end
+
+  pipeline :api_auth do
+    plug Guardian.Plug.Pipeline, module: MotorRepairBackendWeb.Guardian,
+      error_handler: MotorRepairBackendWeb.AuthErrorHandler
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", MotorRepairBackendWeb do
@@ -20,8 +26,19 @@ defmodule MotorRepairBackendWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MotorRepairBackendWeb do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", MotorRepairBackendWeb do
+    pipe_through :api
+    post "/login", LoginController, :login
+    post "/register", LoginController, :register
+    get "/plug_auth_failure/:msg", AuthFailureController, :plug_auth_failure
+  end
+
+  scope "/api/v1", MotorRepairBackendWeb do
+    pipe_through [:api, :api_auth]
+
+    resources "/user", UserController, except: [:new, :edit]
+    resources "/project", ProjectController, except: [:new, :edit]
+    resources "/role", RoleController, except: [:new, :edit]
+  end
+
 end
