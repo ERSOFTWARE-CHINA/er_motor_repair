@@ -86,7 +86,6 @@ export class UserRegisterComponent implements OnDestroy {
         this.error = '';
         for (const i in this.form.controls) {
             this.form.controls[i].markAsDirty();
-            this.form.controls[i].updateValueAndValidity();
         }
         if (this.form.invalid) return;
         // mock http

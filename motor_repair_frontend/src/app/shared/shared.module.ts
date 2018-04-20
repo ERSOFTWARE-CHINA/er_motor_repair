@@ -3,25 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 // delon
+import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
 import { AlainThemeModule } from '@delon/theme';
-import { DelonABCModule } from '@delon/abc';
-import { DelonACLModule } from '@delon/acl';
+import { AlainACLModule } from '@delon/acl';
+import { ZORROMODULES, ABCMODULES } from '../delon.module';
 // i18n
 import { TranslateModule } from '@ngx-translate/core';
 
 // region: third libs
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-import { UEditorModule } from 'ngx-ueditor';
-import { NgxTinymceModule } from 'ngx-tinymce';
-// import { NzSchemaFormModule } from 'nz-schema-form';
-const THIRDMODULES = [
-    NgZorroAntdModule,
-    CountdownModule,
-    UEditorModule,
-    NgxTinymceModule,
-    // NzSchemaFormModule
-];
+const THIRDMODULES = [ CountdownModule ];
 // endregion
 
 // region: your componets & directives
@@ -35,9 +26,11 @@ const DIRECTIVES = [];
         FormsModule,
         RouterModule,
         ReactiveFormsModule,
+        ...ZORROMODULES,
+        NgZorroAntdExtraModule,
         AlainThemeModule.forChild(),
-        DelonABCModule,
-        DelonACLModule,
+        ...ABCMODULES,
+        AlainACLModule,
         // third libs
         ...THIRDMODULES
     ],
@@ -51,9 +44,10 @@ const DIRECTIVES = [];
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
+        ...ZORROMODULES,
+        NgZorroAntdExtraModule,
         AlainThemeModule,
-        DelonABCModule,
-        DelonACLModule,
+        ...ABCMODULES,
         // i18n
         TranslateModule,
         // third libs

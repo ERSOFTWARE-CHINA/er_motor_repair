@@ -12,7 +12,13 @@ import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterComponent } from './passport/register/register.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
 // single pages
-import { UserLockComponent } from './passport/lock/lock.component';
+// import { CallbackComponent } from './callback/callback.component';
+import { Exception403Component } from './exception/403.component';
+import { Exception404Component } from './exception/404.component';
+import { Exception500Component } from './exception/500.component';
+// import { UsersListComponent } from './users/list/list.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthenticationService } from './pages/login/login.service';
 
 
 @NgModule({
@@ -27,9 +33,14 @@ import { UserLockComponent } from './passport/lock/lock.component';
         UserRegisterComponent,
         UserRegisterResultComponent,
         // single pages
-        UserLockComponent,
-
-    ]
+        // CallbackComponent,
+        Exception403Component,
+        Exception404Component,
+        Exception500Component,
+        LoginComponent
+        // UsersListComponent
+    ],
+    providers: [ AuthenticationService ]
 })
 
 export class RoutesModule {}

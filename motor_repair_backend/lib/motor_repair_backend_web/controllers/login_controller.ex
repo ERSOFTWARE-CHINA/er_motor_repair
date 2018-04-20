@@ -24,6 +24,9 @@ defmodule MotorRepairBackendWeb.LoginController do
   end
 
   defp get_user_changeset(user_params) do
+    user_params = user_params 
+      |> Map.update("is_admin", true, fn(_) -> true end)
+      |> Map.update("is_root", false, fn(_) -> false end)
     User.changeset(%User{}, user_params)
   end
 

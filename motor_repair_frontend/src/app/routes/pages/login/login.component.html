@@ -1,0 +1,77 @@
+<div class="wrapper">
+    <div class="abs-center mt-lg width-lg">
+        <nz-card [nzTitle]="nzTitle" [nzBordered]="false" class="ant-card__primary ant-card__title-img">
+            <ng-template #nzTitle>
+                <div class="text-center"><img src="./assets/img/logo1.png" style="height:45px;"></div>
+            </ng-template>
+            <form nz-form [formGroup]="valForm" (ngSubmit)="submit()" role="form">
+                <div nz-form-item>
+                        <div nz-form-control [nzValidateStatus]="valForm.controls.project">
+                            <nz-input formControlName="project" [nzPlaceHolder]="'请输入项目名称'" [nzSize]="'large'" [nzDisabled]="waiting" (input)="onChange()">
+                                <ng-template #suffix>
+                                    <i class="anticon anticon-user"></i>
+                                </ng-template>
+                            </nz-input>
+                            <div nz-form-explain *ngIf="valForm.controls.project.dirty&&valForm.controls.project.hasError('required')">用户名必填</div>
+                        </div>
+                </div>
+                <div nz-form-item>
+                    <div nz-form-control [nzValidateStatus]="valForm.controls.username">
+                        <nz-input formControlName="username" [nzPlaceHolder]="'请输入用户名'" [nzSize]="'large'" [nzDisabled]="waiting" (input)="onChange()">
+                            <ng-template #suffix>
+                                <i class="anticon anticon-user"></i>
+                            </ng-template>
+                        </nz-input>
+                        <div nz-form-explain *ngIf="valForm.controls.username.dirty&&valForm.controls.username.hasError('required')">用户名必填</div>
+                    </div>
+                </div>
+                <div nz-form-item>
+                    <div nz-form-control [nzValidateStatus]="valForm.controls.password">
+                        <nz-input formControlName="password" [nzPlaceHolder]="'请输入密码'" [nzType]="'password'" [nzSize]="'large'" [nzDisabled]="waiting" (input)="onChange()">
+                            <ng-template #suffix>
+                                <i class="anticon anticon-lock"></i>
+                            </ng-template>
+                        </nz-input>
+                        <div nz-form-explain *ngIf="valForm.controls.password.dirty&&valForm.controls.password.hasError('required')">密码必填</div>
+                    </div>
+                </div>
+
+                <div *ngIf = "invalidlogin">
+                    <p >
+                        <font color="red">
+                            登录失败，请输入正确的项目名称、用户名以及密码！
+                        </font>
+                    </p>
+                </div>
+
+                <div nz-form-item nz-row>
+                    <div nz-col [nzSpan]="12">
+                        <label nz-checkbox formControlName="remember_me">
+                            <span>记住密码</span>
+                        </label>
+                    </div>
+                </div>
+                <div nz-form-item nz-row>
+                    <div nz-col [nzSpan]="24">
+                        <button nz-button [disabled]="!valForm.valid" [nzType]="'primary'" [nzSize]="'large'" [disabled]="waiting" class="ant-btn__block">
+                            <span>{{button_label}}</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- <div nz-form-item nz-row>
+                <div nz-col [nzSpan]="24" class="text-center">或</div>
+            </div> -->
+            <!-- <div nz-row>
+                <div nz-col [nzSpan]="24">
+                    <button nz-button [routerLink]="['/register']" [nzType]="'default'" [nzSize]="'large'" [disabled]="waiting" class="ant-btn__block">
+                        <span>立即注册</span>
+                    </button>
+                </div>
+            </div> -->
+        </nz-card>
+        <div class="p-lg text-center text-sm">
+            <div nz-col [class.text-center]="true">管理系统 ©2018 Powered By Ng-zorro, Angular, Phoenix.</div>
+        </div>
+    </div>
+</div>

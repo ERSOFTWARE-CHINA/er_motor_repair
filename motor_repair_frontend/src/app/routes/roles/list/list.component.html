@@ -1,0 +1,66 @@
+<div nz-row [nzGutter]="24" class="pt-lg">
+    <nz-card [nzBordered]="false">
+        <form nz-form (ngSubmit)="getData()" [nzLayout]="'inline'">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8" class="mb-md">
+                    <div nz-form-item class="d-flex">
+                        <div nz-form-label><label for="name">角色名称</label></div>
+                        <div nz-form-control class="flex-1">
+                            <nz-input [(ngModel)]="q.name" name="name" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="name"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col [nzSpan]="expandForm ? 24 : 8" class="mb-md" [class.text-right]="expandForm">
+                    <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading" [nzSize]="'large'" >查询</button>
+                    <button nz-button type="reset" (click)="getData()" [nzSize]="'large'" class="mx-sm">重置</button>
+                    <a (click)="expandForm=!expandForm">
+                        {{expandForm ? '收起' : '展开'}}
+                        <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <div class="mb-md">
+            <button nz-button (click)="add()" [nzType]="'primary'" [nzSize]="'large'">
+                <i class="anticon anticon-plus"></i><span>新建</span>
+            </button>
+        </div>
+
+        <nz-table #nzTable [nzAjaxData]="data" [nzTotal]="total" [nzPageSize]="q.page_size" [nzLoading]="loading"
+                    (nzPageIndexChange)="pageChange($event)">
+            <thead nz-thead>
+                <tr>
+                    <th nz-th>
+                        <span>角色名称</span>
+                        <nz-table-sort [(nzValue)]="sortMap.name" (nzValueChange)="sort('name',$event)"></nz-table-sort>
+                    </th>
+                    <th nz-th>
+                        <span>权限位</span>
+                        <nz-table-sort [(nzValue)]="sortMap.perms_number" (nzValueChange)="sort('perms_number',$event)"></nz-table-sort>
+                    </th>
+
+                    <th nz-th><span>操作</span></th>
+                </tr>
+            </thead>
+            <tbody nz-tbody>
+                <tr nz-tbody-tr *ngFor="let i of nzTable.data">
+
+                    <td nz-td>{{i.name}}</td>
+                    <td nz-td>{{i.perms_number}}</td>
+                    <td nz-td>
+                        <a (click)="update(i.id)">修改</a>
+                        <span nz-table-divider></span>
+                        <a (click)="remove(i)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </nz-card>
+</div>
+<nz-modal [nzVisible]="modalVisible" [nzTitle]="'删除确认'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <p>{{confirmContent}}</p>
+    </ng-template>
+</nz-modal>

@@ -9,5 +9,7 @@ defmodule MotorRepairBackend.Repo.Migrations.CreateProjects do
       add :deadline, :date
       timestamps()
     end
+
+    create unique_index(:projects, [:name])
   end
 end

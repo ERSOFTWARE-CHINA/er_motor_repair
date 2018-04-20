@@ -41,9 +41,9 @@ defmodule MotorRepairBackend.ProjectContext do
   # 更新项目后，如果回收项目权限，该项目下所有的角色权限分配需要统一回收
   def update_project_with_handle_perms(project, changeset, conn) do
     new_perms_number = changeset.changes
-    |> Map.get(:perms_number, 0)
+      |> Map.get(:perms_number, 0)
     old_perms_number = project
-    |> Map.get(:perms_number, 0)
+      |> Map.get(:perms_number, 0)
 
     case old_perms_number == (old_perms_number &&& new_perms_number) do
       true -> # 权限扩大，不需要回收权限

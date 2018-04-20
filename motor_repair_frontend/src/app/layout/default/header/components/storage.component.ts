@@ -5,10 +5,7 @@ import { NzModalService, NzMessageService } from 'ng-zorro-antd';
     selector: 'header-storage',
     template: `
     <i class="anticon anticon-tool"></i>
-    {{ 'clear-local-storage' | translate}}`,
-    host: {
-        '[class.d-block]': 'true'
-    }
+    {{ 'clear-local-storage' | translate}}`
 })
 export class HeaderStorageComponent {
 
@@ -21,8 +18,8 @@ export class HeaderStorageComponent {
     @HostListener('click')
     _click() {
         this.confirmServ.confirm({
-            nzTitle: 'Make sure clear all local storage?',
-            nzOnOk: () => {
+            title: 'Make sure clear all local storage?',
+            onOk: () => {
                 localStorage.clear();
                 this.messageServ.success('Clear Finished!');
             }

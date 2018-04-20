@@ -1,0 +1,126 @@
+<div nz-row [nzGutter]="24" class="pt-lg">
+
+    <form nz-form [formGroup]="form" (ngSubmit)="_submitForm()" [nzLayout]="'vertical'">
+        <nz-card [nzBordered]="false" [nzTitle]="card_title">
+            <div nz-row [nzGutter]="16">
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col nz-form-item-required><label>用户名</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="name">
+                            <nz-input formControlName="name" nzPlaceHolder="请输入用户名" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['name'].dirty || form.controls['name'].touched">
+                                <p nz-form-explain *ngIf="form.controls['name'].errors?.required">请输入用户名</p>
+                                <p nz-form-explain *ngIf="form.controls['name'].errors?.checked">用户名已存在</p>
+                                <p nz-form-explain *ngIf="form.controls['name'].errors?.pattern ||form.controls['name'].errors?.minlength ">请输入2个字符以上的字母、数字和下划线</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col nz-form-item-required><label>全名</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="real_name">
+                            <nz-input formControlName="real_name" nzPlaceHolder="请输入全名" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['real_name'].dirty || form.controls['real_name'].touched">
+                                <p nz-form-explain *ngIf="form.controls['real_name'].errors?.required">请输入真实姓名</p>
+                                <p nz-form-explain *ngIf="form.controls['real_name'].errors?.pattern || form.controls['real_name'].errors?.minlength ">请输入2个字符以上的字母、数字和下划线</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label nz-form-item-required>邮箱</label></div>
+                        <div nz-form-control nz-col [nzValidateStatus]="email">
+                            <nz-input formControlName="email" nzPlaceHolder="请输入邮箱" nzSize="large" email></nz-input>
+                            <ng-container *ngIf="form.controls['email'].dirty || form.controls['email'].touched">
+                                <p nz-form-explain *ngIf="form.controls['email'].errors?.required">请输入邮箱</p>
+                                <p nz-form-explain *ngIf="form.controls['email'].errors?.email">请输入正确的邮箱格式</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>岗位</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="position" >
+                            <nz-input formControlName="position" nzPlaceHolder="请输入岗位" nzSize="large"></nz-input>
+                            <p nz-form-explain *ngIf="form.controls['position'].invalid && (form.controls['position'].dirty || form.controls['position'].touched) && form.controls['position'].errors.required">
+                                请输入岗位
+                            </p>                           
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label nz-form-item-required>状态</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="actived" >
+                                <nz-select formControlName="actived" nzSize="large" [nzPlaceHolder]="'请选择'">
+                                    <nz-option [nzLabel]="'激活'" [nzValue]="true"></nz-option>
+                                    <nz-option [nzLabel]="'禁用'" [nzValue]="false"></nz-option>
+                                </nz-select>
+                            <p nz-form-explain *ngIf="form.controls['actived'].invalid && (form.controls['actived'].dirty || form.controls['actived'].touched) && form.controls['actived'].errors.required">
+                                修改状态
+                            </p>                           
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label nz-form-item-required>管理员</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="is_admin" >
+                            <nz-select formControlName="is_admin" nzSize="large" [nzPlaceHolder]="'请选择'">
+                                <nz-option [nzLabel]="'是'" [nzValue]="true"></nz-option>
+                                <nz-option [nzLabel]="'否'" [nzValue]="false"></nz-option>
+                            </nz-select>
+                            <p nz-form-explain *ngIf="form.controls['is_admin'].invalid && (form.controls['is_admin'].dirty || form.controls['is_admin'].touched) && form.controls['is_admin'].errors.required">
+                                请状态
+                            </p>                           
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>角色</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="roles" >
+                            <nz-select formControlName="roles" nzId="roles" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzMode]="'multiple'" [(ngModel)]="multi_roles">
+                                <nz-option *ngFor="let i of roles" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                            </nz-select>
+                            <p nz-form-explain *ngIf="form.controls['roles'].invalid && (form.controls['roles'].dirty || form.controls['roles'].touched) && form.controls['roles'].errors.required">
+                                请选择角色
+                            </p>                           
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>项目</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="project" >
+                            <nz-select formControlName="project" nzId="project" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzMode]="'single'" [(ngModel)]="single_project">
+                                <nz-option *ngFor="let i of projects" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                            </nz-select>
+                            <p nz-form-explain *ngIf="form.controls['project'].invalid && (form.controls['project'].dirty || form.controls['project'].touched) && form.controls['project'].errors.required">
+                                请选择项目
+                            </p>                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </nz-card>             
+
+        <div>
+            <error-collect></error-collect>
+            <button nz-button [nzType]="'primary'" nzSize="large">提交</button>
+            <button nz-button [nzType]="'primary'" nzSize="large" (click)="goBack()">返回</button>
+        </div>
+    </form>
+
+</div>

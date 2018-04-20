@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { SettingsService, MenuService, TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { Component } from '@angular/core';
+import { SettingsService, MenuService, TitleService } from '@delon/theme';
 import { I18NService } from '@core/i18n/i18n.service';
 
 @Component({
@@ -24,14 +24,19 @@ export class HeaderI18nComponent {
     langs: any[];
 
     constructor(
+        private menuService: MenuService,
         public settings: SettingsService,
-        @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService
+        public tsServ: I18NService,
+        private titleServ: TitleService
     ) {
-        this.langs = this.i18n.getLangs();
+        this.langs = this.tsServ.getLangs();
     }
 
     change(lang: string) {
-        this.i18n.use(lang);
+        this.tsServ.use(lang, false).subscribe(() => {
+            this.menuService.resume();
+            this.titleServ.setTitle();
+        });
         this.settings.setLayout('lang', lang);
     }
 }

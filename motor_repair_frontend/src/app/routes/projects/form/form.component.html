@@ -1,0 +1,93 @@
+<div nz-row [nzGutter]="24" class="pt-lg">
+
+    <form nz-form [formGroup]="form" (ngSubmit)="_submitForm()" [nzLayout]="'vertical'">
+        <nz-card [nzBordered]="false" [nzTitle]="card_title">
+            <div nz-row [nzGutter]="16">
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col nz-form-item-required><label>项目名称</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="name">
+                            <nz-input formControlName="name" nzPlaceHolder="请输入项目名称" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['name'].dirty || form.controls['name'].touched">
+                                <p nz-form-explain *ngIf="form.controls['name'].errors?.required">请输入项目名称</p>
+                                <p nz-form-explain *ngIf="form.controls['name'].errors?.checked">项目名称已存在</p>
+                                <p nz-form-explain *ngIf="form.controls['name'].errors?.pattern ||form.controls['name'].errors?.minlength ">请输入4个字符以上的字母、数字和下划线</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>有效期</label></div>
+                        <div nz-form-control  nz-col>
+                            <div nz-form-item nz-row>
+                                <div nz-form-control [nzValidateStatus]="deadline">
+                                    <nz-datepicker style="width: 100%;" [nzSize]="'large'" formControlName="deadline" [nzPlaceHolder]="'有效期'" nzFormat="YYYY-MM-DD"></nz-datepicker>
+                                    <ng-container *ngIf="form.controls['deadline'].dirty || form.controls['deadline'].touched">
+                                        <p nz-form-explain *ngIf="form.controls['deadline'].errors?.required">请选择有效期</p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- 
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>权限</label></div>
+                        <div nz-form-control nz-col [nzValidateStatus]="perms_numbser">
+                            <nz-input formControlName="perms_number" nzPlaceHolder="请输入邮箱" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['perms_number'].dirty || form.controls['perms_number'].touched">
+                                <p nz-form-explain *ngIf="form.controls['perms_number'].errors?.required">请输入权限</p>
+                                <p nz-form-explain *ngIf="form.controls['perms_number'].errors?.pattern ||form.controls['perms_number'].errors?.minlength ">请输入正确的邮箱格式</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div nz-col nzMd="8" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label nz-form-item-required>状态</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="acitived" >
+                            <nz-select formControlName="acitived" nzSize="large" [nzPlaceHolder]="'请选择'">
+                                <nz-option [nzLabel]="'激活'" [nzValue]="true"></nz-option>
+                                <nz-option [nzLabel]="'禁用'" [nzValue]="false"></nz-option>
+                            </nz-select>
+                            <!-- <ng-container *ngIf="form.controls['acitived'].dirty || form.controls['acitived'].touched">
+                                <p nz-form-explain *ngIf="form.controls['perms_number'].errors?.required">请选择状态</p>
+                            </ng-container>                          -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div nz-row [nzGutter]="16">
+                <div nz-col nzMd="24" nzSm="12" nzXs="24">
+                    <div nz-form-label nz-col><label>权限配置</label></div>
+                    <!-- <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="perms" > -->
+                        <nz-transfer
+                            [nzDataSource]="perms_list"
+                            nzShowSearch
+                            [nzOperations]="['选择', '取消']"
+                            [nzListStyle]="{'width.px': 250, 'height.px': 300}"
+                            (nzSelectChange)="select($event)"
+                            (nzChange)="change($event)">
+                            <ng-template #render let-item>
+                                {{item.title}}
+                            </ng-template>
+                        </nz-transfer>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </nz-card>             
+
+        <div>
+            <error-collect></error-collect>
+            <button nz-button [nzType]="'primary'" nzSize="large">提交</button>
+            <button nz-button [nzType]="'primary'" nzSize="large" (click)="goBack()">返回</button>
+        </div>
+    </form>
+
+</div>
