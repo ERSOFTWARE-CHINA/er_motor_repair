@@ -7,6 +7,8 @@ import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '
 import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 
+import { AuthenticationService } from '../service/login.service';
+
 @Component({
     selector: 'passport-login',
     templateUrl: './login.component.html',
@@ -20,15 +22,19 @@ export class UserLoginComponent implements OnDestroy {
     type = 0;
     loading = false;
 
+    invalidlogin = false;
+
     constructor(
         fb: FormBuilder,
         private router: Router,
         public msg: NzMessageService,
         private settingsService: SettingsService,
         private socialService: SocialService,
+        private loginService: AuthenticationService,
         @Optional() @Inject(ReuseTabService) private reuseTabService: ReuseTabService,
         @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
         this.form = fb.group({
+            project: [null, [Validators.required, Validators.minLength(4)]],
             userName: [null, [Validators.required, Validators.minLength(5)]],
             password: [null, Validators.required],
             mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
@@ -38,7 +44,7 @@ export class UserLoginComponent implements OnDestroy {
     }
 
     // region: fields
-
+    get project() { return this.form.controls.project; }
     get userName() { return this.form.controls.userName; }
     get password() { return this.form.controls.password; }
     get mobile() { return this.form.controls.mobile; }
@@ -71,6 +77,7 @@ export class UserLoginComponent implements OnDestroy {
         if (this.type === 0) {
             this.userName.markAsDirty();
             this.password.markAsDirty();
+            this.project.markAsDirty();
             if (this.userName.invalid || this.password.invalid) return;
         } else {
             this.mobile.markAsDirty();
@@ -79,26 +86,41 @@ export class UserLoginComponent implements OnDestroy {
         }
         // mock http
         this.loading = true;
-        setTimeout(() => {
-            this.loading = false;
-            if (this.type === 0) {
-                if (this.userName.value !== 'admin' || this.password.value !== '888888') {
-                    this.error = `账户或密码错误`;
-                    return;
+        this.loginService.login(this.form.value)
+            .subscribe(result => {
+                console.log(result)
+                if (result) {
+                    this.loading = false;
+                    this.reuseTabService.clear();
+                    this.router.navigate(['dashboard/v1']);
+                } else{
+                    this.loading = false;
+                    this.invalidlogin = true;
                 }
-            }
-
-            // 清空路由复用信息
-            this.reuseTabService.clear();
-            this.tokenService.set({
-                token: '123456789',
-                name: this.userName.value,
-                email: `cipchk@qq.com`,
-                id: 10000,
-                time: +new Date
+            }, 
+            err => { 
+                this.msg.error(err);
             });
-            this.router.navigate(['/']);
-        }, 1000);
+        // setTimeout(() => {
+        //     this.loading = false;
+        //     if (this.type === 0) {
+        //         if (this.userName.value !== 'admin' || this.password.value !== '888888') {
+        //             this.error = `账户或密码错误`;
+        //             return;
+        //         }
+        //     }
+
+        //     // 清空路由复用信息
+        //     this.reuseTabService.clear();
+        //     this.tokenService.set({
+        //         token: '123456789',
+        //         name: this.userName.value,
+        //         email: `cipchk@qq.com`,
+        //         id: 10000,
+        //         time: +new Date
+        //     });
+        //     this.router.navigate(['/']);
+        // }, 1000);
     }
 
     // region: social
@@ -135,6 +157,10 @@ export class UserLoginComponent implements OnDestroy {
                 type: 'href'
             });
         }
+    }
+
+    onChange(){
+        this.invalidlogin = false
     }
 
     // endregion

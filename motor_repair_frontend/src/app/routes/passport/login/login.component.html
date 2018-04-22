@@ -4,8 +4,21 @@
             <ng-template #nzTabHeading>账户密码登录</ng-template>
             <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
             <div nz-form-item>
+                <div nz-form-control [nzValidateStatus]="poject">
+                    <nz-input formControlName="project" [nzPlaceHolder]="'项目名称'" [nzSize]="'large'" (input)="onChange()">
+                        <ng-template #prefix>
+                            <i class="anticon anticon-team"></i>
+                        </ng-template>
+                    </nz-input>
+                    <ng-container *ngIf="project.dirty || project.touched">
+                        <p nz-form-explain *ngIf="project.errors?.required">请输入项目名！</p>
+                        <p nz-form-explain *ngIf="project.errors?.minlength">至少四个字符</p>
+                    </ng-container>
+                </div>
+            </div>
+            <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="userName">
-                    <nz-input formControlName="userName" [nzPlaceHolder]="'admin'" [nzSize]="'large'">
+                    <nz-input formControlName="userName" [nzPlaceHolder]="'用户名'" [nzSize]="'large'" (input)="onChange()">
                         <ng-template #prefix>
                             <i class="anticon anticon-user"></i>
                         </ng-template>
@@ -18,13 +31,20 @@
             </div>
             <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="password">
-                    <nz-input formControlName="password" [nzPlaceHolder]="'888888'" [nzType]="'password'" [nzSize]="'large'">
+                    <nz-input formControlName="password" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'" (input)="onChange()">
                         <ng-template #prefix>
                             <i class="anticon anticon-lock"></i>
                         </ng-template>
                     </nz-input>
                     <div nz-form-explain *ngIf="(password.dirty || password.touched) && password.errors?.required">请输入密码！</div>
                 </div>
+            </div>
+            <div *ngIf = "invalidlogin">
+                <p >
+                    <font color="red">
+                        登录失败，请输入正确的项目名称、用户名以及密码！
+                    </font>
+                </p>
             </div>
         </nz-tab>
         <nz-tab>

@@ -2,15 +2,26 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
     <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
     <div nz-form-item>
-        <div nz-form-control [nzValidateStatus]="mail">
-            <nz-input formControlName="mail" [nzPlaceHolder]="'邮箱'" [nzSize]="'large'">
+        <div nz-form-control [nzValidateStatus]="project">
+            <nz-input formControlName="project" [nzPlaceHolder]="'项目名称'" [nzSize]="'large'">
+                <ng-template #prefix>
+                    <i class="anticon anticon-team"></i>
+                </ng-template>
+            </nz-input>
+            <ng-container *ngIf="project.dirty || project.touched">
+                <p nz-form-explain *ngIf="project.errors?.required">请输入项目名！</p>
+            </ng-container>
+        </div>
+    </div>
+    <div nz-form-item>
+        <div nz-form-control [nzValidateStatus]="name">
+            <nz-input formControlName="name" [nzPlaceHolder]="'用户名'" [nzSize]="'large'">
                 <ng-template #prefix>
                     <i class="anticon anticon-user"></i>
                 </ng-template>
             </nz-input>
-            <ng-container *ngIf="mail.dirty || mail.touched">
-                <p nz-form-explain *ngIf="mail.errors?.required">请输入邮箱地址！</p>
-                <p nz-form-explain *ngIf="mail.errors?.email">邮箱地址格式错误！</p>
+            <ng-container *ngIf="name.dirty || name.touched">
+                <p nz-form-explain *ngIf="name.errors?.required">请输入用户名！</p>
             </ng-container>
         </div>
     </div>
@@ -83,6 +94,7 @@
                 </div>
             </div>
             <div nz-form-explain *ngIf="(captcha.dirty || captcha.touched) && captcha.errors?.required">请输入验证码！</div>
+            <div nz-form-explain *ngIf="captchaInvalid">验证码错误！</div>
         </div>
     </div>
     <div nz-form-item>

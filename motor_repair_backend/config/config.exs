@@ -22,7 +22,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
-config :motor_repair_backend, MotorRepairBackend.Guardian,
+config :motor_repair_backend, MotorRepairBackendWeb.Guardian,
   issuer: "motor_repair_backend",
   secret_key: "j0/ssJf0441VW/25glbSth1H85SFj7PfmbRGpeH+AbXmmHkGDtmuTnw3HXu+kJxz"
 

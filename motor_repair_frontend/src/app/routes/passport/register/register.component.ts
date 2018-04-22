@@ -3,10 +3,13 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 
+import { RegisterService } from '../service/register.service';
+
 @Component({
     selector: 'passport-register',
     templateUrl: './register.component.html',
-    styleUrls: [ './register.component.less' ]
+    styleUrls: [ './register.component.less' ],
+    providers: [RegisterService]
 })
 export class UserRegisterComponent implements OnDestroy {
 
@@ -23,9 +26,16 @@ export class UserRegisterComponent implements OnDestroy {
         pool: 'exception'
     };
 
-    constructor(fb: FormBuilder, private router: Router, public msg: NzMessageService) {
+    realCaptcha='';
+    captchaInvalid=false;
+
+    constructor(fb: FormBuilder, 
+                private router: Router, 
+                public msg: NzMessageService,
+                private registService: RegisterService) {
         this.form = fb.group({
-            mail: [null, [Validators.email]],
+            project: [null, [Validators.required]],
+            name: [null, [Validators.required]],
             password: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.checkPassword.bind(this)]],
             confirm: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.passwordEquar]],
             mobilePrefix: [ '+86' ],
@@ -57,8 +67,8 @@ export class UserRegisterComponent implements OnDestroy {
     }
 
     // region: fields
-
-    get mail() { return this.form.controls.mail; }
+    get project() { return this.form.controls.project; }
+    get name() { return this.form.controls.name; }
     get password() { return this.form.controls.password; }
     get confirm() { return this.form.controls.confirm; }
     get mobile() { return this.form.controls.mobile; }
@@ -73,6 +83,7 @@ export class UserRegisterComponent implements OnDestroy {
 
     getCaptcha() {
         this.count = 59;
+        this.genCaptcha();
         this.interval$ = setInterval(() => {
             this.count -= 1;
             if (this.count <= 0)
@@ -88,12 +99,29 @@ export class UserRegisterComponent implements OnDestroy {
             this.form.controls[i].markAsDirty();
         }
         if (this.form.invalid) return;
+        if (!this.checkCaptcha()) return;
         // mock http
         this.loading = true;
-        setTimeout(() => {
-            this.loading = false;
-            this.router.navigate(['/passport/register-result']);
-        }, 1000);
+        this.registService.register(this.form.value);
+
+        // setTimeout(() => {
+        //     this.loading = false;
+        //     this.router.navigate(['/passport/register-result']);
+        // }, 1000);
+    }
+
+    genCaptcha() {
+        var c = '';
+        for(var i =0;i<6;i++){
+            var num = Math.floor(Math.random()*10);
+            c = c + num.toString()
+        }         
+        this.realCaptcha = c
+    }; 
+
+    checkCaptcha() {
+        if (this.form.controls["captcha"].value == this.realCaptcha) return true
+        else return false;
     }
 
     ngOnDestroy(): void {

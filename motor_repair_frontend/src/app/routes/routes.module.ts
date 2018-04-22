@@ -8,7 +8,7 @@ import { DashboardAnalysisComponent } from './dashboard/analysis/analysis.compon
 import { DashboardMonitorComponent } from './dashboard/monitor/monitor.component';
 import { DashboardWorkplaceComponent } from './dashboard/workplace/workplace.component';
 // passport pages
-import { UserLoginComponent } from './passport/login/login.component';
+// import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterComponent } from './passport/register/register.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
 // single pages
@@ -17,8 +17,8 @@ import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 // import { UsersListComponent } from './users/list/list.component';
-import { LoginComponent } from './pages/login/login.component';
-import { AuthenticationService } from './pages/login/login.service';
+import { UserLoginComponent } from './passport/login/login.component';
+import { AuthenticationService } from './passport/service/login.service';
 
 
 @NgModule({
@@ -36,8 +36,8 @@ import { AuthenticationService } from './pages/login/login.service';
         // CallbackComponent,
         Exception403Component,
         Exception404Component,
-        Exception500Component,
-        LoginComponent
+        Exception500Component
+        // LoginComponent
         // UsersListComponent
     ],
     providers: [ AuthenticationService ]

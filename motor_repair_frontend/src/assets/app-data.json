@@ -14,7 +14,7 @@
             "translate": "项目",
             "link": "",
             "group": true,
-            "acl": "root",
+
             "children": [
                 {
                     "text": "项目管理",
@@ -24,26 +24,23 @@
                         {
                             "text": "项目管理",
                             "link": "/projects/page"
-                        },
-                        {
-                            "text": "用户管理(项目)",
-                            "link": "/project_users/page"
                         }
                     ]
                 }
             ]
         },
+
         {
-            "text": "系统",
-            "translate": "系统",
+            "text": "汽修云解决方案",
+            "translate": "汽修云解决方案",
             "link": "",
             "group": true,
-            "acl": "admin",
+
             "children": [
                 {
                     "text": "系统设置",
                     "link": "",
-                    "icon": "icon-wrench",
+                    "icon": "icon-settings",
                     "children": [
                         {
                             "text": "用户管理",
@@ -54,46 +51,41 @@
                             "link": "/roles/page"
                         },
                         {
-                            "text": "权限测试",
-                            "link": "/acl"
+                            "text": "职务管理",
+                            "link": "/positions/page"
                         },
                         {
-                            "text": "数据字典",
-                            "link": "/dict/page"
+                          "text": "员工管理",
+                          "link": "/employee/page"
+                        },
+                        {
+                          "text": "操作日志",
+                          "link": "/logs/page"
                         }
+
                     ]
-                }
-            ]
-        },
-        {
-            "text": "订单",
-            "translate": "订单",
-            "link": "",
-            "group": true,
-            "children": [
+                },
                 {
-                    "text": "订单管理",
-                    "link": "",
-                    "icon": "icon-wrench",
-                    "children": [
-                        {
-                            "text": "产品信息管理",
-                            "link": "/productions/page"
-                        },
-                        {
-                            "text": "配件信息管理",
-                            "link": "/spareparts/page"
-                        },
-                        {
-                            "text": "订单信息管理",
-                            "link": "/orders/page"
-                        },
-                        {
-                            "text": "采购单信息管理",
-                            "link": "/purchases/page"
-                        }
-                    ]
+                  "text": "客户信息",
+                  "icon": "icon-people",
+                  "link": "/customers/page"
+                },
+                {
+                  "text": "维修管理",
+                  "icon": "icon-wrench",
+                  "link": "/repair/page"
+                },
+                {
+                  "text": "配件管理",
+                  "icon": "icon-rocket",
+                  "link": "/spareparts/page"
+                },
+                {
+                  "text": "增值业务",
+                  "icon": "icon-present",
+                  "link": "/others/page"
                 }
+
             ]
         }
     ]

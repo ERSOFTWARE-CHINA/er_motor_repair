@@ -38,7 +38,7 @@ defmodule MotorRepairBackendWeb.LoginController do
     Project.changeset(%Project{}, pm)
   end
       
-  def login(conn, %{"password" => pw, "username" => un, "project" => proj} = params) do
+  def login(conn, %{"password" => pw, "userName" => un, "project" => proj} = params) do
     case checkPassword(un, pw, proj) do
       {:ok, user, project_id} ->
         # 将权限和项目id编码进token

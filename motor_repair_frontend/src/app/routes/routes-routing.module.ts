@@ -27,13 +27,13 @@ import { ACLGuard } from './acl.guard';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'passport',
         pathMatch: 'full'
     },
-    {
-		path: 'login',
-		component: LoginComponent
-    },
+    // {
+	// 	path: 'login',
+	// 	component: LoginComponent
+    // },
     {
         path: '',
         component: LayoutDefaultComponent,
@@ -70,6 +70,7 @@ const routes: Routes = [
         path: 'passport',
         component: LayoutPassportComponent,
         children: [
+            { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: UserLoginComponent },
             { path: 'register', component: UserRegisterComponent },
             { path: 'register-result', component: UserRegisterResultComponent }
@@ -84,7 +85,7 @@ const routes: Routes = [
 
     {
 		path: '**', // fallback router must in the last
-		component: LoginComponent
+		component: LayoutPassportComponent
 	}
 ];
 
