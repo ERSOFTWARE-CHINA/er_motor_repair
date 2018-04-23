@@ -5,6 +5,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 import { RegisterService } from '../service/register.service';
 
+import { getMsgUrl, getMsgHashUrl } from '../../../shared/shared.service';
+
 @Component({
     selector: 'passport-register',
     templateUrl: './register.component.html',
@@ -26,7 +28,7 @@ export class UserRegisterComponent implements OnDestroy {
         pool: 'exception'
     };
 
-    realCaptcha='';
+    realCaptcha=null;
     captchaInvalid=false;
 
     constructor(fb: FormBuilder, 
@@ -84,10 +86,14 @@ export class UserRegisterComponent implements OnDestroy {
     getCaptcha() {
         this.count = 59;
         this.genCaptcha();
+        console.log(getMsgUrl("15156709660",this.realCaptcha))
+        console.log(getMsgHashUrl("15156709660",this.realCaptcha))
         this.interval$ = setInterval(() => {
             this.count -= 1;
-            if (this.count <= 0)
+            if (this.count <= 0) {
+                this.realCaptcha = null;
                 clearInterval(this.interval$);
+            }
         }, 1000);
     }
 
@@ -99,11 +105,12 @@ export class UserRegisterComponent implements OnDestroy {
             this.form.controls[i].markAsDirty();
         }
         if (this.form.invalid) return;
+        console.log(this.checkCaptcha())
         if (!this.checkCaptcha()) return;
         // mock http
         this.loading = true;
         this.registService.register(this.form.value);
-
+        this.loading = false;
         // setTimeout(() => {
         //     this.loading = false;
         //     this.router.navigate(['/passport/register-result']);
@@ -120,6 +127,7 @@ export class UserRegisterComponent implements OnDestroy {
     }; 
 
     checkCaptcha() {
+        if (this.realCaptcha == null) return false
         if (this.form.controls["captcha"].value == this.realCaptcha) return true
         else return false;
     }
