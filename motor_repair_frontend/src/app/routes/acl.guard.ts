@@ -18,7 +18,7 @@ export class ACLGuard implements CanActivate {
         if (this.aclSrv.can(roles)) {
             return true;
         }
-        this.router.navigate(['/login']);
+        this.router.navigate(['/passport/login']);
         return false;
     }
 

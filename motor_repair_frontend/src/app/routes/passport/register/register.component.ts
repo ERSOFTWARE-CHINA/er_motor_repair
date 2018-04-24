@@ -10,8 +10,7 @@ import { getMsgUrl, getMsgHashUrl } from '../../../utils/sms';
 @Component({
     selector: 'passport-register',
     templateUrl: './register.component.html',
-    styleUrls: [ './register.component.less' ],
-    providers: [RegisterService]
+    styleUrls: [ './register.component.less' ]
 })
 export class UserRegisterComponent implements OnDestroy {
 
@@ -80,17 +79,16 @@ export class UserRegisterComponent implements OnDestroy {
 
     // region: get captcha
 
-    count = 0;
+    count = null;
     interval$: any;
 
     getCaptcha() {
         this.count = 59;
-        this.genCaptcha();
-        console.log(getMsgUrl("15156709660",this.realCaptcha))
-        console.log(getMsgHashUrl("15156709660",this.realCaptcha))
+        this.realCaptcha = this.genCaptcha();
         this.interval$ = setInterval(() => {
             this.count -= 1;
             if (this.count <= 0) {
+                this.count = null
                 this.realCaptcha = null;
                 clearInterval(this.interval$);
             }
@@ -100,21 +98,29 @@ export class UserRegisterComponent implements OnDestroy {
     // endregion
 
     submit() {
+        this.count = null
         this.error = '';
         for (const i in this.form.controls) {
             this.form.controls[i].markAsDirty();
         }
         if (this.form.invalid) return;
-        console.log(this.checkCaptcha())
-        if (!this.checkCaptcha()) return;
-        // mock http
+        if (!this.checkCaptcha()) {
+            this.captchaInvalid = true;
+            return;
+        }
+
         this.loading = true;
-        this.registService.register(this.form.value);
+        this.registService.register(this.form.value)
+            .then(resp => {
+                if (resp.ok) {
+                    this.registService.registeredName = resp.ok.name;
+                    this.router.navigateByUrl('/passport/register-result');
+                }
+                if (resp.error) this.msg.error(resp.error)
+            })
+            .catch(error => this.msg.error(error));
         this.loading = false;
-        // setTimeout(() => {
-        //     this.loading = false;
-        //     this.router.navigate(['/passport/register-result']);
-        // }, 1000);
+
     }
 
     genCaptcha() {
@@ -122,14 +128,19 @@ export class UserRegisterComponent implements OnDestroy {
         for(var i =0;i<6;i++){
             var num = Math.floor(Math.random()*10);
             c = c + num.toString()
-        }         
-        this.realCaptcha = c
+        }  
+        console.log(c)       
+        return c
     }; 
 
     checkCaptcha() {
         if (this.realCaptcha == null) return false
         if (this.form.controls["captcha"].value == this.realCaptcha) return true
         else return false;
+    }
+
+    onChange(){
+        this.captchaInvalid = false;
     }
 
     ngOnDestroy(): void {

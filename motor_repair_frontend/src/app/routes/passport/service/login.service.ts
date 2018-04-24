@@ -28,7 +28,6 @@ export class AuthenticationService {
     }
  
     login(value): Observable<any> {
-        console.log(value);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({ headers: headers });
@@ -44,6 +43,7 @@ export class AuthenticationService {
               
                  if (!error && token && username && perms) {
                     this.token = token;
+                    localStorage.clear();
                     localStorage.setItem('currentToken', token);
                     localStorage.setItem('currentUsername', username);
                     localStorage.setItem('currentPerms', perms);
@@ -68,22 +68,18 @@ export class AuthenticationService {
         this.menuSrv.resume();
     }
 
-
     checkUsernameAlreadyExists(username) {
         return this.http.get(baseUrl + `users/username/${username}`).map(response => response.json()).toPromise();
-
     }
 
     checkEmailAlreadyExists(email) {
         return this.http.get(baseUrl + `users/email/${email}`, getTokenOptions(null)).map(response => response.json()).toPromise();
-
     }
 
     checkPassword(pwd) {
-
-            return this.http.get(baseUrl + `users/checkpwd/${pwd}`, getTokenOptions(null))
-                       .map(response => response.json()).toPromise();
-          }
+        return this.http.get(baseUrl + `users/checkpwd/${pwd}`, getTokenOptions(null))
+                   .map(response => response.json()).toPromise();
+    }
 
 }
 

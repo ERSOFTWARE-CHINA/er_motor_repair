@@ -14,7 +14,7 @@
             "translate": "项目",
             "link": "",
             "group": true,
-
+            "acl": "root",
             "children": [
                 {
                     "text": "项目管理",
@@ -44,11 +44,8 @@
                     "children": [
                         {
                             "text": "用户管理",
+                            "acl": "admin",
                             "link": "/users/page"
-                        },
-                        {
-                            "text": "角色管理",
-                            "link": "/roles/page"
                         },
                         {
                             "text": "职务管理",
