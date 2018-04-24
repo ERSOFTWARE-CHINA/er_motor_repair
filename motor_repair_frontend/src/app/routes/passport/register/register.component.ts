@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 import { RegisterService } from '../service/register.service';
 
-import { getMsgUrl, getMsgHashUrl } from '../../../shared/shared.service';
+import { getMsgUrl, getMsgHashUrl } from '../../../utils/sms';
 
 @Component({
     selector: 'passport-register',
