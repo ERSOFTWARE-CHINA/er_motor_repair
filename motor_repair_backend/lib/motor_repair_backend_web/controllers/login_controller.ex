@@ -17,9 +17,9 @@ defmodule MotorRepairBackendWeb.LoginController do
       |> Ecto.Changeset.put_assoc(:project, project_changeset)
       |> Repo.insert
       |> case do
-        {:ok, user} -> json conn, user
+        {:ok, user} -> json conn, %{ok: user}
         {:error, changeset} -> 
-          json conn, translate_changeset_error(changeset)
+          json conn, %{error: translate_changeset_error(changeset)}
     end
   end
 

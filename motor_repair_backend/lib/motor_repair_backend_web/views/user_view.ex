@@ -27,7 +27,6 @@ defmodule MotorRepairBackendWeb.UserView do
       is_admin: user.is_admin,
       actived: user.actived,
       perms_number: user.perms_number,
-      avatar: user.avatar,
       roles: user.roles
     }
       |> drop_ecto_not_loaded_from_map

@@ -1,6 +1,6 @@
 defmodule MotorRepairBackend.UserContext do
   @moduledoc """
-  The UserService context.
+  The User context.
   """
 
   import Ecto.Query, warn: false

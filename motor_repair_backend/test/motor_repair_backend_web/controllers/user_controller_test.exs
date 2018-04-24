@@ -1,15 +1,15 @@
 defmodule MotorRepairBackendWeb.UserControllerTest do
   use MotorRepairBackendWeb.ConnCase
 
-  alias MotorRepairBackend.UserService
-  alias MotorRepairBackend.UserService.User
+  alias MotorRepairBackend.UserContext
+  alias MotorRepairBackend.UserContext.User
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:user) do
-    {:ok, user} = UserService.create_user(@create_attrs)
+    {:ok, user} = UserContext.create_user(@create_attrs)
     user
   end
 

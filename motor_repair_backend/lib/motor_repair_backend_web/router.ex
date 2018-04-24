@@ -36,9 +36,9 @@ defmodule MotorRepairBackendWeb.Router do
   scope "/api/v1", MotorRepairBackendWeb do
     pipe_through [:api, :api_auth]
 
-    resources "/user", UserController, except: [:new, :edit]
-    resources "/project", ProjectController, except: [:new, :edit]
-    resources "/role", RoleController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/projects", ProjectController, except: [:new, :edit]
+    resources "/roles", RoleController, except: [:new, :edit]
   end
 
 end

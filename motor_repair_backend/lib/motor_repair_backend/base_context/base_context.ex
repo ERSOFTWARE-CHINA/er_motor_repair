@@ -71,7 +71,7 @@ defmodule MotorRepairBackend.BaseContext do
 
   # 添加所属项目作为查询条件，不对root用户有效
   defp add_belongs_to(query, conn) do
-    resource = RestfulApiWeb.Guardian.Plug.current_resource(conn)
+    resource = MotorRepairBackendWeb.Guardian.Plug.current_resource(conn)
     case resource.is_root do
       true ->
         query

@@ -2,7 +2,7 @@ defmodule MotorRepairBackendWeb.Guardian do
   use Guardian, otp_app: :motor_repair_backend
 
   alias MotorRepairBackend.Repo
-  alias MotorRepairBackend.UserService.User
+  alias MotorRepairBackend.UserContext.User
 
 
   def subject_for_token(resource, _claims) do
