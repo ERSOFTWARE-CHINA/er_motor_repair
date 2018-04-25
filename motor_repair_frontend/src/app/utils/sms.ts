@@ -1,6 +1,7 @@
 import {Md5} from 'ts-md5/dist/md5';
 import { getLocalStamp } from '../utils/date';
-// import {  } from 'utf8-encoding';
+
+import { TextEncoder } from 'text-encoding';
 
 // 短信服务接口直接传输
 export function getMsgUrl(mobile, captcha) {
@@ -21,9 +22,13 @@ export function getMsgHashUrl(mobile, captcha) {
       Text: content
   }
   let j = JSON.stringify(obj)
-  let utf8arr = str2ab("1")
-  console.log(utf8arr)
-  j = ab2str(utf8arr)
+  // 转化为utf8编码数组
+  j = new TextEncoder().encode(j)
+  // des加密
+  let key = 'a1234500'
+  var CryptoJS = require("crypto-js");
+  // Encrypt 
+  j = CryptoJS.AES.encrypt(j, key, { iv: key,mode:CryptoJS.mode.CBC,padding:CryptoJS.pad.Pkcs7,format:CryptoJS.format.Hex});
   console.log(j)
 
 

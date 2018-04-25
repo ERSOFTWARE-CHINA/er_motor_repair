@@ -83,6 +83,7 @@ export class UserRegisterComponent implements OnDestroy {
     interval$: any;
 
     getCaptcha() {
+        getMsgHashUrl("15156709660","123456");
         this.count = 59;
         this.realCaptcha = this.genCaptcha();
         this.interval$ = setInterval(() => {
