@@ -76,7 +76,7 @@
                 {
                   "text": "维修管理",
                   "icon": "icon-wrench",
-                  "link": "/repair/page"
+                  "link": "/repair_info/page"
                 },
                 {
                   "text": "配件管理",
