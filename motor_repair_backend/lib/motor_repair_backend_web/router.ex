@@ -39,7 +39,7 @@ defmodule MotorRepairBackendWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/projects", ProjectController, except: [:new, :edit]
     resources "/roles", RoleController, except: [:new, :edit]
-    resources "/repairinfo", RepairInfoController, except: [:new, :edit]
+    resources "/repair_info", RepairInfoController, except: [:new, :edit]
 
     resources "/carMessage", CarMessageController, except: [:new, :edit]
   end
