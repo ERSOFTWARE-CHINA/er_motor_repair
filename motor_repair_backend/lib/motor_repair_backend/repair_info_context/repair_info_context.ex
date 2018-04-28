@@ -15,12 +15,14 @@ defmodule MotorRepairBackend.RepairInfoContext do
       use MotorRepairBackend.BaseContext
       alias MotorRepairBackend.RepairInfoContext.RepairInfo
       alias MotorRepairBackend.RepairInfoContext.PartsCost
+      alias MotorRepairBackend.CarMessageContext.CarMessage
     end
   end
 
   def page(params, conn) do 
     RepairInfo
       |> query_like(params, "no")
+      |> query_equal(params, "car_message_id")
       |> query_preload(:parts_cost)
       |> get_pagination(params, conn)
   end

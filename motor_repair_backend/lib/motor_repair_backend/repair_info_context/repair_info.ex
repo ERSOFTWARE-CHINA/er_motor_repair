@@ -2,8 +2,9 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias MotorRepairBackend.RepairInfoContext.PartsExpense
+  alias MotorRepairBackend.RepairInfoContext.PartsCost
   alias MotorRepairBackend.ProjectContext.Project
+  alias MotorRepairBackend.CarMessageContext.CarMessage
 
 
   schema "repair_info" do
@@ -24,7 +25,8 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
     field :agent_mobile, :string               # 送修人手机
 
     belongs_to :project, Project, on_replace: :nilify
-    has_many :parts_cost, PartsExpense, on_delete: :delete_all, on_replace: :delete
+    belongs_to :car_message, CarMessage, on_replace: :nilify
+    has_many :parts_cost, PartsCost, on_delete: :delete_all, on_replace: :delete
 
     timestamps()
   end

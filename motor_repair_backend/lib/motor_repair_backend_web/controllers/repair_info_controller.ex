@@ -12,8 +12,10 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
 
   def create(conn, %{"repair_info" => repair_info_params}) do
     parts_cost_changesets = get_parts_cost_changesets(repair_info_params, conn)
+    car_message_changeset = get_car_message_changeset(repair_info_params, conn)
     info_changeset = RepairInfo.changeset(%RepairInfo{}, repair_info_params)
       |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)
+      |> Ecto.Changeset.put_assoc(:car_message, car_message_changeset)
     with {:ok, %RepairInfo{} = ri} <- save_create(info_changeset, conn) do
       conn
         |> put_status(:created)
@@ -47,9 +49,23 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
 
   defp get_parts_cost_changesets(params, conn) do
     params
-    |> Map.get("parts_cost", [])
-    |> Enum.map(fn(d)->
-      PartsCost.changeset(%PartsCost{}, d)
-    end)
+      |> Map.get("parts_cost", [])
+      |> Enum.map(fn(d)->
+        PartsCost.changeset(%PartsCost{}, d)
+      end)
+  end
+
+  defp get_car_message_changeset(params, conn) do
+    params
+    |> Map.get("car_message", %{})
+    |> Map.get("id")
+    |> case do
+      nil -> nil
+      id ->
+        case get_by_id(CarMessage, id, conn) do
+          {:error, _} -> nil
+          {:ok, car_message} -> change(CarMessage, car_message)
+        end
+    end
   end
 end
