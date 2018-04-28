@@ -15,32 +15,28 @@ export function getMsgUrl(mobile, captcha) {
 
 // 短信服务接口加密传输
 export function getMsgHashUrl(mobile, captcha) {
-  let stamp = getLocalStamp();
-  // let content = `尊敬的用户，您的注册验证码为：`+captcha+`。【汽修云】`
-  let content = "我的验证码是：7890。【奥创时代】"
-  let obj = {
-      UserName: "test",
-      Secret: "2A8D628159B0D4D3D4D58A3EB17F3082",
-      Stamp: "0414174715",
-      Mobile: "15510331875",
-      Text: content,
-      Ext: "",
-      SendTime: ""
-  }
-  let j = JSON.stringify(obj)
-  console.log(j)
-  // 转化为utf8编码数组
-  let arr = toUTF8Array(j)
-  console.log(arr)
-  // des加密
-  let str = 'test'
-  let key =  stringToUnicodeArray(str)+"00000000"
-  
-  console.log(key)
-
-  console.log(crypto.DES.encrypt(arr, key, { iv: key,mode:crypto.mode.CBC,padding:crypto.pad.Pkcs7,format:crypto.format.Hex}));
-
-
+    let stamp = getLocalStamp();
+    // let content = `尊敬的用户，您的注册验证码为：`+captcha+`。【汽修云】`
+    let content = "我的验证码是：7890。【奥创时代】"
+    let obj = {
+        UserName: "test",
+        Secret: "2A8D628159B0D4D3D4D58A3EB17F3082",
+        Stamp: "0414174715",
+        Mobile: "15510331875",
+        Text: content,
+        Ext: "",
+        SendTime: ""
+    }
+    let j = JSON.stringify(obj)
+    console.log(j)
+    // 转化为utf8编码数组
+    let arr = toUTF8Array(j)
+    console.log(arr)
+    // des加密
+    let str = 'test'
+    let key =  stringToUnicodeArray(str)+"00000000"
+    console.log(key)
+    console.log(crypto.DES.encrypt(arr, key, { iv: key,mode:crypto.mode.CBC,padding:crypto.pad.Pkcs7,format:crypto.format.Hex}));
 
 }
 
