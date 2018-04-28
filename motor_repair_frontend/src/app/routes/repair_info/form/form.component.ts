@@ -30,7 +30,7 @@ export class RepairInfoFormComponent implements OnInit {
         if (op == 'create') this.initCreate();
         if (op == 'update') this.initUpdate();
         this.form = this.fb.group({
-            no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.maxLength(30), Validators.minLength(4),
+            no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.minLength(4),
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
             type: [this.repairInfo? this.repairInfo.type : '', [Validators.required]],
             time_cost: [this.repairInfo? this.repairInfo.time_cost : null, [Validators.required]],
@@ -103,26 +103,27 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     _submitForm() {
-
+        console.log("submit start!!")
         for (const i in this.form.controls) {
           this.form.controls[ i ].markAsDirty();
         }
-        if (this.form.invalid) return ;
+        if (this.form.invalid) {console.log(this.form.controls);return} ;
         if (this.form.valid) {
+            console.log("form is valid!!")
             this.formatForm() 
             let op = this.mrSrv.formOperation;
             if (op == 'create') this.mrSrv.add(this.form.value).then(resp => {
                 if (resp.error) { 
                     this.msg.error(resp.error);
                 } else {
-                    this.msg.success('创建领料单 ' + resp.no + ' 成功！');
+                    this.msg.success('创建维修单 ' + resp.no + ' 成功！');
                 }
                 console.log(resp);this.goBack()}).catch(error => this.msg.error(error));
             if (op == 'update') this.mrSrv.update(this.repairInfo.id, this.form.value).then(resp => {
                 if (resp.error) { 
                     this.msg.error(resp.error);
                 } else {
-                    this.msg.success('更新领料单 ' + resp.no + ' 成功！');
+                    this.msg.success('更新维修单 ' + resp.no + ' 成功！');
                 }
                 this.goBack();}).catch(error => this.msg.error(error));
             

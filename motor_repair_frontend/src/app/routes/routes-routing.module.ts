@@ -7,9 +7,7 @@ import { LayoutFullScreenComponent } from '../layout/fullscreen/fullscreen.compo
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 import { DashboardV1Component } from './dashboard/v1/v1.component';
-import { DashboardAnalysisComponent } from './dashboard/analysis/analysis.component';
-import { DashboardMonitorComponent } from './dashboard/monitor/monitor.component';
-import { DashboardWorkplaceComponent } from './dashboard/workplace/workplace.component';
+
 // passport pages
 import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterComponent } from './passport/register/register.component';
@@ -41,9 +39,6 @@ const routes: Routes = [
             { path: '', redirectTo: 'dashboard/v1', pathMatch: 'full' },
             { path: 'dashboard', redirectTo: 'dashboard/v1', pathMatch: 'full' },
             { path: 'dashboard/v1', component: DashboardV1Component, data: { translate: 'dashboard_v1' } },
-            { path: 'dashboard/analysis', component: DashboardAnalysisComponent, data: { translate: 'dashboard_analysis' } },
-            { path: 'dashboard/monitor', component: DashboardMonitorComponent, data: { translate: 'dashboard_monitor' } },
-            { path: 'dashboard/workplace', component: DashboardWorkplaceComponent, data: { translate: 'dashboard_workplace' } },
             { path: 'dict', loadChildren: './dictionary/dict.module#DictModule' },
             { path: 'pages', loadChildren: './pages/pages.module#PagesModule' },
             { path: 'users', loadChildren: './users/users.module#UsersModule' },
@@ -59,15 +54,7 @@ const routes: Routes = [
         ],
         canActivate: [AuthGuard]
     },
-    // 全屏布局
-    // {
-    //     path: 'data-v',
-    //     component: LayoutFullScreenComponent,
-    //     children: [
-    //         { path: '', loadChildren: './data-v/data-v.module#DataVModule' }
-    //     ]
-    // },
-    // passport
+
     {
         path: 'passport',
         component: LayoutPassportComponent,

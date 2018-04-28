@@ -21,6 +21,7 @@ export class RepairInfoService {
     }
 
     add(v): Promise<any>{ 
+        console.log(v)
         v.order = {id: v.order}
         let param = { repair_info: v} 
         return this.http.post(this.url, param, getTokenOptions(null))

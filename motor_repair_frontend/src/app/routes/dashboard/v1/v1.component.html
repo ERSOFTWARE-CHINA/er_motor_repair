@@ -1,150 +1,143 @@
 <div class="content__title">
-    <h1>
+    <!-- <h1>
         Dashboard
         <small class="text-sm hidden-xs">Welcome !</small>
-    </h1>
-</div>
-<div class="quick-menu" [class.show]="quickMenu" (click)="quickMenu=!quickMenu">
-    <div class="quick-menu-inner">
-        <div class="settings-ctrl">
-            <i class="anticon anticon-question-circle-o"></i>
-        </div>
-        <div class="list-group list-group-flush">
-            <a (click)="msg.info('item 1')" class="list-group-item">How do i create account?</a>
-            <a (click)="msg.info('item 2')" class="list-group-item">How do i create account?</a>
-            <a (click)="msg.info('item 3')" class="list-group-item">How do i create account?</a>
-            <a (click)="msg.info('item 4')" class="list-group-item">How do i create account?</a>
-            <a (click)="msg.info('item 5')" class="list-group-item">How do i create account?</a>
-        </div>
+    </h1> -->
+
+    <div class="text-center">
+        <!-- <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton" style="width: 520px;">
+            <input type="text" nz-input placeholder="请输入">
+            <ng-template #suffixButton>
+                <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+            </ng-template>
+        </nz-input-group> -->
+
+        <input type="text" nz-input placeholder="请输入">
+
+
     </div>
 </div>
+
 <div nz-row nzGutter="16">
-    <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-        <div nz-row nzType="flex" nzAlign="middle" class="bg-primary rounded-md">
-            <div nz-col nzSpan="12" class="p-md text-white">
-                <div class="h2 mt0">123,456</div>
-                <p class="text-nowrap">Website Traffics</p>
-            </div>
-            <div nz-col nzSpan="12">
-                <mini-bar height="35" color="#fff" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="webSite"></mini-bar>
-            </div>
-        </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-        <div nz-row nzType="flex" nzAlign="middle" class="bg-success rounded-md">
-            <div nz-col nzSpan="12" class="p-md text-white">
-                <div class="h2 mt0">234,567K</div>
-                <p class="text-nowrap">Website Impressions</p>
-            </div>
-            <div nz-col nzSpan="12">
-                <mini-bar height="35" color="#fff" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="webSite"></mini-bar>
-            </div>
-        </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-        <div nz-row nzType="flex" nzAlign="middle" class="bg-orange rounded-md">
-            <div nz-col nzSpan="12" class="p-md text-white">
-                <div class="h2 mt0">$458,778</div>
-                <p class="text-nowrap">Total Sales</p>
-            </div>
-            <div nz-col nzSpan="12">
-                <mini-bar height="35" color="#fff" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="webSite"></mini-bar>
-            </div>
-        </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-        <div nz-row nzType="flex" nzAlign="middle" class="bg-pink rounded-md">
-            <div nz-col nzSpan="12" class="p-md text-white">
-                <div class="h2 mt0">456</div>
-                <p class="text-nowrap">Support Tickets</p>
-            </div>
-            <div nz-col nzSpan="12">
-                <mini-bar height="35" color="#fff" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="webSite"></mini-bar>
-            </div>
-        </div>
-    </div>
-</div>
-<div nz-row nzGutter="16">
-    <div nz-col nzXs="24" nzMd="12">
+
+    <div nz-col nzXs="24" nzMd="24">
         <nz-card [nzBordered]="false">
             <ng-template #title>
-                Sales Statistics
-                <small class="text-sm font-weight-normal">Business Expectations & Retail Sales Statistics</small>
+                车辆信息
+                
             </ng-template>
-            <bar
-                height="275"
-                [data]="salesData"></bar>
+
+            <nz-table #nzTable [nzAjaxData]="data_car" [nzTotal]="total_car" [nzPageSize]="q_car.page_size" [nzLoading]="loading"
+            (nzPageIndexChange)="pageChange($event)">
+                <thead nz-thead>
+                    <tr>
+                        
+                        <th nz-th>
+                            <span>车主名称</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.owner_name" (nzValueChange)="sort('owner_name',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>VIN码</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.vin" (nzValueChange)="sort('vin',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>车牌号</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.plate_num" (nzValueChange)="sort('plate_num',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>发动机号</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.engine_num" (nzValueChange)="sort('engine_num',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>品牌名称</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.car_brand" (nzValueChange)="sort('car_brand',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>车系名称</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.car_series" (nzValueChange)="sort('car_series',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th><span>操作</span></th>
+                    
+                        
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor="let i of nzTable.data">
+                        
+                        <td nz-td>{{i.owner_name}}</td>
+                        <td nz-td>{{i.vin}}</td>
+                        <td nz-td>{{i.plate_num}}</td>
+                        <td nz-td>{{i.engine_num}}</td>
+                        <td nz-td>{{i.car_brand}}</td>
+                        <td nz-td>{{i.car_series}}</td>
+                        <td nz-td>
+                            <a (click)="update(i.id)">修改</a>
+                            <span nz-table-divider></span>
+                            <a (click)="remove(i)">删除</a>
+                            <span nz-table-divider></span>
+                            <a (click)="show_info(i)">维修信息</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+
         </nz-card>
     </div>
-    <div nz-col nzXs="24" nzMd="12">
-        <nz-card [nzTitle]="nzTitle" [nzBordered]="false">
-            <ng-template #nzTitle>
-                Growth Rate
-                <small class="text-sm font-weight-normal">Business Expectations & Retail Sales Statistics</small>
+
+    <div nz-col nzXs="24" nzMd="24">
+        <nz-card [nzBordered]="false">
+            <ng-template #title>
+                车辆维修信息
+                <small class="text-sm font-weight-normal">{{ sub_title }}</small>
             </ng-template>
-            <timeline [data]="offlineChartData" [height]="239" [padding]="[0, 0, 0, 0]"
-                      [titleMap]="{ y1: '客流量', y2: '支付笔数' }"></timeline>
+
+            <nz-table #nzTable2 [nzAjaxData]="data_repair" [nzTotal]="total_repair" [nzPageSize]="q_repair.page_size" [nzLoading]="loading"
+            (nzPageIndexChange)="pageChange($event)">
+                <thead nz-thead>
+                    <tr>
+                        <th nz-th>
+                            <span>维修单号</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.no" (nzValueChange)="sort('no',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>类型</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.type" (nzValueChange)="sort('type',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>工时费用</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.time_cost" (nzValueChange)="sort('time_cost',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>项目</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.items" (nzValueChange)="sort('items',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>送修人</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.agent" (nzValueChange)="sort('agent',$event)"></nz-table-sort>
+                        </th>
+
+                        
+
+                        <th nz-th><span>操作</span></th>
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor="let i of nzTable2.data">
+
+                        <td nz-td>{{i.no}}</td>
+                        <td nz-td>{{i.type}}</td>
+                        <td nz-td>{{i.time_cost}}</td>
+                        <td nz-td>{{i.items}}</td>
+                        <td nz-td>{{i.agent}}</td>
+                        <td nz-td>
+                            <a (click)="update(i.id)">修改</a>
+                            <span nz-table-divider></span>
+                            <a (click)="remove(i)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
         </nz-card>
     </div>
-</div>
-<div nz-row nzGutter="16">
-    <div nz-col nzXs="24" nzMd="12">
-        <nz-card [nzBordered]="false" class="ant-card__img">
-            <img class="img" src="//os.alipayobjects.com/rmsportal/GhjqstwSgxBXrZS.png">
-            <div class="p-md">
-                <h3>ANT DESIGN</h3>
-                <p class="text-grey">A UI Design Language</p>
-                <ol class="list-styled text-lg pt-md">
-                    <li>Designed by experienced team, and showcase dozens of inspiring projects.</li>
-                    <li>Provide solutions for usual problems that may be encountered while developing enterprise-like complex UIs.</li>
-                    <li>Dozens of flexible and practical reusable components that increase your productivity.</li>
-                </ol>
-                <p class="pt-md">
-                    <a class="text-grey" href="//ng.ant.design" target="_blank">View Site...</a>
-                </p>
-            </div>
-        </nz-card>
-    </div>
-    <div nz-col nzXs="24" nzMd="12">
-        <nz-card [nzTitle]="nzTitle" [nzBordered]="false" nzNoPadding>
-            <ng-template #nzTitle>
-                Recent Posts
-                <small class="text-sm font-weight-normal">Venenatis portauam Inceptos ameteiam</small>
-            </ng-template>
-            <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'" class="py-sm bg-grey-lighter-h point"
-                *ngFor="let item of todoData">
-                <div nz-col [nzSpan]="4" class="text-center">
-                    <nz-avatar [nzSrc]="'./assets/img/' + item.avatar + '.png'" [nzSize]="'large'"></nz-avatar>
-                </div>
-                <div nz-col [nzSpan]="20">
-                    <strong>{{item.name}}</strong>
-                    <p>{{item.content}}</p>
-                </div>
-            </div>
-        </nz-card>
-    </div>
-    <div nz-col nzXs="24" nzMd="12">
-        <nz-card nzTitle="Todo lists" [nzBordered]="false" nzNoPadding>
-            <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'" class="py-sm bg-grey-lighter-h point"
-                *ngFor="let item of todoData">
-                <div nz-col [nzSpan]="4" class="text-center">
-                    <nz-avatar [nzSrc]="'./assets/img/' + item.avatar + '.png'" [nzSize]="'large'"></nz-avatar>
-                </div>
-                <div nz-col [nzSpan]="18">
-                    <strong>{{item.name}}</strong>
-                    <p [class.text-deleted]="item.completed">{{item.content}}</p>
-                </div>
-                <div nz-col [nzSpan]="2" class="text-right pr-md">
-                    <nz-dropdown [nzPlacement]="'topRight'">
-                        <i nz-dropdown class="icon-options-vertical"></i>
-                        <ul nz-menu>
-                            <li nz-menu-item *ngIf="item.completed" (click)="item.completed=false">Active</li>
-                            <li nz-menu-item *ngIf="!item.completed" (click)="item.completed=true">Completed</li>
-                            <li nz-menu-item (click)="todoData.splice(todoData.indexOf(item), 1)">Delted</li>
-                        </ul>
-                    </nz-dropdown>
-                </div>
-            </div>
-        </nz-card>
-    </div>
+   
 </div>
