@@ -1,0 +1,200 @@
+<div nz-row [nzGutter]="24" class="pt-lg">
+
+    <form nz-form [formGroup]="form" (ngSubmit)="_submitForm()" [nzLayout]="'vertical'">
+        <nz-card [nzBordered]="true" nzTitle="车主信息">
+            <div nz-row [nzGutter]="16">
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col nz-form-item-required><label>车主名称:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="owner_name">
+                            <nz-input formControlName="owner_name" nzPlaceHolder="请输入车主名称" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['owner_name'].dirty || form.controls['owner_name'].touched">
+                                <p nz-form-explain *ngIf="form.controls['owner_name'].errors?.required">请输入车主姓名</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col nz-form-item-required><label>电话:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="phone_num">
+                            <nz-input formControlName="phone_num" nzPlaceHolder="请输入电话" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['phone_num'].dirty || form.controls['phone_num'].touched">
+                                <p nz-form-explain *ngIf="form.controls['phone_num'].errors?.required">请输入电话</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </nz-card>  
+        
+        <nz-card [nzBordered]="false" nzTitle="汽车基本信息" >
+            <div nz-row [nzGutter]="16">
+                <div nz-col nzMd="6" nzSm="12" nzXs="24" style="text-align: left;">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col nz-form-item-required><label>车牌号:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="plate_num">
+                            <nz-input formControlName="plate_num" nzPlaceHolder="请输入车牌号" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['plate_num'].dirty || form.controls['plate_num'].touched">
+                                <p nz-form-explain *ngIf="form.controls['plate_num'].errors?.required">请输入车牌号</p>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24" style="text-align: left;" >
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>颜色:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="car_color">
+                            <nz-input formControlName="car_color" nzPlaceHolder="请输入颜色" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div  nz-col [nzSpan]="6" class="mb-md">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label><label for="position">岗位名称</label></div>
+                        <div nz-form-control>
+                            <nz-input [(ngModel)]="q.position" name="position" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="position"></nz-input>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24" style="text-align: left;">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>VIN号:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="vin">
+                            <nz-input formControlName="vin" nzPlaceHolder="请输入VIN号" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24" style="text-align: left;">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>车型名称:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="car_type">
+                            <nz-input formControlName="car_type" nzPlaceHolder="请输入车型名称" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24" style="text-align: left;">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>品牌:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="car_brand">
+                            <nz-input formControlName="car_brand" nzPlaceHolder="请输入品牌" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24" style="text-align: left;">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>车系名称:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="car_series">
+                            <nz-input formControlName="car_series" nzPlaceHolder="请输入车系名称" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>发动机号:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="engine_num">
+                            <nz-input formControlName="engine_num" nzPlaceHolder="请输入发动机号" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>发动机型号:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="engine_type">
+                            <nz-input formControlName="engine_type" nzPlaceHolder="请输入发动机型号" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>购车时间:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="buy_date">
+                            <nz-datepicker formControlName="buy_date" nzPlaceHolder="请输入购车时间" nzSize="large"></nz-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>下次保养时间:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="next_maintain_date">
+                            <nz-datepicker formControlName="next_maintain_date" nzPlaceHolder="请输入下次保养时间" nzSize="large"></nz-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>下次保养里程:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="next_maintain_mileage">
+                            <nz-input formControlName="next_maintain_mileage" nzPlaceHolder="请输入下次保养里程" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>下次年审时间</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="next_annual_trial_date">
+                            <nz-datepicker formControlName="next_annual_trial_date" nzPlaceHolder="请输入下次年审时间" nzSize="large"></nz-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>下次保险时间:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="next_insurance_date">
+                            <nz-datepicker formControlName="next_insurance_date" nzPlaceHolder="请输入下次保险时间" nzSize="large"></nz-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>保险公司:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="insurance_name">
+                            <nz-input formControlName="insurance_name" nzPlaceHolder="请输入保险公司" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>最新里程:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="latest_mileage">
+                            <nz-input formControlName="latest_mileage" nzPlaceHolder="请输入最新里程" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+               <div nz-col nzXs="24">
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col><label>车辆备注:</label></div>
+                        <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="car_remark">
+                            <nz-input formControlName="car_remark" nzPlaceHolder="请输入车辆备注" nzSize="large"></nz-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-card> 
+
+        <div>
+            <error-collect></error-collect>
+            <button nz-button [nzType]="'primary'" nzSize="large">提交</button>
+            <button nz-button [nzType]="'primary'" nzSize="large" (click)="goBack()">返回</button>
+        </div>
+    </form>
+
+</div>

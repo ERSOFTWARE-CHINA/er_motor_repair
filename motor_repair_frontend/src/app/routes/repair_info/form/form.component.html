@@ -1,0 +1,276 @@
+<div nz-row [nzGutter]="24" class="pt-lg">
+  <form nz-form [formGroup]="form" (ngSubmit)="_submitForm()" [nzLayout]="'vertical'">
+      <nz-card [nzBordered]="false" [nzTitle]="title">
+          <div nz-row [nzGutter]="16">
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                  <div nz-form-item nz-row>
+                      <div nz-form-label nz-col><label nz-form-item-required>维修单号</label></div>
+                      <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="no">
+                          <nz-input formControlName="no" nzPlaceHolder="请输入维修单号" nzSize="large"></nz-input>
+                          <ng-container *ngIf="form.controls['no'].dirty || form.controls['no'].touched">
+                              <p nz-form-explain *ngIf="form.controls['no'].errors?.required">请输入维修单号</p>
+                              <p nz-form-explain *ngIf="form.controls['no'].errors?.minlength ">维修单号不少于4个字符</p>
+                          </ng-container>
+                      </div>
+                  </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>工时费用</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="time_cost">
+                        <nz-input formControlName="time_cost" nzPlaceHolder="请输入工时费用" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['time_cost'].dirty || form.controls['time_cost'].touched">
+                            <p nz-form-explain *ngIf="form.controls['time_cost'].errors?.required">请输入工时费用</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>服务顾问</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="consultant">
+                        <nz-input formControlName="consultant" nzPlaceHolder="请输入工时费用" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['consultant'].dirty || form.controls['consultant'].touched">
+                            <p nz-form-explain *ngIf="form.controls['consultant'].errors?.required">请输入服务顾问</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col [nzMd]="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>进场时间</label></div>
+                    <div nz-form-control  nz-col>
+                        <div nz-form-item nz-row>
+                            <div nz-form-control [nzValidateStatus]="entry_date">
+                                <nz-datepicker style="width: 100%;" [nzSize]="'large'" formControlName="entry_date" [nzPlaceHolder]="'进场时间'" nzFormat="YYYY-MM-DD"></nz-datepicker>
+                                <ng-container *ngIf="form.controls['entry_date'].dirty || form.controls['entry_date'].touched">
+                                    <p nz-form-explain *ngIf="form.controls['entry_date'].errors?.required">请选择进场</p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col [nzMd]="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>预交车时间</label></div>
+                    <div nz-form-control  nz-col>
+                        <div nz-form-item nz-row>
+                            <div nz-form-control [nzValidateStatus]="return_date">
+                                <nz-datepicker style="width: 100%;" [nzSize]="'large'" formControlName="return_date" [nzPlaceHolder]="'进场时间'" nzFormat="YYYY-MM-DD"></nz-datepicker>
+                                <ng-container *ngIf="form.controls['return_date'].dirty || form.controls['return_date'].touched">
+                                    <p nz-form-explain *ngIf="form.controls['return_date'].errors?.required">请选择预交车时间</p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>服务项目</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="items">
+                        <nz-input formControlName="items" nzPlaceHolder="请输入服务项目" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['items'].dirty || form.controls['items'].touched">
+                            <p nz-form-explain *ngIf="form.controls['items'].errors?.required">请输入服务项目</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>客户描述</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="customer_comment">
+                        <nz-input formControlName="customer_comment" nzPlaceHolder="请输入客户描述" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['customer_comment'].dirty || form.controls['customer_comment'].touched">
+                            <p nz-form-explain *ngIf="form.controls['customer_comment'].errors?.required">请输入客户描述</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>维修工描述</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="repairman_comment">
+                        <nz-input formControlName="repairman_comment" nzPlaceHolder="请输入维修工描述" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['repairman_comment'].dirty || form.controls['repairman_comment'].touched">
+                            <p nz-form-explain *ngIf="form.controls['repairman_comment'].errors?.required">请输入客户描述</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>维修建议</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="advise">
+                        <nz-input formControlName="advise" nzPlaceHolder="请输入维修建议" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['advise'].dirty || form.controls['advise'].touched">
+                            <p nz-form-explain *ngIf="form.controls['advise'].errors?.required">请输入维修建议</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>进场里程</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="mileage">
+                        <nz-input formControlName="mileage" nzPlaceHolder="请输入进场里程" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['mileage'].dirty || form.controls['mileage'].touched">
+                            <p nz-form-explain *ngIf="form.controls['mileage'].errors?.required">请输入进场里程</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>下次保养里程</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="next_mileage">
+                        <nz-input formControlName="next_mileage" nzPlaceHolder="请输入下次保养里程" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['next_mileage'].dirty || form.controls['next_mileage'].touched">
+                            <p nz-form-explain *ngIf="form.controls['next_mileage'].errors?.required">请输入下次保养里程</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col [nzMd]="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>下次保养日期</label></div>
+                    <div nz-form-control  nz-col>
+                        <div nz-form-item nz-row>
+                            <div nz-form-control [nzValidateStatus]="next_date">
+                                <nz-datepicker style="width: 100%;" [nzSize]="'large'" formControlName="next_date" [nzPlaceHolder]="'下次保养日期'" nzFormat="YYYY-MM-DD"></nz-datepicker>
+                                <ng-container *ngIf="form.controls['next_date'].dirty || form.controls['next_date'].touched">
+                                    <p nz-form-explain *ngIf="form.controls['next_date'].errors?.required">请选择下次保养日期</p>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>送修人</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="agent">
+                        <nz-input formControlName="agent" nzPlaceHolder="请输入下次保养里程" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['agent'].dirty || form.controls['agent'].touched">
+                            <p nz-form-explain *ngIf="form.controls['agent'].errors?.required">请输入送修人</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+              <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col><label nz-form-item-required>送修人手机</label></div>
+                    <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="agent_mobile">
+                        <nz-input formControlName="agent_mobile" nzPlaceHolder="请输入送修人手机" nzSize="large"></nz-input>
+                        <ng-container *ngIf="form.controls['agent_mobile'].dirty || form.controls['agent_mobile'].touched">
+                            <p nz-form-explain *ngIf="form.controls['agent_mobile'].errors?.required">请输入送修人手机</p>
+                        </ng-container>
+                    </div>
+                </div>
+              </div>
+
+          </div>
+      </nz-card>
+      
+      <nz-card [nzBordered]="false" nzTitle="备件费用">
+          <nz-table formArrayName="parts_cost" [nzDataSource]="parts_cost.value" [nzIsPagination]="false">
+              <thead nz-thead>
+                  <tr>
+                      <th nz-th [nzWidth]="'20%'"><span>备件名称</span></th>
+                      <th nz-th [nzWidth]="'20%'"><span>数量</span></th>
+                      <th nz-th [nzWidth]="'20%'"><span>单价</span></th>
+                      <th nz-th [nzWidth]="'20%'"><span>总价</span></th>
+                      <th nz-th [nzWidth]="'20%'"><span>操作</span></th>
+                  </tr>
+              </thead>
+              <tbody nz-tbody>
+                  <tr nz-tbody-tr *ngFor="let item of parts_cost.controls; let i = index" [formGroupName]="i">
+
+                      <td nz-td>
+                          <span *ngIf="editIndex!==i">{{parts_cost.value[i].name}}</span>
+                          <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.name">
+                              <nz-input formControlName="name" nzPlaceHolder="请输入名称" nzSize="large"></nz-input>
+                          </span>
+                      </td>
+
+                      <td nz-td>
+                          <span *ngIf="editIndex!==i">{{parts_cost.value[i].amount}}</span>
+                          <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.amount">
+                              <nz-input formControlName="amount" nzPlaceHolder="请输入数量" nzSize="large"></nz-input>
+                          </span>
+                      </td>
+
+                      <td nz-td>
+                          <span *ngIf="editIndex!==i">{{parts_cost.value[i].unit_price}}</span>
+                          <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.unit_price">
+                              <nz-input formControlName="unit_price" nzPlaceHolder="请输入单价" nzSize="large"></nz-input>
+                          </span>
+                      </td>
+
+                      <td nz-td>
+                          <span *ngIf="editIndex!==i">{{parts_cost.value[i].total}}</span>
+                          <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.total">
+                              <nz-input formControlName="total" nzPlaceHolder="请输入总价" nzSize="large"></nz-input>
+                          </span>
+                      </td>
+                      
+                      <!-- <td nz-td>
+                          <span *ngIf="editIndex!==i">{{parts_cost.value[i].sparepart}}</span>
+                          <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.sparepart">
+                              <nz-select formControlName="sparepart" nzId="sparepart" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzMode]="'single'">
+                                  <nz-option *ngFor="let i of spareparts" [nzLabel]="i.name" [nzValue]="i.name"></nz-option>
+                              </nz-select>
+                          </span>
+                      </td> -->
+                          
+                      <td nz-td>
+                          <span *ngIf="editIndex!==i">
+                              <a (click)="edit(i)">编辑</a>
+                              <span nz-table-divider></span>
+                              <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                                  <a nz-popconfirm>删除</a>
+                              </nz-popconfirm>
+                          </span>
+                          <span *ngIf="editIndex===i">
+                              <a (click)="save(i)">保存</a>
+                              <span nz-table-divider></span>
+                              <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                                  <a nz-popconfirm>取消</a>
+                              </nz-popconfirm>
+                          </span>
+                      </td>
+                  </tr>
+              </tbody>
+          </nz-table>
+          
+          <p *ngIf="parts_cost.length>0 && !parts_cost.valid">
+              <font size="2" color = "red">             
+                  注：明细中所有字段必须填写，且“数量”与“价格”需输入有效数字。
+              </font>
+          </p>
+          <button *ngIf="editIndex===-1" nz-button [nzType]="'dashed'" [nzSize]="'large'" (click)="add()" class="ant-btn__block mt-md">
+              <i class="anticon anticon-plus"></i>
+              <span>新增明细</span>
+          </button>
+      </nz-card>
+      <div >
+          <error-collect></error-collect>
+          <button nz-button [nzType]="'primary'" nzSize="large">提交</button>
+          <button nz-button [nzType]="'primary'" nzSize="large" (click)="goBack()">返回</button>
+      </div>
+  </form>
+</div>

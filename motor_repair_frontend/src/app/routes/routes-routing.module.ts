@@ -53,7 +53,9 @@ const routes: Routes = [
             { path: 'project_users', loadChildren: './project_users/users.module#UsersModule', data: {roles: ['root']}, canActivate: [ACLGuard] },
             {path : 'productions',loadChildren: './production/production.module#ProductionModule'},
             {path : 'spareparts',loadChildren: './sparepart/sparepart.module#SparepartModule'},
-            {path : 'purchases',loadChildren: './purchase/purchase.module#PurchaseModule'}
+            {path : 'purchases',loadChildren: './purchase/purchase.module#PurchaseModule'},
+            {path : 'carMessage',loadChildren: './carMessage/carMessage.module#CarMessageModule'},
+            {path : 'repair_info',loadChildren: './repair_info/repair_info.module#RepairInfoModule'}
         ],
         canActivate: [AuthGuard]
     },

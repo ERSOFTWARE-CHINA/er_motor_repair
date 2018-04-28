@@ -65,12 +65,18 @@
                 {
                   "text": "客户信息",
                   "icon": "icon-people",
-                  "link": "/customers/page"
+                  "children": [
+                    {
+                        "text": "车辆信息维护",
+                        "acl": "admin",
+                        "link": "/carMessage/page"
+                    }
+                ]
                 },
                 {
                   "text": "维修管理",
                   "icon": "icon-wrench",
-                  "link": "/repair/page"
+                  "link": "/repair_info/page"
                 },
                 {
                   "text": "配件管理",
