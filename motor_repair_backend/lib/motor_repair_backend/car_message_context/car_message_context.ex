@@ -17,6 +17,16 @@ defmodule MotorRepairBackend.CarMessageContext do
     end
   end
 
+  # 参数中存在oneKey的值，则进行多字段或查询
+  def page(%{"oneKey" => oneKey} = params, conn) do
+    CarMessage
+    |> query_or_like(oneKey, "owner_name")
+    |> query_or_like(oneKey, "phone_num")
+    |> query_order_by(params, "owner_name")
+    |> get_pagination(params, conn)
+    
+  end
+
   def page(params, conn) do
     CarMessage
     |> query_like(params, "owner_name")
@@ -31,4 +41,6 @@ defmodule MotorRepairBackend.CarMessageContext do
     |> query_order_by(params, "owner_name")
     |> get_pagination(params, conn)
   end
+
+  
 end

@@ -1,6 +1,6 @@
 defmodule MotorRepairBackend.SearchTerm do
   use Ecto.Schema
-  import Ecto.Query, only: [where: 3, order_by: 3, preload: 3]
+  import Ecto.Query, only: [where: 3, or_where: 3, order_by: 3, preload: 3]
   import Ecto.Query.API, only: [like: 2, field: 2]
   alias MotorRepairBackend.Repo
 
@@ -9,6 +9,14 @@ defmodule MotorRepairBackend.SearchTerm do
       nil -> query
       value -> 
         where(query, [e], like(field(e, ^String.to_existing_atom(field_name)), ^"%#{value}%"))
+    end
+  end
+
+  def query_or_like(query, value, field_name) do
+    case value do
+      nil -> query
+      value -> 
+        or_where(query, [e], like(field(e, ^String.to_existing_atom(field_name)), ^"%#{value}%"))
     end
   end
 

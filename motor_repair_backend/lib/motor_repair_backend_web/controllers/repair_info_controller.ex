@@ -16,6 +16,7 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
     info_changeset = RepairInfo.changeset(%RepairInfo{}, repair_info_params)
       |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)
       |> Ecto.Changeset.put_assoc(:car_message, car_message_changeset)
+    IO.inspect info_changeset
     with {:ok, %RepairInfo{} = ri} <- save_create(info_changeset, conn) do
       conn
         |> put_status(:created)
