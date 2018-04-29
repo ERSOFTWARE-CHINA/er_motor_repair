@@ -7,7 +7,6 @@ import { RepairInfoRoutingModule } from './repair_info-routing.module';
 import { RepairInfoComponent } from './repair_info.component';
 import { RepairInfoListComponent } from './list/list.component';
 import { RepairInfoFormComponent } from './form/form.component';
-import { RepairInfoService } from './service/repair_info.service';
 
 @NgModule({
   imports: [ SharedModule, RepairInfoRoutingModule ],
@@ -17,7 +16,6 @@ import { RepairInfoService } from './service/repair_info.service';
     RepairInfoFormComponent
   ],
   providers: [
-    RepairInfoService
   ]
 })
 export class RepairInfoModule { }

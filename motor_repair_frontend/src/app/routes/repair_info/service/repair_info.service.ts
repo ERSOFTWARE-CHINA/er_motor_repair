@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { RepairInfo } from '../domain/repair_info.domain';
+import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 import { baseUrl } from '../../../shared/shared.service';
 import { getTokenOptions } from '../../pages/login/login.service';
 
@@ -36,6 +37,7 @@ export class RepairInfoService {
 
     isUpdate = false;
     formOperation = 'create';
+    carMessage : CarMessage = null;
     repairInfo : RepairInfo = null;
 
     initUpdate(id){

@@ -6,6 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 import { RepairInfoService } from '../service/repair_info.service';
 import { RepairInfo } from '../domain/repair_info.domain'; 
+import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 // import { stringToDate} from '../../../../utils/utils';
 @Component({
     selector: 'repair_info-form',
@@ -16,8 +17,9 @@ export class RepairInfoFormComponent implements OnInit {
     editObj = {};
 
     form: FormGroup;
-
+    carMessage: CarMessage;
     repairInfo: RepairInfo;
+    title: string = '';
 
     constructor(
         private fb: FormBuilder, 
@@ -33,7 +35,7 @@ export class RepairInfoFormComponent implements OnInit {
             no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.minLength(4),
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
             type: [this.repairInfo? this.repairInfo.type : '', [Validators.required]],
-            time_cost: [this.repairInfo? this.repairInfo.time_cost : null, [Validators.required]],
+            time_cost: [this.repairInfo? this.repairInfo.time_cost : null, [Validators.required, this.validateNumber]],
             consultant : [this.repairInfo? this.repairInfo.consultant : null],
             entry_date : [this.repairInfo? this.repairInfo.entry_date : null, [Validators.required]],
             return_date : [this.repairInfo? this.repairInfo.return_date : null],
@@ -41,12 +43,19 @@ export class RepairInfoFormComponent implements OnInit {
             customer_comment : [this.repairInfo? this.repairInfo.customer_comment : null],
             repairman_comment : [this.repairInfo? this.repairInfo.repairman_comment : null],
             advise : [this.repairInfo? this.repairInfo.advise : null],
-            mileage : [this.repairInfo? this.repairInfo.mileage : null],
-            next_mileage : [this.repairInfo? this.repairInfo.next_mileage : null],
+            mileage : [this.repairInfo? this.repairInfo.mileage : null, [this.validateNumber]],
+            next_mileage : [this.repairInfo? this.repairInfo.next_mileage : null, [this.validateNumber]],
             next_date : [this.repairInfo? this.repairInfo.next_date : null],
             agent : [this.repairInfo? this.repairInfo.agent : null],
             agent_mobile : [this.repairInfo? this.repairInfo.agent_mobile : null],
-            parts_cost: this.fb.array([])
+            parts_cost: this.fb.array([]),
+            // 车辆信息，仅作为显示
+            carMessage_plate_num: [this.carMessage? this.carMessage.plate_num: null],
+            carMessage_car_type: [this.carMessage? this.carMessage.car_type: null],
+            carMessage_vin: [this.carMessage? this.carMessage.vin: null],
+            carMessage_engine_num: [this.carMessage? this.carMessage.engine_num: null],
+            carMessage_owner_name: [this.carMessage? this.carMessage.owner_name: null],
+            carMessage_phone_num: [this.carMessage? this.carMessage.phone_num: null],
         });
         if (op == 'update'){
         this.repairInfo.parts_cost? this.repairInfo.parts_cost.forEach(i => {
@@ -61,9 +70,9 @@ export class RepairInfoFormComponent implements OnInit {
     createPartsCost(): FormGroup {
         return this.fb.group({
             name: [ null, [ Validators.required ] ],
-            amount: [ null, [ Validators.required ] ],
-            unit_price: [ null, [ Validators.required ] ],
-            total: [ null, [ Validators.required ] ]
+            amount: [ null, [ Validators.required, this.validateNumber ] ],
+            unit_price: [ null, [ Validators.required, this.validateNumber ] ],
+            total: [ null, [ Validators.required, this.validateNumber ] ]
         });
     }
 
@@ -136,11 +145,13 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     initCreate() {
+        this.carMessage = this.mrSrv.carMessage;
+        this.title = "创建维修信息"
     }
 
     initUpdate() {
+        this.title = "修改维修信息"
         this.repairInfo = this.mrSrv.repairInfo;
-        console.log(this.repairInfo)
     }
 
     formatForm() {
@@ -149,8 +160,8 @@ export class RepairInfoFormComponent implements OnInit {
         let form_parts_cost = this.form.controls["parts_cost"].value;
         for (const i in form_parts_cost) {
             let v = form_parts_cost[i]
-            let sparepart = {name : form_parts_cost[i].sparepart} 
-            v.sparepart = sparepart
+            // let sparepart = {name : form_parts_cost[i].sparepart} 
+            // v.sparepart = sparepart
             parts_cost.push(v)
             console.log(v)
         }

@@ -7,7 +7,6 @@ import { CarMessageRoutingModule } from './carMessage-routing.module';
 import { CarMessageComponent } from './carMessage.component';
 import { CarMessageListComponent } from './list/list.component';
 import { CarMessageFormComponent } from './form/form.component';
-import { CarMessageService } from './service/carMessage.service';
 import { MainPipe } from '../../pipes/pipes.module';
 
 @NgModule({
@@ -18,7 +17,7 @@ import { MainPipe } from '../../pipes/pipes.module';
     CarMessageFormComponent
   ],
   providers: [
-    CarMessageService
+    
   ]
 })
 export class CarMessageModule { }

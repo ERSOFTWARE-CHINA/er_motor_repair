@@ -18,6 +18,8 @@ import { UserLoginComponent } from './passport/login/login.component';
 import { AuthenticationService } from './passport/service/login.service';
 
 import { RegisterService } from './passport/service/register.service';
+import { CarMessageService } from './carMessage/service/carMessage.service';
+import { RepairInfoService } from './repair_info/service/repair_info.service'; 
 
 
 @NgModule({
@@ -36,7 +38,7 @@ import { RegisterService } from './passport/service/register.service';
         // LoginComponent
         // UsersListComponent
     ],
-    providers: [ AuthenticationService, RegisterService ]
+    providers: [ AuthenticationService, RegisterService, CarMessageService, RepairInfoService ]
 })
 
 export class RoutesModule {}
