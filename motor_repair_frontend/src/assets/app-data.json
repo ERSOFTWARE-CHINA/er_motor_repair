@@ -38,6 +38,11 @@
 
             "children": [
                 {
+                  "text": "首页",
+                  "icon": "icon-home",
+                  "link": "/dashboard/v1"
+                },
+                {
                     "text": "系统设置",
                     "link": "",
                     "icon": "icon-settings",

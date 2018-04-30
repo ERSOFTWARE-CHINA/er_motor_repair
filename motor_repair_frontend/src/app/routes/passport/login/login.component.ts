@@ -88,10 +88,10 @@ export class UserLoginComponent implements OnDestroy {
         this.loading = true;
         this.loginService.login(this.form.value)
             .subscribe(result => {
-                console.log(result)
                 if (result) {
                     this.loading = false;
                     this.reuseTabService.clear();
+                    this.reuseTabService.clearTitleCached();
                     this.router.navigate(['dashboard/v1']);
                 } else{
                     this.loading = false;

@@ -22,8 +22,7 @@ export class RepairInfoService {
     }
 
     add(v): Promise<any>{ 
-        console.log(v)
-        v.order = {id: v.order}
+        v.car_message = {id: this.carMessage.id}
         let param = { repair_info: v} 
         return this.http.post(this.url, param, getTokenOptions(null))
                    .map(response => response.json()).toPromise();

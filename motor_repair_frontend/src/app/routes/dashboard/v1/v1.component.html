@@ -1,24 +1,5 @@
-<div class="content__title">
-    <!-- <h1>
-        Dashboard
-        <small class="text-sm hidden-xs">Welcome !</small>
-    </h1> -->
 
-    <div class="text-center">
-        <!-- <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton" style="width: 520px;">
-            <input type="text" nz-input placeholder="请输入">
-            <ng-template #suffixButton>
-                <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
-            </ng-template>
-        </nz-input-group> -->
-
-        <input type="text" nz-input placeholder="请输入" [(ngModel)]="model" (keyup)="search()">
-
-
-    </div>
-</div>
-
-<div nz-row nzGutter="16">
+<div nz-row [nzGutter]="24" class="pt-lg">
 
     <div nz-col nzXs="24" nzMd="24">
         <nz-card [nzBordered]="false">
@@ -27,6 +8,14 @@
                 
             </ng-template>
 
+
+              <div nz-row [nzGutter]="24">
+                  <div nz-col [nzSpan]="8" class="mb-md">
+                      <nz-input nzPlaceHolder="请输入客户信息" [nzType]="'search'" [nzSize]="'large'" [(ngModel)]="model" (keyup)="search()"></nz-input>
+                  </div>
+              </div>
+
+
             <div class="mb-md">
                 <button nz-button (click)="add_car_message()" [nzType]="'primary'" [nzSize]="'large'">
                     <i class="anticon anticon-plus"></i><span>新建</span>
@@ -34,7 +23,8 @@
             </div>
 
             <nz-table #nzTable [nzAjaxData]="data_car" [nzTotal]="total_car" [nzPageSize]="q_car.page_size" [nzLoading]="loading"
-            (nzPageIndexChange)="pageChange_car_message($event)">
+            (nzPageIndexChange)="pageChange_car_message($event)" nzShowTotal="true" 
+            nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
                 <thead nz-thead>
                     <tr>
                         
@@ -96,13 +86,14 @@
             </ng-template>
 
             <div class="mb-md">
-                <button nz-button (click)="add_repair_info()" [nzType]="'primary'" [nzSize]="'large'">
+                <button nz-button (click)="add_repair_info()" [nzType]="'primary'" [nzSize]="'large'" [disabled]="!repairInfoService.carMessage">
                     <i class="anticon anticon-plus"></i><span>开单</span>
                 </button>
             </div>
 
             <nz-table #nzTable2 [nzAjaxData]="data_repair" [nzTotal]="total_repair" [nzPageSize]="q_repair.page_size" [nzLoading]="loading"
-            (nzPageIndexChange)="pageChange_repair_info($event)">
+            (nzPageIndexChange)="pageChange_repair_info($event)" nzShowTotal="true" 
+            nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
                 <thead nz-thead>
                     <tr>
                         <th nz-th>

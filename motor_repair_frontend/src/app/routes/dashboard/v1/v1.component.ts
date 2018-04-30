@@ -35,11 +35,12 @@ export class DashboardV1Component implements OnInit {
     search(): void {
         this.searchModels.next(this.model);
     }
-              
+      
+    page_size = [5, 10, 20]
     // 车辆信息
     q_car: any = {
         page_index: 1,
-        page_size: 2,
+        page_size: 5,
         sort_field: "owner_name",
         sort_direction: "desc"
     };
@@ -54,7 +55,7 @@ export class DashboardV1Component implements OnInit {
 
     q_repair: any = {
         page_index: 1,
-        page_size: 15,
+        page_size: 5,
         sort_field: "date",
         sort_direction: "desc"
     };
@@ -70,7 +71,7 @@ export class DashboardV1Component implements OnInit {
     sub_title = ""
 
     ngOnInit() {
-        this.reuseTabService.title ="主页"; 
+        this.reuseTabService.title ="首页"; 
         this.getCarMsg();
         this.getRepairInfo();
         this.searchModels.debounceTime(400)
