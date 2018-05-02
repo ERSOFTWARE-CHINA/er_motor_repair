@@ -5,7 +5,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { tap } from 'rxjs/operators';
 
-import { UserStatusPipe } from '../../../pipes/pipes'; 
+import { StaffStatusPipe } from '../../../pipes/pipes'; 
+import { SexPipe } from '../../../pipes/pipes'; 
 import { StaffsService } from '../service/staffs.service';
 @Component({
     templateUrl: './list.component.html'
@@ -28,6 +29,18 @@ export class StaffListComponent implements OnInit {
     loading = false;
 
     sortMap: any = {};
+
+    sex_status = [
+        { text: '', value: null },
+        { text: '男', value: true },
+        { text: '女', value: false }
+    ]
+
+    actived_status = [
+        { text: '', value: null },
+        { text: '在岗', value: true },
+        { text: '离职', value: false }
+    ]
 
     constructor(
         private http: _HttpClient, 
@@ -99,7 +112,14 @@ export class StaffListComponent implements OnInit {
     }
 
     formatForm() {
+        if ((this.q.staffno == null)||(this.q.staffno == "")){delete this.q.staffno}
         if ((this.q.name == null)||(this.q.name == "")){delete this.q.name}
+        if (this.q.sex == null){delete this.q.sex}
+        if ((this.q.idnumber == null)||(this.q.idnumber == "")){delete this.q.idnumber}
+        if ((this.q.mobile == null)||(this.q.mobile == "")){delete this.q.mobile}
+        if ((this.q.wechat == null)||(this.q.wechat == "")){delete this.q.wechat}
+        if ((this.q.qqnum == null)||(this.q.qqnum == "")){delete this.q.qqnum}
+        if (this.q.actived == null){delete this.q.actived}
     }
 
     // 删除确认框相关

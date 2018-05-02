@@ -21,7 +21,7 @@ defmodule MotorRepairBackend.StaffManage do
     Staff
     |> query_like(params, "name")
     |> query_like(params, "staffno")
-    |> query_like(params, "sex")
+    |> query_equal(params, "sex")
     |> query_like(params, "idnumber")
     |> query_like(params, "mobile")
     |> query_like(params, "wechat")

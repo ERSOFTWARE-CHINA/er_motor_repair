@@ -25,7 +25,9 @@
                         <div nz-form-item class="d-flex">
                             <div nz-form-label><label for="sex">性别</label></div>
                             <div nz-form-control class="flex-1">
-                                <nz-input [(ngModel)]="q.sex" name="sex" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="sex"></nz-input>
+                                <nz-select [(ngModel)]="q.sex" name="sex" nzId="sex" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'">
+                                    <nz-option *ngFor="let i of sex_status" [nzLabel]="i.text" [nzValue]="i.value"></nz-option>
+                                </nz-select>
                             </div>
                         </div>
                 </div>
@@ -139,12 +141,12 @@
 
                     <td nz-td>{{i.staffno}}</td>
                     <td nz-td>{{i.name}}</td>
-                    <td nz-td>{{i.sex}}</td>
+                    <td nz-td>{{i.sex |sexPipe}}</td>
                     <td nz-td>{{i.idnumber}}</td>
                     <td nz-td>{{i.mobile}}</td>
-                    <td nz-td>{{i.wechar}}</td>
+                    <td nz-td>{{i.wechat}}</td>
                     <td nz-td>{{i.qqnum}}</td>
-                    <td nz-td>{{i.actived}}</td>
+                    <td nz-td>{{i.actived |staffStatusPipe}}</td>
                     <td nz-td>
                         <a (click)="update(i.id)">修改</a>
                         <span nz-table-divider></span>
