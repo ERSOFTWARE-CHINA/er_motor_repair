@@ -21,6 +21,8 @@ import { RegisterService } from './passport/service/register.service';
 import { CarMessageService } from './carMessage/service/carMessage.service';
 import { RepairInfoService } from './repair_info/service/repair_info.service'; 
 
+import { StaffsService } from './staffs/service/staffs.service'; 
+
 
 @NgModule({
     imports: [ SharedModule, RouteRoutingModule ],

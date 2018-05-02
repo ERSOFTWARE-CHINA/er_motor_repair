@@ -22,6 +22,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { ACLGuard } from './acl.guard';
 
+
 const routes: Routes = [
     {
         path: '',
@@ -50,7 +51,8 @@ const routes: Routes = [
             {path : 'spareparts',loadChildren: './sparepart/sparepart.module#SparepartModule'},
             {path : 'purchases',loadChildren: './purchase/purchase.module#PurchaseModule'},
             {path : 'carMessage',loadChildren: './carMessage/carMessage.module#CarMessageModule'},
-            {path : 'repair_info',loadChildren: './repair_info/repair_info.module#RepairInfoModule'}
+            {path : 'repair_info',loadChildren: './repair_info/repair_info.module#RepairInfoModule'},
+            { path: 'staffs', loadChildren: './staffs/staffs.module#StaffModule' }
         ],
         canActivate: [AuthGuard]
     },

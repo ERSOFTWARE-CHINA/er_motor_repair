@@ -42,6 +42,8 @@ defmodule MotorRepairBackendWeb.Router do
     resources "/repair_info", RepairInfoController, except: [:new, :edit]
 
     resources "/carMessage", CarMessageController, except: [:new, :edit]
+    #员工信息
+    resources "/staffs", StaffController, except: [:new, :edit]
   end
 
 end
