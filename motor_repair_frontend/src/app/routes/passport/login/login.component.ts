@@ -35,7 +35,7 @@ export class UserLoginComponent implements OnDestroy {
         @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
         this.form = fb.group({
             project: [null, [Validators.required, Validators.minLength(4)]],
-            userName: [null, [Validators.required, Validators.minLength(5)]],
+            userName: [null, [Validators.required, Validators.minLength(4)]],
             password: [null, Validators.required],
             mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
             captcha: [null, [Validators.required]],

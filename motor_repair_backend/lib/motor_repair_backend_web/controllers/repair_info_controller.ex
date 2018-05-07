@@ -48,6 +48,14 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
     end
   end
 
+  # 自动生成单号
+  def get_next_no(conn, _) do
+    case GenServer.call(NoGenerator, {:get_no,conn}) do
+      {:ok, value} -> json conn, %{ok: value}
+      {_, error} -> json conn, %{error: error}
+    end
+  end
+
   defp get_parts_cost_changesets(params, conn) do
     params
       |> Map.get("parts_cost", [])

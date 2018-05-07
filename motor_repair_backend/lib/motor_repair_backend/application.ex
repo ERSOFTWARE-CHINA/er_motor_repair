@@ -14,6 +14,8 @@ defmodule MotorRepairBackend.Application do
       supervisor(MotorRepairBackendWeb.Endpoint, []),
       # Start your own worker by calling: MotorRepairBackend.Worker.start_link(arg1, arg2, arg3)
       # worker(MotorRepairBackend.Worker, [arg1, arg2, arg3]),
+      # 自动生成单号的服务
+      worker(MotorRepairBackend.GenServer.NoGenerator, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

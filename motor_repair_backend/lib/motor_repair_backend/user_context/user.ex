@@ -30,7 +30,6 @@ defmodule MotorRepairBackend.UserContext.User do
       # |> cast_attachments(attrs, [:avatar])
       |> validate_required([:name])
       |> validate_format(:email, ~r/@/)
-      |> unique_constraint(:name)
       |> unique_constraint(:email)
       |> validate_length(:name, min: 2)
       |> validate_length(:password, min: 6)

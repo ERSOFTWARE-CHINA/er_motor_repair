@@ -7,6 +7,7 @@ defmodule MotorRepairBackend.CarMessageContext do
   alias MotorRepairBackend.Repo
 
   alias MotorRepairBackend.CarMessageContext.CarMessage
+  alias MotorRepairBackend.Utils.GetDate
   use MotorRepairBackend.BaseContext
 
   defmacro __using__(_opts) do
@@ -17,17 +18,23 @@ defmodule MotorRepairBackend.CarMessageContext do
     end
   end
 
-  # 参数中存在oneKey的值，则进行多字段或查询
+  # 参数中存在oneKey的值，则进行多字段"或"查询
   def page(%{"oneKey" => oneKey} = params, conn) do
+    
     CarMessage
     |> query_or_like(oneKey, "owner_name")
     |> query_or_like(oneKey, "phone_num")
+    |> query_or_like(oneKey, "plate_num")
     |> query_order_by(params, "owner_name")
     |> get_pagination(params, conn)
     
   end
 
   def page(params, conn) do
+    IO.puts inspect GetDate.get_date_str()
+    IO.puts inspect Regex.match?(~r/[0-9]{11}/,"00")
+    IO.puts inspect Regex.match?(~r/[0-9]{11}/,"00000000000")
+    IO.puts inspect "1" > "0"
     CarMessage
     |> query_like(params, "owner_name")
     |> query_like(params, "phone_num")

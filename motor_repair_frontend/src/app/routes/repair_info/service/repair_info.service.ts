@@ -34,6 +34,11 @@ export class RepairInfoService {
                    .toPromise();
     }
 
+    generateNo(){
+        return this.http.get(baseUrl+"repair_info_gen_no", getTokenOptions(null))
+                   .toPromise().then(res => {return res.json()})     
+    }
+
     isUpdate = false;
     formOperation = 'create';
     carMessage : CarMessage = null;

@@ -147,6 +147,10 @@ export class RepairInfoFormComponent implements OnInit {
     initCreate() {
         this.carMessage = this.mrSrv.carMessage;
         this.title = "创建维修信息"
+        this.mrSrv.generateNo().then(resp => {
+            if (resp.ok) this.form.controls["no"].setValue(resp.ok) 
+            if (resp.error) this.form.controls["no"].setValue("generate no failed.") 
+        })
     }
 
     initUpdate() {

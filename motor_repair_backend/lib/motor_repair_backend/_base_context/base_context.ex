@@ -4,6 +4,7 @@ defmodule MotorRepairBackend.BaseContext do
   alias MotorRepairBackend.Repo
   alias MotorRepairBackendWeb.Guardian
   import MotorRepairBackend.SearchTerm
+  import Ecto.Query.API, only: [like: 2, field: 2, max: 1]
 
   alias MotorRepairBackend.ProjectContext.Project
 
@@ -63,6 +64,14 @@ defmodule MotorRepairBackend.BaseContext do
       {:error, :not_found} -> {:error, :not_found}
       {:ok, entity} -> Repo.delete(entity)
     end
+  end
+
+  # 获取某字段的最大值
+  def get_max(struct, field_atom, conn) do
+    query = from p in struct, select: max(field(p, ^field_atom))
+    query 
+    |> add_belongs_to(conn)
+    |> Repo.one
   end
 
   def change(struct, entity) do

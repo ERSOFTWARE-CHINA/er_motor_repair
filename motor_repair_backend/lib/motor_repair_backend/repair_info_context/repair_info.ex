@@ -5,6 +5,7 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
   alias MotorRepairBackend.RepairInfoContext.PartsCost
   alias MotorRepairBackend.ProjectContext.Project
   alias MotorRepairBackend.CarMessageContext.CarMessage
+  alias MotorRepairBackend.Utils.GetDate
 
 
   schema "repair_info" do
@@ -36,6 +37,18 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
     repair_info
       |> cast(attrs, [:no, :type, :time_cost, :consultant, :entry_date, :return_date, :items, :customer_comment, :repairman_comment, :advise, :mileage, :next_mileage, :next_date, :agent, :agent_mobile])
       |> validate_required([:no, :type])
+      |> validate_no_format()
       |> unique_constraint(:no)
   end
+
+  # 单号格式验证，11位数字的单号为正确格式，且最大值为"yyyymmdd<>999"
+  defp validate_no_format(changeset) do
+    no = get_field(changeset, :no)  
+    if Regex.match?(~r/[0-9]{8}/,no) && no <= GetDate.get_date_str()<>"999" do
+      changeset
+    else
+      add_error(changeset, :no, "invalid format")
+    end
+  end
+
 end
