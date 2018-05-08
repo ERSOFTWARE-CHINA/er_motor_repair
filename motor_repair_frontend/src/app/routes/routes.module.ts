@@ -23,9 +23,11 @@ import { RepairInfoService } from './repair_info/service/repair_info.service';
 
 import { StaffsService } from './staffs/service/staffs.service'; 
 
+import { MainPipe } from '../pipes/pipes.module';
+
 
 @NgModule({
-    imports: [ SharedModule, RouteRoutingModule ],
+    imports: [ SharedModule, RouteRoutingModule, MainPipe ],
     declarations: [
         DashboardV1Component,
         // passport pages

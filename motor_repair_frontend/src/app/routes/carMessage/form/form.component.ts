@@ -100,7 +100,7 @@ export class CarMessageFormComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigateByUrl('/carMessage/page');
+        this.router.navigateByUrl('/dashboard/v1');
     }
 
     formatForm() {

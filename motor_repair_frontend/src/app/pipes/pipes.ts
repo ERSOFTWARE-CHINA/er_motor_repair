@@ -23,3 +23,11 @@ export class SexPipe implements PipeTransform {
     if (!value) return "女"; 
   }
 }
+
+@Pipe({ name: 'repairInfoStatusPipe' })
+export class RepairInfoStatusPipe implements PipeTransform {
+  transform(value: boolean): string {
+    if (value) return "已完成" ;
+    if (!value) return "已开单"; 
+  }
+}

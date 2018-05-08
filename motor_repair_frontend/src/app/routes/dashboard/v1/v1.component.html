@@ -52,7 +52,7 @@
                             <span>车系名称</span>
                             <nz-table-sort [(nzValue)]="sortMap_car.car_series" (nzValueChange)="sort_car_message('car_series',$event)"></nz-table-sort>
                         </th>
-                        <!-- <th nz-th><span>操作</span></th> -->
+                        <th nz-th><span>操作</span></th>
                     
                         
                     </tr>
@@ -66,11 +66,11 @@
                         <td nz-td>{{i.engine_num}}</td>
                         <td nz-td>{{i.car_brand}}</td>
                         <td nz-td>{{i.car_series}}</td>
-                        <!-- <td nz-td>
-                            <a (click)="update(i.id)">修改</a>
+                        <td nz-td>
+                            <a (click)="update_carmessage(i.id)">修改</a>
                             <span nz-table-divider></span>
-                            <a (click)="remove(i)">删除</a>
-                        </td> -->
+                            <a (click)="remove_carmessage(i)">删除</a>
+                        </td>
                     </tr>
                 </tbody>
             </nz-table>
@@ -116,10 +116,18 @@
                             <span>送修人</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.agent" (nzValueChange)="sort_repair_info('agent',$event)"></nz-table-sort>
                         </th>
+                        <th nz-th>
+                            <span>进场时间</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.entry_date" (nzValueChange)="sort_repair_info('entry_date',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>维修单状态</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.status" (nzValueChange)="sort_repair_info('status',$event)"></nz-table-sort>
+                        </th>
 
                         
 
-                        <!-- <th nz-th><span>操作</span></th> -->
+                        <th nz-th><span>操作</span></th>
                     </tr>
                 </thead>
                 <tbody nz-tbody>
@@ -130,11 +138,13 @@
                         <td nz-td>{{i.time_cost}}</td>
                         <td nz-td>{{i.items}}</td>
                         <td nz-td>{{i.agent}}</td>
-                        <!-- <td nz-td>
-                            <a (click)="update(i.id)">修改</a>
+                        <td nz-td>{{i.entry_date}}</td>
+                        <td nz-td>{{i.status | repairInfoStatusPipe}}</td>
+                        <td nz-td>
+                            <a (click)="update_repairinfo(i.id)">修改</a>
                             <span nz-table-divider></span>
-                            <a (click)="remove(i)">删除</a>
-                        </td> -->
+                            <a (click)="remove_repairinfo(i)">删除</a>
+                        </td>
                     </tr>
                 </tbody>
             </nz-table>
@@ -142,3 +152,9 @@
     </div>
    
 </div>
+
+<nz-modal [nzVisible]="modalVisible" [nzTitle]="'删除确认'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <p>{{confirmContent}}</p>
+    </ng-template>
+</nz-modal>

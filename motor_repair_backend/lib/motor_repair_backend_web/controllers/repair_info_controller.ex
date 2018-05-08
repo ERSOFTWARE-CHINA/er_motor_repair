@@ -32,7 +32,7 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
   end
 
   def update(conn, %{"id" => id, "repair_info" => repair_info_params}) do
-    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost]) do
+    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost, :project]) do
       parts_cost_changesets = get_parts_cost_changesets(repair_info_params, conn)
       ri_changeset = RepairInfo.changeset(ri, repair_info_params)
         |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)

@@ -16,6 +16,8 @@ import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
 import { CarMessageService } from '../../carMessage/service/carMessage.service';
 import { RepairInfoService } from '../../repair_info/service/repair_info.service';
 
+import { RepairInfoStatusPipe } from '../../../pipes/pipes'; 
+
 @Component({
     selector: 'app-dashboard-v1',
     templateUrl: './v1.component.html'
@@ -37,6 +39,9 @@ export class DashboardV1Component implements OnInit {
     }
       
     page_size = [5, 10, 20]
+
+    // 区分当前要删除的对象
+    del_obj = ""
     // 车辆信息
     q_car: any = {
         page_index: 1,
@@ -156,5 +161,73 @@ export class DashboardV1Component implements OnInit {
       this.repairInfoService.formOperation = 'create';
       this.repairInfoService.isUpdate=false;
       this.router.navigateByUrl('/repair_info/form');
+    }
+
+    remove_carmessage(obj) {
+        this.confirmContent = "确定要删除车辆信息?";
+        this.modalVisible = true;
+        this.del_car = obj;
+        this.del_obj = "carmessage"
+        // this.carMsgService.delete(id)
+        //                  .then(resp => this.msg.success("车辆信息:" + resp.data.plate_num + "已删除！")).then(resp => this.getCarMsg() )
+        //                  .catch((error) => {this.msg.error(error); this.loading_car = false;})
+    }
+
+    remove_repairinfo(obj) {
+        this.confirmContent = "确定要删除维修信息?";
+        this.modalVisible = true;
+        this.del_repair = obj;
+        this.del_obj = "repairinfo"
+        // this.repairInfoService.delete(id)
+        //                  .then(resp => this.msg.success("维修单号:" + resp.data.no + "已删除！")).then(resp => this.getRepairInfo() )
+        //                  .catch((error) => {this.msg.error(error); this.loading_repair = false;})
+    }
+
+    delete(){
+        if (this.del_obj == "carmessage") 
+            this.carMsgService.delete(this.del_car.id)
+                            .then(resp => this.msg.success("车辆信息:" + resp.data.plate_num + "已删除！")).then(resp => this.getCarMsg() )
+                            .catch((error) => {this.msg.error(error); this.loading_car = false;})
+        if (this.del_obj == "repairinfo") 
+            this.repairInfoService.delete(this.del_repair.id)
+                            .then(resp => this.msg.success("维修信息:" + resp.data.no + "已删除！")).then(resp => this.getRepairInfo() )
+                            .catch((error) => {this.msg.error(error); this.loading_repair = false;})
+    }
+
+    update_carmessage(id){
+        this.carMsgService.formOperation='update';
+        this.carMsgService.initUpdate(id)
+            .then(result => { this.carMsgService.carMessage = result.data;})
+            .then(() => this.router.navigateByUrl('/carMessage/form')).catch((error)=>
+            this.msg.error(error)); 
+    }
+
+    update_repairinfo(id) {
+        this.repairInfoService.formOperation='update';
+        this.repairInfoService.initUpdate(id)
+            .then(result => { this.repairInfoService.repairInfo = result.data;})
+            .then(() => this.router.navigateByUrl('/repair_info/form')).catch((error)=>
+            this.msg.error(error)); 
+    }
+
+
+
+
+
+    // 删除确认框相关
+    confirmContent = ""
+    modalVisible = false;
+
+    showModal = () => {
+        this.modalVisible = true;
+    }
+
+    handleOk = (e) => {
+        this.modalVisible = false;
+        this.delete();
+    }
+
+    handleCancel = (e) => {
+        this.modalVisible = false;
     }
 }

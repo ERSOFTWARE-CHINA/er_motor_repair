@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { NzMessageService } from 'ng-zorro-antd';
 
+import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
+
 import { RepairInfoService } from '../service/repair_info.service';
 import { RepairInfo } from '../domain/repair_info.domain'; 
 import { CarMessage } from '../../carMessage/domain/carMessage.domain';
@@ -21,11 +23,14 @@ export class RepairInfoFormComponent implements OnInit {
     repairInfo: RepairInfo;
     title: string = '';
 
+    options: string[] = ["保养","维修"]
+
     constructor(
         private fb: FormBuilder, 
         private router: Router, 
         private mrSrv: RepairInfoService, 
-        private msg: NzMessageService) {}
+        private msg: NzMessageService,
+        private reuseTabService: ReuseTabService) {}
 
     ngOnInit() {
         let op = this.mrSrv.formOperation;
@@ -34,12 +39,12 @@ export class RepairInfoFormComponent implements OnInit {
         this.form = this.fb.group({
             no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.minLength(4),
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
-            type: [this.repairInfo? this.repairInfo.type : '', [Validators.required]],
+            type: [this.repairInfo? this.repairInfo.type : null, [Validators.required]],
             time_cost: [this.repairInfo? this.repairInfo.time_cost : null, [Validators.required, this.validateNumber]],
             consultant : [this.repairInfo? this.repairInfo.consultant : null],
             entry_date : [this.repairInfo? this.repairInfo.entry_date : null, [Validators.required]],
             return_date : [this.repairInfo? this.repairInfo.return_date : null],
-            items : [this.repairInfo? this.repairInfo.items : null],
+            // type : [this.repairInfo? this.repairInfo.items : null],
             customer_comment : [this.repairInfo? this.repairInfo.customer_comment : null],
             repairman_comment : [this.repairInfo? this.repairInfo.repairman_comment : null],
             advise : [this.repairInfo? this.repairInfo.advise : null],
@@ -141,10 +146,11 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigateByUrl('/repair_info/page');
+        this.router.navigateByUrl('/dashboard/v1');
     }
 
     initCreate() {
+        this.reuseTabService.title ="创建维修信息"; 
         this.carMessage = this.mrSrv.carMessage;
         this.title = "创建维修信息"
         this.mrSrv.generateNo().then(resp => {
@@ -154,6 +160,7 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     initUpdate() {
+        this.reuseTabService.title ="修改维修信息"; 
         this.title = "修改维修信息"
         this.repairInfo = this.mrSrv.repairInfo;
     }
