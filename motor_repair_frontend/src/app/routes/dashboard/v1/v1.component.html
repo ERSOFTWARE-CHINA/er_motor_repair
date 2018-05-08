@@ -1,20 +1,14 @@
-
 <div nz-row [nzGutter]="24" class="pt-lg">
 
     <div nz-col nzXs="24" nzMd="24">
         <nz-card [nzBordered]="false">
             <ng-template #title>
-                客户信息
+
+                    <div class="text-center">
+                        <nz-input style="width:600px;" nzPlaceHolder="请输入客户名、车牌号或客户手机号" [nzType]="'search'" [nzSize]="'large'" [(ngModel)]="model" (keyup)="search()"></nz-input>
+                    </div>
                 
             </ng-template>
-
-
-              <div nz-row [nzGutter]="24">
-                  <div nz-col [nzSpan]="8" class="mb-md">
-                      <nz-input nzPlaceHolder="请输入客户信息" [nzType]="'search'" [nzSize]="'large'" [(ngModel)]="model" (keyup)="search()"></nz-input>
-                  </div>
-              </div>
-
 
             <div class="mb-md">
                 <button nz-button (click)="add_car_message()" [nzType]="'primary'" [nzSize]="'large'">
@@ -22,7 +16,7 @@
                 </button>
             </div>
 
-            <nz-table #nzTable [nzAjaxData]="data_car" [nzTotal]="total_car" [nzPageSize]="q_car.page_size" [nzLoading]="loading"
+            <nz-table #nzTable [nzAjaxData]="data_car" [nzTotal]="total_car" [nzPageSize]="q_car.page_size" [nzLoading]="loading_car"
             (nzPageIndexChange)="pageChange_car_message($event)" nzShowTotal="true" 
             nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
                 <thead nz-thead>
@@ -91,7 +85,7 @@
                 </button>
             </div>
 
-            <nz-table #nzTable2 [nzAjaxData]="data_repair" [nzTotal]="total_repair" [nzPageSize]="q_repair.page_size" [nzLoading]="loading"
+            <nz-table #nzTable2 [nzAjaxData]="data_repair" [nzTotal]="total_repair" [nzPageSize]="q_repair.page_size" [nzLoading]="loading_repair"
             (nzPageIndexChange)="pageChange_repair_info($event)" nzShowTotal="true" 
             nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
                 <thead nz-thead>

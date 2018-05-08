@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 
 import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
+import { AdProHeaderModule } from '@delon/abc';
 
 import { CarMessageService } from '../../carMessage/service/carMessage.service';
 import { RepairInfoService } from '../../repair_info/service/repair_info.service';

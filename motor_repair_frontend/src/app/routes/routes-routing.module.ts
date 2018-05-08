@@ -24,15 +24,7 @@ import { ACLGuard } from './acl.guard';
 
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'passport',
-        pathMatch: 'full'
-    },
-    // {
-	// 	path: 'login',
-	// 	component: LoginComponent
-    // },
+
     {
         path: '',
         component: LayoutDefaultComponent,
