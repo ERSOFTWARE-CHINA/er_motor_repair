@@ -22,6 +22,7 @@ import { CarMessageService } from './carMessage/service/carMessage.service';
 import { RepairInfoService } from './repair_info/service/repair_info.service'; 
 
 import { StaffsService } from './staffs/service/staffs.service'; 
+import { SparepartService } from './sparepart/service/sparepart.service';
 
 import { MainPipe } from '../pipes/pipes.module';
 
@@ -42,7 +43,7 @@ import { MainPipe } from '../pipes/pipes.module';
         // LoginComponent
         // UsersListComponent
     ],
-    providers: [ AuthenticationService, RegisterService, CarMessageService, RepairInfoService ]
+    providers: [ AuthenticationService, RegisterService, CarMessageService, RepairInfoService, SparepartService ]
 })
 
 export class RoutesModule {}

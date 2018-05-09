@@ -7,7 +7,7 @@ import { SparepartRoutingModule } from './sparepart-routing.module';
 import { SparepartComponent } from './sparepart.component';
 import { SparepartListComponent } from './sparepart-list/sparepart-list.component';
 import { SparepartFormComponent } from './sparepart-form/sparepart-form.component';
-import { SparepartService } from './service/sparepart.service';
+// import { SparepartService } from './service/sparepart.service';
 import { RolesService } from '../roles/service/roles.service';
 import { MainPipe } from '../../pipes/pipes.module';
 
@@ -19,7 +19,7 @@ import { MainPipe } from '../../pipes/pipes.module';
     SparepartFormComponent
   ],
   providers: [
-    SparepartService
+    // SparepartService
     // ConfirmationService
   ]
 })

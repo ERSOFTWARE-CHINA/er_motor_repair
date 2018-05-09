@@ -31,10 +31,6 @@ defmodule MotorRepairBackend.CarMessageContext do
   end
 
   def page(params, conn) do
-    IO.puts inspect GetDate.get_date_str()
-    IO.puts inspect Regex.match?(~r/[0-9]{11}/,"00")
-    IO.puts inspect Regex.match?(~r/[0-9]{11}/,"00000000000")
-    IO.puts inspect "1" > "0"
     CarMessage
     |> query_like(params, "owner_name")
     |> query_like(params, "phone_num")

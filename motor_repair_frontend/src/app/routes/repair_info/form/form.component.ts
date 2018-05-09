@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { NzMessageService } from 'ng-zorro-antd';
+import { Subject }           from 'rxjs/Subject';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
 
 import { RepairInfoService } from '../service/repair_info.service';
+import { SparepartService } from '../../sparepart/service/sparepart.service';
 import { RepairInfo } from '../domain/repair_info.domain'; 
 import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 // import { stringToDate} from '../../../../utils/utils';
@@ -19,18 +20,22 @@ export class RepairInfoFormComponent implements OnInit {
     editObj = {};
 
     form: FormGroup;
+    
     carMessage: CarMessage;
     repairInfo: RepairInfo;
     title: string = '';
 
     options: string[] = ["保养","维修"]
 
+
     constructor(
         private fb: FormBuilder, 
         private router: Router, 
-        private mrSrv: RepairInfoService, 
+        private mrSrv: RepairInfoService,
+        private spSrv: SparepartService, 
         private msg: NzMessageService,
-        private reuseTabService: ReuseTabService) {}
+        private reuseTabService: ReuseTabService,
+        private modalSrv: NzModalService) {}
 
     ngOnInit() {
         let op = this.mrSrv.formOperation;
@@ -62,12 +67,21 @@ export class RepairInfoFormComponent implements OnInit {
             carMessage_owner_name: [this.carMessage? this.carMessage.owner_name: null],
             carMessage_phone_num: [this.carMessage? this.carMessage.phone_num: null],
         });
+        this.sparepart_form = this.fb.group({
+            name: [null, [Validators.required]],
+            specifications: [null, [Validators.required]],
+            attributes: [null, [Validators.required]]
+        });
+        this.getSparepart()
+
+        // this.searchModels.debounceTime(400)
+        //     .map(model => {this.getSparepart()}).subscribe();
+
         if (op == 'update'){
         this.repairInfo.parts_cost? this.repairInfo.parts_cost.forEach(i => {
             const field = this.createPartsCost();
             field.patchValue(i);
             this.parts_cost.push(field);
-            // field.controls["sparepart"].setValue(i.sparepart.name);
         }) : console.log("tihs contract has no parts_cost.");}
 
     }
@@ -81,6 +95,18 @@ export class RepairInfoFormComponent implements OnInit {
         });
     }
 
+    // 获取备件信息
+    spareparts: any[];
+    //搜索框ngModel，用于后台多字段查询备件
+    // model: string = "";
+    //每当在输入框输入时（keyup），向流中发送搜索model
+    // private searchModels = new Subject<any>();
+    // search_sparepart(): void {
+    //     this.searchModels.next(this.model);
+    // }
+    getSparepart(){
+        this.spSrv.listAll().then(resp => this.spareparts = resp.data).then(resp => console.log(this.spareparts))
+    }
 
     get parts_cost() { return this.form.controls.parts_cost as FormArray; }
     
@@ -117,13 +143,11 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     _submitForm() {
-        console.log("submit start!!")
         for (const i in this.form.controls) {
           this.form.controls[ i ].markAsDirty();
         }
         if (this.form.invalid) {console.log(this.form.controls);return} ;
         if (this.form.valid) {
-            console.log("form is valid!!")
             this.formatForm() 
             let op = this.mrSrv.formOperation;
             if (op == 'create') this.mrSrv.add(this.form.value).then(resp => {
@@ -132,7 +156,7 @@ export class RepairInfoFormComponent implements OnInit {
                 } else {
                     this.msg.success('创建维修单 ' + resp.no + ' 成功！');
                 }
-                console.log(resp);this.goBack()}).catch(error => this.msg.error(error));
+                this.goBack()}).catch(error => this.msg.error(error));
             if (op == 'update') this.mrSrv.update(this.repairInfo.id, this.form.value).then(resp => {
                 if (resp.error) { 
                     this.msg.error(resp.error);
@@ -183,5 +207,40 @@ export class RepairInfoFormComponent implements OnInit {
     validateNumber(c: FormControl) {
         return c.value > 0 ? null : {validateNumber: true}
     };
+
+    // 删除确认框相关
+    confirmContent = ""
+    modalVisible = false;
+    sparepart_form: FormGroup;
+
+    showModal = () => {
+        this.modalVisible = true;
+    }
+
+    handleOk = (e) => {
+        for (const i in this.sparepart_form.controls) {
+            this.sparepart_form.controls[ i ].markAsDirty();
+        }
+        if (this.sparepart_form.valid) {
+            this.spSrv.add(this.sparepart_form.value).then(resp => {
+                if (resp.error) { 
+                    this.msg.error(resp.error);
+                } else {
+                    this.msg.success('创建备件 ' + resp.data.name + ' 成功！');
+                    this.modalVisible = false;
+                }}).then(resp => this.getSparepart()).catch(error => this.msg.error(error));
+        }
+    }
+
+    handleCancel = (e) => {
+        this.modalVisible = false;
+    }
+
+    add_sparepart(){
+
+        // this.confirmContent = "确定要删除领料单: " + obj.no + " ?";
+        this.modalVisible = true;
+        // this.delObj = obj;
+    }
     
 }

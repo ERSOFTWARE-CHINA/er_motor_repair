@@ -39,7 +39,7 @@ export class SparepartFormComponent implements OnInit {
         if (this.sparepartService.formOperation == 'create') {this.sparepart=null;}
         if (this.sparepartService.formOperation == 'update') {this.initUpdate();}
         this.form = this.fb.group({
-            name : [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$')]), this.nameValidator.bind(this)],
+            name : [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$')])],
             attributes : [this.sparepart? this.sparepart.attributes : null],
             specifications : [this.sparepart? this.sparepart.specifications : null, ],
             // type : [this.sparepart? this.sparepart.type : null],
@@ -86,21 +86,21 @@ export class SparepartFormComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigateByUrl('/spareparts/page');
+        this.router.navigateByUrl('/dashboard/v1');
     }
 
     //用户名name异步验证
-    nameValidator = (control: FormControl): Observable<any>  => {
-        return control.valueChanges.pipe(
-            debounceTime(200),
-            map((value) => {
-                let obj = {name: control.value, id: this.sparepart? this.sparepart.id: -1}; //如果为新增的情况，id参数设置为-1传递给后台
-                this.sparepartService.checkNameAlreadyExists(obj)
-                    .then(result => {
-                if (result.error) {control.setErrors({ checked: true, error: true })} else if (!control.value){control.setErrors({ required: true })}  else {control.setErrors(null);};})   
-            })
-        )
-    }
+    // nameValidator = (control: FormControl): Observable<any>  => {
+    //     return control.valueChanges.pipe(
+    //         debounceTime(200),
+    //         map((value) => {
+    //             let obj = {name: control.value, id: this.sparepart? this.sparepart.id: -1}; //如果为新增的情况，id参数设置为-1传递给后台
+    //             this.sparepartService.checkNameAlreadyExists(obj)
+    //                 .then(result => {
+    //             if (result.error) {control.setErrors({ checked: true, error: true })} else if (!control.value){control.setErrors({ required: true })}  else {control.setErrors(null);};})   
+    //         })
+    //     )
+    // }
 
     initUpdate() {
         this.sparepart = this.sparepartService.sparepart;

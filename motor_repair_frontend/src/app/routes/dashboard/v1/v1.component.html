@@ -102,13 +102,14 @@
                             <span>工时费用</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.time_cost" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort>
                         </th>
-                        <th nz-th>
-                            <span>项目</span>
-                            <nz-table-sort [(nzValue)]="sortMap_repair.items" (nzValueChange)="sort_repair_info('items',$event)"></nz-table-sort>
-                        </th>
+                        
                         <th nz-th>
                             <span>送修人</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.agent" (nzValueChange)="sort_repair_info('agent',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>送修人联系方式</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.agent_mobile" (nzValueChange)="sort_repair_info('agent_mobile',$event)"></nz-table-sort>
                         </th>
                         <th nz-th>
                             <span>进场时间</span>
@@ -119,8 +120,6 @@
                             <nz-table-sort [(nzValue)]="sortMap_repair.status" (nzValueChange)="sort_repair_info('status',$event)"></nz-table-sort>
                         </th>
 
-                        
-
                         <th nz-th><span>操作</span></th>
                     </tr>
                 </thead>
@@ -130,8 +129,9 @@
                         <td nz-td>{{i.no}}</td>
                         <td nz-td>{{i.type}}</td>
                         <td nz-td>{{i.time_cost}}</td>
-                        <td nz-td>{{i.items}}</td>
+                        
                         <td nz-td>{{i.agent}}</td>
+                        <td nz-td>{{i.agent_mobile}}</td>
                         <td nz-td>{{i.entry_date}}</td>
                         <td nz-td>{{i.status | repairInfoStatusPipe}}</td>
                         <td nz-td>

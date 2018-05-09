@@ -267,6 +267,11 @@
       </nz-card>
       
       <nz-card [nzBordered]="false" nzTitle="备件费用">
+          <div class="mb-md">
+                <button nz-button (click)="add_sparepart(modalContent)" [nzType]="'primary'" [nzSize]="'large'">
+                    <i class="anticon anticon-plus"></i><span>创建配件</span>
+                </button>
+          </div>
           <nz-table formArrayName="parts_cost" [nzDataSource]="parts_cost.value" [nzIsPagination]="false">
               <thead nz-thead>
                   <tr>
@@ -279,11 +284,13 @@
               </thead>
               <tbody nz-tbody>
                   <tr nz-tbody-tr *ngFor="let item of parts_cost.controls; let i = index" [formGroupName]="i">
-
                       <td nz-td>
                           <span *ngIf="editIndex!==i">{{parts_cost.value[i].name}}</span>
                           <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.name">
-                              <nz-input formControlName="name" nzPlaceHolder="请输入名称" nzSize="large"></nz-input>
+                              <!-- <nz-input formControlName="name" nzPlaceHolder="请输入名称" nzSize="large" [(ngModel)]="model" (keyup)="search_sparepart()"></nz-input> -->
+                              <nz-select formControlName="name" nzId="model" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzMode]="'single'">
+                                  <nz-option *ngFor="let i of spareparts" [nzLabel]="i.name + ': ' + i.specifications" [nzValue]="i.name + ': ' + i.specifications"></nz-option>
+                              </nz-select>
                           </span>
                       </td>
 
@@ -354,3 +361,39 @@
       </div>
   </form>
 </div>
+
+<nz-modal [nzVisible]="modalVisible" [nzTitle]="'创建配件'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <form nz-form [formGroup]="sparepart_form" (ngSubmit)="_submitSparepartForm()" [nzLayout]="'vertical'">
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col><label>名称</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="name">
+                    <nz-input formControlName="name" nzSize="large"></nz-input>
+                    <ng-container *ngIf="sparepart_form.controls['name'].dirty || sparepart_form.controls['name'].touched">
+                        <p nz-form-explain *ngIf="sparepart_form.controls['name'].errors?.required">请输入配件名称</p>
+                    </ng-container>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col><label>规格</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="specifications">
+                    <nz-input formControlName="specifications" nzSize="large"></nz-input>
+                    <ng-container *ngIf="sparepart_form.controls['specifications'].dirty || sparepart_form.controls['specifications'].touched">
+                        <p nz-form-explain *ngIf="sparepart_form.controls['specifications'].errors?.required">请输入规格</p>
+                    </ng-container>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col><label>类型</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="attributes">
+                    <nz-input formControlName="attributes" nzSize="large"></nz-input>
+                    <ng-container *ngIf="sparepart_form.controls['attributes'].dirty || sparepart_form.controls['attributes'].touched">
+                        <p nz-form-explain *ngIf="sparepart_form.controls['attributes'].errors?.required">请输入类型</p>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+
+    </ng-template>
+</nz-modal>
+
