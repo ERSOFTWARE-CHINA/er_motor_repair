@@ -20,7 +20,7 @@ defmodule MotorRepairBackend.UserContext do
   def page(params, conn) do 
     User
     |> query_like(params, "name")
-    |> query_like(params, "email")
+    |> query_like(params, "mobile")
     |> query_like(params, "real_name")
     |> query_like(params, "position")
     |> query_equal(params, "is_admin")

@@ -1,5 +1,5 @@
 import {Component,OnInit} from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray, EmailValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -44,7 +44,7 @@ export class UsersFormComponent implements OnInit {
         if (this.usersService.formOperation == 'update') {this.getRoles();this.initUpdate();}
         this.form = this.fb.group({
             name : [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$')]), this.nameValidator.bind(this)],
-            email : [this.user? this.user.email : null, EmailValidator],
+            mobile : [this.user? this.user.mobile : null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
             real_name : [this.user? this.user.real_name : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$')])],
             position : [this.user? this.user.position : null],
             actived : [this.user? this.user.actived : null, Validators.required],

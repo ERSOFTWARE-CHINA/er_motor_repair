@@ -32,12 +32,11 @@
 
                 <div nz-col nzMd="8" nzSm="12" nzXs="24">
                     <div nz-form-item nz-row>
-                        <div nz-form-label nz-col><label nz-form-item-required>邮箱</label></div>
-                        <div nz-form-control nz-col [nzValidateStatus]="email">
-                            <nz-input formControlName="email" nzPlaceHolder="请输入邮箱" nzSize="large" email></nz-input>
-                            <ng-container *ngIf="form.controls['email'].dirty || form.controls['email'].touched">
-                                <p nz-form-explain *ngIf="form.controls['email'].errors?.required">请输入邮箱</p>
-                                <p nz-form-explain *ngIf="form.controls['email'].errors?.email">请输入正确的邮箱格式</p>
+                        <div nz-form-label nz-col><label nz-form-item-required>手机号</label></div>
+                        <div nz-form-control nz-col [nzValidateStatus]="mobile">
+                            <nz-input formControlName="mobile" nzPlaceHolder="请输入手机号" nzSize="large"></nz-input>
+                            <ng-container *ngIf="form.controls['mobile'].dirty || form.controls['mobile'].touched">
+                                <p nz-form-explain *ngIf="form.controls['mobile'].errors?.required">请输入手机号</p>
                             </ng-container>
                         </div>
                     </div>

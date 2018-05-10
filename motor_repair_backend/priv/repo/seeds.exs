@@ -47,7 +47,7 @@ root =
   |> User.changeset(%{
     name: "root",
     password_hash: Comeonin.Pbkdf2.hashpwsalt("root123"),
-    email: "root@phx.com",
+    mobile: "18000000000",
     real_name: "如特",
     position: "Root Administrator",
     perms_number: 255,
@@ -63,7 +63,7 @@ admin =
   |> User.changeset(%{
     name: "admin",
     password_hash: Comeonin.Pbkdf2.hashpwsalt("admin123"),
-    email: "admin@phx.com",
+    mobile: "19000000000",
     real_name: "阿德明",
     position: "User Administrator",
     perms_number: 255,

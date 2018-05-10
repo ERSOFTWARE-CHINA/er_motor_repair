@@ -21,7 +21,7 @@ defmodule MotorRepairBackendWeb.UserView do
     %{
       id: user.id,
       name: user.name,
-      email: user.email,
+      mobile: user.mobile,
       real_name: user.real_name,
       position: user.position,
       is_admin: user.is_admin,

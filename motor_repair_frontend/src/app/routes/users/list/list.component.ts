@@ -22,7 +22,7 @@ export class UsersListComponent implements OnInit {
         name: null,
         actived: null,
         real_name: null,
-        email: null,
+        mobile: null,
         position: null
     };
     // 记录总数
@@ -128,7 +128,7 @@ export class UsersListComponent implements OnInit {
         if ((this.q.name == null)||(this.q.name == "")){delete this.q.name}
         if (this.q.actived == null){delete this.q.actived}
         if ((this.q.real_name == null)||(this.q.real_name == "")){delete this.q.real_name}
-        if ((this.q.email == null)||(this.q.email == "")){delete this.q.email}
+        if ((this.q.mobile == null)||(this.q.mobile == "")){delete this.q.mobile}
         if ((this.q.position == null)||(this.q.position == "")){delete this.q.position}
     }
 

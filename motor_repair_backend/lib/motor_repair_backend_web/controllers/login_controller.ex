@@ -53,6 +53,23 @@ defmodule MotorRepairBackendWeb.LoginController do
     end
   end
 
+  def login(conn, %{"mobile" => mb} = params) do
+    IO.puts inspect checkMobile(mb)
+
+    case checkMobile(mb) do
+      {:ok, user} ->
+        # 将权限和项目id编码进token
+        perms_number = Permissions.get_perms_from_roles(user.roles)
+        {:ok, token, claims} = Guardian.encode_and_sign(user, %{pem: %{"default" => perms_number}, project: user.project_id, is_root: user.is_root})
+        perms = Permissions.get_permissions(claims)
+        json conn, %{user: get_user_map(user), jwt: token, perms: perms}
+      {:error, _} ->
+        conn
+        |> put_status(200)
+        |> json(%{error: "Invalid username or password!"})
+    end
+  end
+
   defp checkPassword(username, password, project) do
     Project
     |> Repo.get_by(name: project)
@@ -79,6 +96,25 @@ defmodule MotorRepairBackendWeb.LoginController do
     
   end
 
+  defp checkMobile(mobile) do
+      user = User
+      |> preload([e], [:roles, :project])
+      |> Repo.get_by(%{ mobile: mobile })
+      cond do
+        # 用户存在，且不为root，但用户未激活
+        !is_nil(user) && !user.is_root && !user.actived ->
+          {:error, nil}
+        # 用户存在，且不为root，但项目已禁用
+        !is_nil(user) && !user.is_root && !user.project.actived ->
+          {:error, nil}
+        # 用户存在，且密码正确
+        !is_nil(user) && !user.is_root && user.actived ->
+          {:ok, user}
+        true ->
+          {:error, nil}
+      end
+  end
+
   defp get_user_map(user) do
     case user do
       nil -> nil
@@ -86,7 +122,7 @@ defmodule MotorRepairBackendWeb.LoginController do
         %{
           id: user.id,
           name: user.name,
-          email: user.email,
+          mobile: user.mobile,
           real_name: user.real_name,
           position: user.position,
           is_admin: user.is_admin,

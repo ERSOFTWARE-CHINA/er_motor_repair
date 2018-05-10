@@ -1,7 +1,7 @@
 export class User {
     id: number;
     name: string;
-    email: string;
+    mobile: string;
     real_name: string;
     position: string;
     is_admin: boolean;

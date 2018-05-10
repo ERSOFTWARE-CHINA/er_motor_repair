@@ -79,6 +79,13 @@
                     <div nz-form-explain *ngIf="(mobile.dirty || mobile.touched) && mobile.errors?.required">请输入验证码！</div>
                 </div>
             </div>
+            <div *ngIf = "invalidlogin">
+                <p >
+                    <font color="red">
+                        登录失败，手机号输入有误！
+                    </font>
+                </p>
+            </div>
         </nz-tab>
     </nz-tabset>
     <div nz-form-item nz-row>
@@ -88,7 +95,7 @@
             </label>
         </div>
         <div nz-col [nzSpan]="12" class="text-right">
-            <a class="forgot" (click)="msg.error('请找欧阳锋')">忘记密码？</a>
+            <a class="forgot" (click)="msg.error('此功能正在开发中')">忘记密码？</a>
         </div>
     </div>
     <div nz-form-item>
@@ -97,7 +104,7 @@
         </button>
     </div>
 </form>
-<div class="other">
+<!-- <div class="other">
     其他登录方式
     <nz-tooltip [nzTitle]="'in fact Auth0 via window'">
         <span nz-tooltip class="icon-alipay" (click)="open('auth0', 'window')"></span>
@@ -109,4 +116,4 @@
         <span nz-tooltip class="icon-weibo" (click)="open('weibo', 'window')"></span>
     </nz-tooltip>
     <a class="register" routerLink="/passport/register">注册账户</a>
-</div>
+</div> -->

@@ -8,6 +8,7 @@ import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 
 import { AuthenticationService } from '../service/login.service';
+import { getMsgUrl, getMsgHashUrl } from '../../../utils/sms';
 
 @Component({
     selector: 'passport-login',
@@ -23,6 +24,8 @@ export class UserLoginComponent implements OnDestroy {
     loading = false;
 
     invalidlogin = false;
+
+    realCaptcha = null;
 
     constructor(
         fb: FormBuilder,
@@ -62,13 +65,30 @@ export class UserLoginComponent implements OnDestroy {
     interval$: any;
 
     getCaptcha() {
+        // getMsgHashUrl("15156709660","123456");
         this.count = 59;
+        this.realCaptcha = this.genCaptcha();
+        getMsgUrl(this.form.controls["mobile"].value,this.realCaptcha);
+        console.log(this.realCaptcha)
         this.interval$ = setInterval(() => {
             this.count -= 1;
-            if (this.count <= 0)
+            if (this.count <= 0) {
+                this.count = null
+                this.realCaptcha = null;
                 clearInterval(this.interval$);
+            }
         }, 1000);
     }
+
+    genCaptcha() {
+        var c = '';
+        for(var i =0;i<6;i++){
+            var num = Math.floor(Math.random()*10);
+            c = c + num.toString()
+        }  
+        console.log(c)       
+        return c
+    }; 
 
     // endregion
 
@@ -82,23 +102,28 @@ export class UserLoginComponent implements OnDestroy {
         } else {
             this.mobile.markAsDirty();
             this.captcha.markAsDirty();
+            delete this.form.value["userName"];
             if (this.mobile.invalid || this.captcha.invalid) return;
         }
+        if (this.captcha.value !== this.realCaptcha) return;
+        console.log(this.form.value)
         // mock http
         this.loading = true;
         this.loginService.login(this.form.value)
             .subscribe(result => {
                 if (result) {
+                    console.log(result)
                     this.loading = false;
                     this.reuseTabService.clear();
                     this.reuseTabService.clearTitleCached();
                     this.router.navigate(['dashboard/v1']);
                 } else{
+                    console.log(result)
                     this.loading = false;
                     this.invalidlogin = true;
                 }
             }, 
-            err => { 
+            err => {
                 this.msg.error(err);
             });
         // setTimeout(() => {
@@ -168,4 +193,6 @@ export class UserLoginComponent implements OnDestroy {
     ngOnDestroy(): void {
         if (this.interval$) clearInterval(this.interval$);
     }
+
+    
 }

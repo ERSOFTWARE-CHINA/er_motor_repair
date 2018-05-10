@@ -67,12 +67,8 @@ export class RepairInfoFormComponent implements OnInit {
             carMessage_owner_name: [this.carMessage? this.carMessage.owner_name: null],
             carMessage_phone_num: [this.carMessage? this.carMessage.phone_num: null],
         });
-        this.sparepart_form = this.fb.group({
-            name: [null, [Validators.required]],
-            specifications: [null, [Validators.required]],
-            attributes: [null, [Validators.required]]
-        });
-        this.getSparepart()
+        this.init_sparepart_form();
+        this.getSparepart();
 
         // this.searchModels.debounceTime(400)
         //     .map(model => {this.getSparepart()}).subscribe();
@@ -208,7 +204,7 @@ export class RepairInfoFormComponent implements OnInit {
         return c.value > 0 ? null : {validateNumber: true}
     };
 
-    // 删除确认框相关
+    // 创建备件弹窗
     confirmContent = ""
     modalVisible = false;
     sparepart_form: FormGroup;
@@ -228,12 +224,14 @@ export class RepairInfoFormComponent implements OnInit {
                 } else {
                     this.msg.success('创建备件 ' + resp.data.name + ' 成功！');
                     this.modalVisible = false;
+                    this.init_sparepart_form();
                 }}).then(resp => this.getSparepart()).catch(error => this.msg.error(error));
         }
     }
 
     handleCancel = (e) => {
         this.modalVisible = false;
+        this.init_sparepart_form();
     }
 
     add_sparepart(){
@@ -241,6 +239,14 @@ export class RepairInfoFormComponent implements OnInit {
         // this.confirmContent = "确定要删除领料单: " + obj.no + " ?";
         this.modalVisible = true;
         // this.delObj = obj;
+    }
+
+    init_sparepart_form() {
+        this.sparepart_form = this.fb.group({
+            name: [null, [Validators.required]],
+            specifications: [null, [Validators.required]],
+            attributes: [null, [Validators.required]]
+        });
     }
     
 }

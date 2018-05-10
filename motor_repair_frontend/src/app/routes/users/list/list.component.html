@@ -33,9 +33,9 @@
 
                 <div *ngIf="expandForm" nz-col [nzSpan]="8" class="mb-md">
                     <div nz-form-item class="d-flex">
-                        <div nz-form-label><label for="email">邮箱地址</label></div>
+                        <div nz-form-label><label for="mobile">联系电话</label></div>
                         <div nz-form-control class="flex-1">
-                            <nz-input [(ngModel)]="q.email" name="email" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="email"></nz-input>
+                            <nz-input [(ngModel)]="q.mobile" name="mobile" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="mobile"></nz-input>
                         </div>
                     </div>
                 </div>
@@ -75,8 +75,8 @@
                         <nz-table-sort [(nzValue)]="sortMap.name" (nzValueChange)="sort('name',$event)"></nz-table-sort>
                     </th>
                     <th nz-th>
-                        <span>电子邮箱</span>
-                        <nz-table-sort [(nzValue)]="sortMap.email" (nzValueChange)="sort('email',$event)"></nz-table-sort>
+                        <span>手机号</span>
+                        <nz-table-sort [(nzValue)]="sortMap.mobile" (nzValueChange)="sort('mobile',$event)"></nz-table-sort>
                     </th>
                     <th nz-th>
                         <span>真实姓名</span>
@@ -98,7 +98,7 @@
                 <tr nz-tbody-tr *ngFor="let i of nzTable.data">
 
                     <td nz-td>{{i.name}}</td>
-                    <td nz-td>{{i.email}}</td>
+                    <td nz-td>{{i.mobile}}</td>
                     <td nz-td>{{i.real_name}}</td>
                     <td nz-td>{{i.position}}</td>
                     <td nz-td>{{i.actived | userStatusPipe}}</td>

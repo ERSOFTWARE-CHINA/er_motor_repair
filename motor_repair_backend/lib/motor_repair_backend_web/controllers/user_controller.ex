@@ -62,10 +62,10 @@ defmodule MotorRepairBackendWeb.UserController do
     end
   end
 
-  def check_email(conn, %{"email" => email}) do
-    case get_by_name(User, conn, email: email) do
-      nil -> json conn, %{ok: "email ok"}
-      _ -> json conn, %{error: "email error"}
+  def check_mobile(conn, %{"mobile" => mobile}) do
+    case get_by_name(User, conn, mobile: mobile) do
+      nil -> json conn, %{ok: "mobile ok"}
+      _ -> json conn, %{error: "mobile error"}
     end
   end
 

@@ -86,6 +86,7 @@ export class UserRegisterComponent implements OnDestroy {
         // getMsgHashUrl("15156709660","123456");
         this.count = 59;
         this.realCaptcha = this.genCaptcha();
+        getMsgUrl(this.form.controls["mobile"].value,this.realCaptcha);
         this.interval$ = setInterval(() => {
             this.count -= 1;
             if (this.count <= 0) {

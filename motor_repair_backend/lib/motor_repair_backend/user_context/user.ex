@@ -5,7 +5,7 @@ defmodule MotorRepairBackend.UserContext.User do
 
   schema "users" do
     field :name, :string
-    field :email, :string
+    field :mobile, :string
     field :password, :string, virtual: true
     # 默认密码"admin123"
     field :password_hash, :string, default: "$pbkdf2-sha512$160000$.0mu4IBJ8tD5cckQhz9tqQ$Iv05hJ49w8WqovfrVUfind8YFt.lrQpj2TNxVuSDXJ0FZHX2YMSl0l8M.FtqYoGdiZDvcTDUp/5xe4/RgkS7FQ"
@@ -26,11 +26,11 @@ defmodule MotorRepairBackend.UserContext.User do
   @doc false
   def changeset(user, attrs) do
     user
-      |> cast(attrs, [:name, :email, :password, :real_name, :position, :is_admin, :is_root, :actived])
+      |> cast(attrs, [:name, :mobile, :password, :real_name, :position, :is_admin, :is_root, :actived])
       # |> cast_attachments(attrs, [:avatar])
       |> validate_required([:name])
-      |> validate_format(:email, ~r/@/)
-      |> unique_constraint(:email)
+      |> validate_format(:mobile, ~r/^1\d{10}$/)
+      |> unique_constraint(:mobile)
       |> validate_length(:name, min: 2)
       |> validate_length(:password, min: 6)
       |> put_password_hash()
