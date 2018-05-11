@@ -80,6 +80,7 @@ export class DashboardV1Component implements OnInit {
         this.reuseTabService.title ="首页"; 
         this.getCarMsg();
         this.getRepairInfo();
+        // var newWindow = window.open('/#/users/form');
         this.searchModels.debounceTime(400)
                          .map(model => {this.q_car.oneKey = this.model;this.getCarMsg()}).subscribe();
     }

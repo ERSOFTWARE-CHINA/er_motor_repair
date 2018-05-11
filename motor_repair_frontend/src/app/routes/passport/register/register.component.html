@@ -94,7 +94,14 @@
                 </div>
             </div>
             <div nz-form-explain *ngIf="(captcha.dirty || captcha.touched) && captcha.errors?.required">请输入验证码！</div>
-            <div nz-form-explain *ngIf="captchaInvalid">验证码错误,请重新生成验证码！</div>
+            <!-- <div nz-form-explain *ngIf="captchaInvalid">验证码错误,请重新生成验证码！</div> -->
+            <div *ngIf = "captchaInvalid">
+                <p >
+                    <font color="red">
+                        验证码错误！
+                    </font>
+                </p>
+            </div>
         </div>
     </div>
     <div nz-form-item>

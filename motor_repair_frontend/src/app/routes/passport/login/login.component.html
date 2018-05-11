@@ -79,6 +79,13 @@
                     <div nz-form-explain *ngIf="(mobile.dirty || mobile.touched) && mobile.errors?.required">请输入验证码！</div>
                 </div>
             </div>
+            <div *ngIf = "captchaInvalid">
+                <p >
+                    <font color="red">
+                        验证码错误！
+                    </font>
+                </p>
+            </div>
             <div *ngIf = "invalidlogin">
                 <p >
                     <font color="red">

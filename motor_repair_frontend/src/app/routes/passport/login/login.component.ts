@@ -24,6 +24,7 @@ export class UserLoginComponent implements OnDestroy {
     loading = false;
 
     invalidlogin = false;
+    captchaInvalid = false;
 
     realCaptcha = null;
 
@@ -105,7 +106,7 @@ export class UserLoginComponent implements OnDestroy {
             delete this.form.value["userName"];
             if (this.mobile.invalid || this.captcha.invalid) return;
         }
-        if (this.captcha.value !== this.realCaptcha) return;
+        if (this.captcha.value !== this.realCaptcha) {this.captchaInvalid = true;return};
         console.log(this.form.value)
         // mock http
         this.loading = true;
