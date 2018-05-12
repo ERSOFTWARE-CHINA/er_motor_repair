@@ -81,6 +81,10 @@ export class AuthenticationService {
                    .map(response => response.json()).toPromise();
     }
 
+    sendMessage(url) {
+        return this.http.get(url).toPromise()
+    }
+
 }
 
     

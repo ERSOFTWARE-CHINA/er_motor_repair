@@ -3,13 +3,14 @@
     <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
     <div nz-form-item>
         <div nz-form-control [nzValidateStatus]="project">
-            <nz-input formControlName="project" [nzPlaceHolder]="'项目名称'" [nzSize]="'large'">
+            <nz-input formControlName="project" [nzPlaceHolder]="'公司名称'" [nzSize]="'large'">
                 <ng-template #prefix>
                     <i class="anticon anticon-team"></i>
                 </ng-template>
             </nz-input>
             <ng-container *ngIf="project.dirty || project.touched">
-                <p nz-form-explain *ngIf="project.errors?.required">请输入项目名！</p>
+                <p nz-form-explain *ngIf="project.errors?.required">请输入公司名！</p>
+                <p nz-form-explain *ngIf="form.controls['project'].errors?.checked">公司名称已被注册！</p>
             </ng-container>
         </div>
     </div>
@@ -76,7 +77,10 @@
                 </nz-select>
                 <input formControlName="mobile" id="'11位手机号码'" nz-input style="width: 75%;">
             </nz-input-group>
-            <div nz-form-explain *ngIf="(mobile.dirty || mobile.touched) && mobile.errors?.required">请输入手机号！</div>
+            <ng-container *ngIf="mobile.dirty || mobile.touched">
+                <p nz-form-explain *ngIf="mobile.errors?.required">请输入手机号！</p>
+                <p nz-form-explain *ngIf="form.controls['mobile'].errors?.checked">手机号已被注册！</p>
+            </ng-container>
         </div>
     </div>
     <div nz-form-item>

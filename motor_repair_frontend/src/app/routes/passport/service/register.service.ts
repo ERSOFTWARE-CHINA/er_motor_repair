@@ -27,6 +27,10 @@ export class RegisterService {
 
     }
 
+    sendMessage(url) {
+        return this.http.get(url).toPromise()
+    }
+
 }
 
     

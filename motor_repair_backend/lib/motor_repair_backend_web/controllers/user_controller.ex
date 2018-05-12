@@ -5,8 +5,8 @@ defmodule MotorRepairBackendWeb.UserController do
 
   import MotorRepairBackendWeb.AuthPlugs, only: [project_active: 2, auth_root: 2, auth_admin: 2]
 
-  plug :project_active
-  plug :auth_admin
+  plug :project_active when action in [:index, :create, :show, :update, :delete]
+  plug :auth_admin when action in [:index, :create, :show, :update, :delete]
   plug :auth_root when action in [:assign_to_project] 
 
   action_fallback MotorRepairBackendWeb.FallbackController
@@ -63,7 +63,7 @@ defmodule MotorRepairBackendWeb.UserController do
   end
 
   def check_mobile(conn, %{"mobile" => mobile}) do
-    case get_by_name(User, conn, mobile: mobile) do
+    case get_by_name(User, mobile: mobile) do
       nil -> json conn, %{ok: "mobile ok"}
       _ -> json conn, %{error: "mobile error"}
     end

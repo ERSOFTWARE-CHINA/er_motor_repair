@@ -31,8 +31,8 @@ export class UsersService {
     return this.http.get(baseUrl + `users/check/name`, getTokenOptions(obj)).map(response => response.json()).toPromise();
   }
 
-  checkEmailAlreadyExists(email) {
-      return this.http.get(baseUrl + `users/email/${email}`, getTokenOptions(null)).map(response => response.json()).toPromise();
+  checkMobileAlreadyExists(obj) {
+      return this.http.get(baseUrl + `users/check/mobile`, getTokenOptions(obj)).map(response => response.json()).toPromise();
   }
 
     delete(id: any) {

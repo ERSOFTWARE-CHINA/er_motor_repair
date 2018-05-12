@@ -27,6 +27,8 @@ export class RepairInfoFormComponent implements OnInit {
 
     options: string[] = ["保养","维修"]
 
+    status_options: any[] = [{label: "已开单", value: false}, {label: "已完结", value: true}]
+
 
     constructor(
         private fb: FormBuilder, 
@@ -45,9 +47,10 @@ export class RepairInfoFormComponent implements OnInit {
             no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.minLength(4),
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
             type: [this.repairInfo? this.repairInfo.type : null, [Validators.required]],
+            status: [this.repairInfo? this.repairInfo.status : null, [Validators.required]],
             time_cost: [this.repairInfo? this.repairInfo.time_cost : null, [Validators.required, this.validateNumber]],
             consultant : [this.repairInfo? this.repairInfo.consultant : null],
-            entry_date : [this.repairInfo? this.repairInfo.entry_date : null, [Validators.required]],
+            entry_date : [this.repairInfo? this.repairInfo.entry_date : null],
             return_date : [this.repairInfo? this.repairInfo.return_date : null],
             // type : [this.repairInfo? this.repairInfo.items : null],
             customer_comment : [this.repairInfo? this.repairInfo.customer_comment : null],
@@ -55,7 +58,7 @@ export class RepairInfoFormComponent implements OnInit {
             advise : [this.repairInfo? this.repairInfo.advise : null],
             mileage : [this.repairInfo? this.repairInfo.mileage : null, [this.validateNumber]],
             next_mileage : [this.repairInfo? this.repairInfo.next_mileage : null, [this.validateNumber]],
-            next_date : [this.repairInfo? this.repairInfo.next_date : null],
+            next_date : [this.repairInfo? this.repairInfo.next_date : null, [Validators.required]],
             agent : [this.repairInfo? this.repairInfo.agent : null],
             agent_mobile : [this.repairInfo? this.repairInfo.agent_mobile : null],
             parts_cost: this.fb.array([]),
@@ -138,6 +141,13 @@ export class RepairInfoFormComponent implements OnInit {
         this.editIndex = -1;
     }
 
+    // 明细中计算总价
+    countTotal(i){
+        // console.log(this.parts_cost.at(i)["controls"])
+        if (!this.parts_cost.at(i)["controls"]["unit_price"].invalid && !this.parts_cost.at(i)["controls"]["amount"].invalid)
+        this.parts_cost.at(i)["controls"]["total"].setValue(this.parts_cost.at(i)["controls"]["unit_price"].value * this.parts_cost.at(i)["controls"]["amount"].value)
+    }
+
     _submitForm() {
         for (const i in this.form.controls) {
           this.form.controls[ i ].markAsDirty();
@@ -150,14 +160,14 @@ export class RepairInfoFormComponent implements OnInit {
                 if (resp.error) { 
                     this.msg.error(resp.error);
                 } else {
-                    this.msg.success('创建维修单 ' + resp.no + ' 成功！');
+                    this.msg.success('创建维修单 ' + resp.data.no + ' 成功！');
                 }
                 this.goBack()}).catch(error => this.msg.error(error));
             if (op == 'update') this.mrSrv.update(this.repairInfo.id, this.form.value).then(resp => {
                 if (resp.error) { 
                     this.msg.error(resp.error);
                 } else {
-                    this.msg.success('更新维修单 ' + resp.no + ' 成功！');
+                    this.msg.success('更新维修单 ' + resp.data.no + ' 成功！');
                 }
                 this.goBack();}).catch(error => this.msg.error(error));
             
@@ -191,16 +201,14 @@ export class RepairInfoFormComponent implements OnInit {
         let form_parts_cost = this.form.controls["parts_cost"].value;
         for (const i in form_parts_cost) {
             let v = form_parts_cost[i]
-            // let sparepart = {name : form_parts_cost[i].sparepart} 
-            // v.sparepart = sparepart
             parts_cost.push(v)
-            console.log(v)
         }
         this.form.controls["parts_cost"].setValue(parts_cost);
     }
 
     //数字验证
     validateNumber(c: FormControl) {
+        if (c.value == null || c.value == "") return null
         return c.value > 0 ? null : {validateNumber: true}
     };
 

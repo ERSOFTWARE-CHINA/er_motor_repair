@@ -7,16 +7,15 @@ import { CryptoJS } from 'crypto-js';
 import * as crypto from "crypto-js";
 
 // 短信服务接口直接传输
-export function getMsgUrl(mobile, captcha) {
+export function getMsgUrl(mobile, captcha, operation) {
   let url = `https://sh2.ipyy.com/sms.aspx`
-  let ps = `?action=send&account=zss136&password=a12345&mobile=`+mobile+`&content=尊敬的用户，您的注册验证码为：`+captcha+`。【汽修云】'` 
+  let ps = `?action=send&account=jkwl561&password=jkwl56120&mobile=`+mobile+`&content=【简迅汽修云】您的`+operation+`验证码为：` + captcha
   return url + ps
 }
 
 // 短信服务接口加密传输
 export function getMsgHashUrl(mobile, captcha) {
     let stamp = getLocalStamp();
-    // let content = `尊敬的用户，您的注册验证码为：`+captcha+`。【汽修云】`
     let content = "我的验证码是：7890。【奥创时代】"
     let obj = {
         UserName: "test",

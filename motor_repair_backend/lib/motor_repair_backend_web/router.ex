@@ -30,6 +30,8 @@ defmodule MotorRepairBackendWeb.Router do
     pipe_through :api
     post "/login", LoginController, :login
     post "/register", LoginController, :register
+    get "/projects/check/name", ProjectController, :check_name
+    get "/users/check/mobile", UserController, :check_mobile
     get "/plug_auth_failure/:msg", AuthFailureController, :plug_auth_failure
   end
 
@@ -38,6 +40,7 @@ defmodule MotorRepairBackendWeb.Router do
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/projects", ProjectController, except: [:new, :edit]
+    
     resources "/roles", RoleController, except: [:new, :edit]
     resources "/repair_info", RepairInfoController, except: [:new, :edit]
     get "/repair_info_gen_no", RepairInfoController, :get_next_no

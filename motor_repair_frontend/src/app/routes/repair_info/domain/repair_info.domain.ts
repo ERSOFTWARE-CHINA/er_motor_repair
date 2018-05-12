@@ -15,6 +15,7 @@ export class RepairInfo {
     next_date: Date;
     agent: string;
     agent_mobile: string;
+    status: string;
     parts_cost: PartsCost[]
 }
 

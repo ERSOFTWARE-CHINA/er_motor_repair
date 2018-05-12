@@ -5,7 +5,7 @@ defmodule MotorRepairBackendWeb.ProjectController do
   import MotorRepairBackendWeb.AuthPlugs, only: [auth_root: 2]
   import MotorRepairBackendWeb.Permissions
 
-  plug :auth_root
+  plug :auth_root when action in [:index, :create, :show, :update, :delete]
 
   action_fallback MotorRepairBackendWeb.FallbackController
 

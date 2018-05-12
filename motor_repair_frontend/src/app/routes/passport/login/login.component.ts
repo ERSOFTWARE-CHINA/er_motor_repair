@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
-import { ReuseTabService } from '@delon/abc';
+import { ReuseTabService, ReuseTabMatchMode } from '@delon/abc';
 import { environment } from '@env/environment';
 
 import { AuthenticationService } from '../service/login.service';
@@ -37,6 +37,12 @@ export class UserLoginComponent implements OnDestroy {
         private loginService: AuthenticationService,
         @Optional() @Inject(ReuseTabService) private reuseTabService: ReuseTabService,
         @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
+        
+        // 不路由复用
+        this.reuseTabService.mode = ReuseTabMatchMode.URL
+        let reg: RegExp = /.*passport.*/
+        this.reuseTabService.excludes = [reg]
+
         this.form = fb.group({
             project: [null, [Validators.required, Validators.minLength(4)]],
             userName: [null, [Validators.required, Validators.minLength(4)]],
@@ -69,7 +75,8 @@ export class UserLoginComponent implements OnDestroy {
         // getMsgHashUrl("15156709660","123456");
         this.count = 59;
         this.realCaptcha = this.genCaptcha();
-        getMsgUrl(this.form.controls["mobile"].value,this.realCaptcha);
+        let sendurl = getMsgUrl(this.form.controls["mobile"].value,this.realCaptcha,"登陆");
+        this.loginService.sendMessage(sendurl).then(resp => console.log("send OK!"))
         console.log(this.realCaptcha)
         this.interval$ = setInterval(() => {
             this.count -= 1;
@@ -105,8 +112,9 @@ export class UserLoginComponent implements OnDestroy {
             this.captcha.markAsDirty();
             delete this.form.value["userName"];
             if (this.mobile.invalid || this.captcha.invalid) return;
+            if (this.captcha.value !== this.realCaptcha) {this.captchaInvalid = true;return};
         }
-        if (this.captcha.value !== this.realCaptcha) {this.captchaInvalid = true;return};
+        
         console.log(this.form.value)
         // mock http
         this.loading = true;

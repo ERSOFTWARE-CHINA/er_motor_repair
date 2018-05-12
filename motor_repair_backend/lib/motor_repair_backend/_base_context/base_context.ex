@@ -49,6 +49,15 @@ defmodule MotorRepairBackend.BaseContext do
     end
   end
 
+  def get_by_name(query, field_value) do
+    query
+    |> Repo.get_by(field_value)
+    |> case do
+      nil -> {:error, :not_found}
+      entity -> {:ok, entity}
+    end
+  end
+
   def save_create(changeset, conn) do
     Repo.insert(changeset |> set_belongs_to(conn))
   end
