@@ -47,8 +47,8 @@ export class RepairInfoFormComponent implements OnInit {
             no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.minLength(4),
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
             type: [this.repairInfo? this.repairInfo.type : null, [Validators.required]],
-            status: [this.repairInfo? this.repairInfo.status : null, [Validators.required]],
-            time_cost: [this.repairInfo? this.repairInfo.time_cost : null, [Validators.required, this.validateNumber]],
+            status: [this.repairInfo? this.repairInfo.status : false],
+            time_cost: [this.repairInfo? this.repairInfo.time_cost : 0, [Validators.required, this.validateNumber]],
             consultant : [this.repairInfo? this.repairInfo.consultant : null],
             entry_date : [this.repairInfo? this.repairInfo.entry_date : null],
             return_date : [this.repairInfo? this.repairInfo.return_date : null],
@@ -56,9 +56,9 @@ export class RepairInfoFormComponent implements OnInit {
             customer_comment : [this.repairInfo? this.repairInfo.customer_comment : null],
             repairman_comment : [this.repairInfo? this.repairInfo.repairman_comment : null],
             advise : [this.repairInfo? this.repairInfo.advise : null],
-            mileage : [this.repairInfo? this.repairInfo.mileage : null, [this.validateNumber]],
+            mileage : [this.repairInfo? this.repairInfo.mileage : null, [Validators.required, this.validateNumber]],
             next_mileage : [this.repairInfo? this.repairInfo.next_mileage : null, [this.validateNumber]],
-            next_date : [this.repairInfo? this.repairInfo.next_date : null, [Validators.required]],
+            next_date : [this.repairInfo? this.repairInfo.next_date : null],
             agent : [this.repairInfo? this.repairInfo.agent : null],
             agent_mobile : [this.repairInfo? this.repairInfo.agent_mobile : null],
             parts_cost: this.fb.array([]),
@@ -175,6 +175,12 @@ export class RepairInfoFormComponent implements OnInit {
         
     }
 
+    // 完工点击事件
+    complete() {
+        this.form.value.status = true;
+        this._submitForm();
+    }
+
     goBack() {
         this.router.navigateByUrl('/dashboard/v1');
     }
@@ -196,6 +202,7 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     formatForm() {
+        
         // 根据后端格式，重新组装parts_cost参数
         let parts_cost = [];
         let form_parts_cost = this.form.controls["parts_cost"].value;
@@ -203,7 +210,8 @@ export class RepairInfoFormComponent implements OnInit {
             let v = form_parts_cost[i]
             parts_cost.push(v)
         }
-        this.form.controls["parts_cost"].setValue(parts_cost);
+        // this.form.controls["parts_cost"].setValue(parts_cost);
+        this.form.value.parts_cost = parts_cost;
     }
 
     //数字验证
@@ -211,6 +219,8 @@ export class RepairInfoFormComponent implements OnInit {
         if (c.value == null || c.value == "") return null
         return c.value > 0 ? null : {validateNumber: true}
     };
+
+
 
     // 创建备件弹窗
     confirmContent = ""

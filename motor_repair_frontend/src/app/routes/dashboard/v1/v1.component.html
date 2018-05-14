@@ -1,13 +1,20 @@
 <div nz-row [nzGutter]="24" class="pt-lg">
 
     <div nz-col nzXs="24" nzMd="24">
-        <nz-card [nzBordered]="false">
-            <ng-template #title>
 
-                    <div class="text-center">
-                        <nz-input style="width:600px;" nzPlaceHolder="请输入客户名、车牌号或客户手机号" [nzType]="'search'" [nzSize]="'large'" [(ngModel)]="model" (keyup)="search()"></nz-input>
-                    </div>
-                
+        <nz-card [nzBordered]="false">
+            <!-- <ng-template #title> -->
+                <div class="text-center">
+                    <nz-input style="width:600px;" nzPlaceHolder="请输入客户名、车牌号或客户手机号" [nzType]="'search'" [nzSize]="'large'" [(ngModel)]="model" (keyup)="search()"></nz-input>
+                </div>
+            <!-- </ng-template> -->
+        </nz-card>
+
+        <nz-card [nzBordered]="false">
+
+            <ng-template #title>
+                客户信息
+                <small class="text-sm font-weight-normal">{{ sub_title }}</small>
             </ng-template>
 
             <div class="mb-md">
@@ -64,6 +71,7 @@
                             <a (click)="update_carmessage(i.id)">修改</a>
                             <span nz-table-divider></span>
                             <a (click)="remove_carmessage(i)">删除</a>
+                            
                         </td>
                     </tr>
                 </tbody>
@@ -138,6 +146,10 @@
                             <a (click)="update_repairinfo(i.id)">修改</a>
                             <span nz-table-divider></span>
                             <a (click)="remove_repairinfo(i)">删除</a>
+                            <span nz-table-divider *ngIf="!i.status"></span>
+                            <a (click)="complete(i)" *ngIf="!i.status">完工</a>
+                            <span nz-table-divider *ngIf="i.status"></span>
+                            <a (click)="dis_complete(i)" *ngIf="i.status">未完工</a>
                         </td>
                     </tr>
                 </tbody>

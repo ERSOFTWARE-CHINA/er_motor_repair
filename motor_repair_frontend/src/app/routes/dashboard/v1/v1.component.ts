@@ -207,10 +207,37 @@ export class DashboardV1Component implements OnInit {
     update_repairinfo(id) {
         this.repairInfoService.formOperation='update';
         this.repairInfoService.initUpdate(id)
-            .then(result => { this.repairInfoService.repairInfo = result.data;})
+            .then(result => { console.log(result);this.repairInfoService.repairInfo = result.data;})
             .then(() => this.router.navigateByUrl('/repair_info/form')).catch((error)=>
             this.msg.error(error)); 
     }
+
+    // 维修单完工操作
+    complete(i){
+        this.repairInfoService.set_status(i.id, true).then(resp =>  {
+            if ('error' in resp) { 
+                this.msg.error(resp.error);
+            } else {
+                this.msg.success('维修单：'+resp.data.no + '已设置为完成状态！');
+            }
+            this.getRepairInfo()}).catch(error => this.msg.error(error));
+
+    }
+
+    // 维修未完工操作
+    dis_complete(i){
+
+            this.repairInfoService.set_status(i.id, false).then(resp =>  {
+                if ('error' in resp) { 
+                    this.msg.error(resp.error);
+                } else {
+                    this.msg.success('维修单：'+resp.data.no + '已设置为未完成状态！');
+                }
+                this.getRepairInfo()}).catch(error => this.msg.error(error));
+    
+        
+    }
+
 
 
 
