@@ -4,7 +4,7 @@
     <ng-template #title>
         <div class="title">你的账户：{{registerService.registeredName}} 注册成功</div>
     </ng-template>
-    <button routerLink="/" nz-button [nzSize]="'large'">返回登录页面</button>
+    <button routerLink="/passport/login" nz-button [nzSize]="'large'">返回登录页面</button>
 </result>
 
 <h1 style="text-align:center" *ngIf="!registerService.registeredName">

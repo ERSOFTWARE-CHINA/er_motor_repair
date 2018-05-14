@@ -36,7 +36,18 @@
                     <div nz-form-item nz-row>
                         <div nz-form-label nz-col nz-form-item-required><label>车牌号:</label></div>
                         <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="plate_num">
-                            <nz-input formControlName="plate_num" nzPlaceHolder="请输入车牌号" nzSize="large"></nz-input>
+                            <!-- <nz-input formControlName="plate_num" nzPlaceHolder="请输入车牌号" nzSize="large"></nz-input> -->
+                            <nz-input-group [nzSize]="'large'" [nzCompact]="true">
+                                
+                                <nz-select formControlName="plate_prefix" style="width: 25%;" [nzSize]="'large'" nzShowSearch>
+                                    <nz-option
+                                        *ngFor="let option of provinces"
+                                        [nzLabel]="option"
+                                        [nzValue]="option">
+                                    </nz-option>
+                                </nz-select>
+                                <input formControlName="plate_num" nz-input style="width: 75%;" [nzSize]="'large'">
+                            </nz-input-group>
                             <ng-container *ngIf="form.controls['plate_num'].dirty || form.controls['plate_num'].touched">
                                 <p nz-form-explain *ngIf="form.controls['plate_num'].errors?.required">请输入车牌号</p>
                             </ng-container>

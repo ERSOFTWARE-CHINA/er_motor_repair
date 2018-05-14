@@ -33,15 +33,27 @@ export class CarMessageFormComponent implements OnInit {
         private msg: NzMessageService
         ) {
     }
+
+    provinces: any[] = [
+        "京","津","冀","晋","内",
+        "辽","吉","黑","沪","苏",
+        "浙","皖","闽","赣","鲁",
+        "豫","鄂","湘","粤","桂",
+        "琼","蜀","黔","滇","渝",
+        "藏","陕","甘","青","宁",
+    ];
+    // default_province: any = {value:"皖", label:"皖"};
     
     ngOnInit() {
         this.setTitle();
         if (this.carMessageSerivce.formOperation == 'create') {this.car_message=null;}
         if (this.carMessageSerivce.formOperation == 'update') {this.initUpdate();}
+        console.log("before init form")
         this.form = this.fb.group({
             owner_name : [this.car_message? this.car_message.owner_name : null, Validators.required ],
             phone_num : [this.car_message? this.car_message.phone_num : null, Validators.required],
-            plate_num : [this.car_message? this.car_message.plate_num : null, Validators.required],
+            plate_prefix : [this.car_message? this.car_message.plate_num[0] : "皖", Validators.required],
+            plate_num : [this.car_message? this.car_message.plate_num.slice(1,8) : null, Validators.required],
             car_color : [this.car_message? this.car_message.car_color : null],
             vin : [this.car_message? this.car_message.vin : null],
             car_type : [this.car_message? this.car_message.car_type : null],
@@ -59,6 +71,7 @@ export class CarMessageFormComponent implements OnInit {
             car_remark : [this.car_message? this.car_message.car_remark : null]
         });
         this.form.controls["owner_name"].setValue(this.car_message? this.car_message.owner_name : "")
+        console.log("after init form")
     }
 
     setTitle() {
@@ -106,9 +119,18 @@ export class CarMessageFormComponent implements OnInit {
     formatForm() {
         // 格式化form中的roles属性
         // this.car_message = this.form.value;
+        this.form.value.plate_num = this.form.value.plate_prefix + this.form.value.plate_num
     }
 
     initUpdate() {
         this.car_message = this.carMessageSerivce.carMessage;
+    }
+
+    get_plate_prefix(s){
+        return s[0]
+    }
+
+    get_plate_num(s){
+        return s.splice(0,1);
     }
 }

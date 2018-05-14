@@ -102,6 +102,7 @@ export class UserRegisterComponent implements OnDestroy {
 
     getCaptcha() {
         // getMsgHashUrl("15156709660","123456");
+        if (this.form.controls["mobile"].invalid) return;
         this.count = 59;
         this.realCaptcha = this.genCaptcha();
         let sendurl = getMsgUrl(this.form.controls["mobile"].value,this.realCaptcha,"注册");

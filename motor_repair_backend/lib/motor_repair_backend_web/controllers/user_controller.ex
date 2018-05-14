@@ -64,8 +64,8 @@ defmodule MotorRepairBackendWeb.UserController do
 
   def check_mobile(conn, %{"mobile" => mobile}) do
     case get_by_name(User, mobile: mobile) do
-      nil -> json conn, %{ok: "mobile ok"}
-      _ -> json conn, %{error: "mobile error"}
+      {:error, _} -> json conn, %{ok: "mobile ok"}
+      {_, _} -> json conn, %{error: "mobile error"}
     end
   end
 
