@@ -31,6 +31,10 @@ export class RepairInfoFormComponent implements OnInit {
 
     status_options: any[] = [{label: "已开单", value: false}, {label: "已完结", value: true}]
 
+    // 新增配件保存的同时需要自动填充配件名字段，该参数用来临时记录parts_cost列表中的索引
+    parts_cost_i = null
+    parts_name = null
+
 
     constructor(
         private fb: FormBuilder, 
@@ -307,6 +311,10 @@ export class RepairInfoFormComponent implements OnInit {
                     this.msg.success('创建备件 ' + resp.data.name + ' 成功！');
                     this.modalVisible = false;
                     this.init_sparepart_form();
+                    console.log("push and set value")
+                    console.log(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
+                    this.spareparts.push(resp.data);
+                    this.parts_cost.controls[this.parts_cost_i]["controls"]["name"].setValue(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
                 }}).then(resp => this.getSparepart()).catch(error => this.msg.error(error));
         }
     }
@@ -316,11 +324,10 @@ export class RepairInfoFormComponent implements OnInit {
         this.init_sparepart_form();
     }
 
-    add_sparepart(){
-
-        // this.confirmContent = "确定要删除领料单: " + obj.no + " ?";
+    add_sparepart(index){
         this.modalVisible = true;
-        // this.delObj = obj;
+        this.parts_cost_i = index;
+        // console.log(this.parts_cost.controls[index]["controls"]["name"].setValue)
     }
 
     init_sparepart_form() {

@@ -350,7 +350,7 @@
                 </div>
             </div> -->
           <div class="mb-md">
-                <button nz-button (click)="add_sparepart(modalContent)" [nzType]="'primary'" [nzSize]="'large'" type="button">
+                <button nz-button (click)="add_sparepart()" [nzType]="'primary'" [nzSize]="'large'" type="button">
                     <i class="anticon anticon-plus"></i><span>创建配件</span>
                 </button>
           </div>
@@ -371,7 +371,7 @@
                           <span *ngIf="editIndex===i" nz-form-control [nzValidateStatus]="item.controls.name">
                               <!-- <nz-input formControlName="name" nzPlaceHolder="请输入名称" nzSize="large" [(ngModel)]="model" (keyup)="search_sparepart()"></nz-input> -->
                               <nz-select formControlName="name" nzId="model" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzMode]="'single'">
-                                  <nz-option *ngFor="let i of spareparts" [nzLabel]="i.name + (i.specifications? ':'+i.specifications : '')" [nzValue]="i.name + ': ' + i.specifications"></nz-option>
+                                  <nz-option *ngFor="let i of spareparts" [nzLabel]="i.name + (i.specifications? ':'+i.specifications : '')" [nzValue]="i.name + (i.specifications? ':'+i.specifications : '')"></nz-option>
                               </nz-select>
                           </span>
                       </td>
@@ -407,6 +407,10 @@
                       </td> -->
                           
                       <td nz-td>
+                          <span *ngIf="editIndex===i">
+                                <a (click)="add_sparepart(i)">新增配件</a>
+                                <span nz-table-divider></span>
+                          </span>
                           <span *ngIf="editIndex!==i">
                               <a (click)="edit(i)">编辑</a>
                               <span nz-table-divider></span>
