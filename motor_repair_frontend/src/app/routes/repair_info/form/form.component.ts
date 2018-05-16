@@ -17,7 +17,9 @@ import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 })
 export class RepairInfoFormComponent implements OnInit {
     editIndex = -1;
+    editIndex2 = -1;
     editObj = {};
+    editObj2 = {};
 
     form: FormGroup;
     
@@ -48,9 +50,9 @@ export class RepairInfoFormComponent implements OnInit {
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
             type: [this.repairInfo? this.repairInfo.type : null, [Validators.required]],
             status: [this.repairInfo? this.repairInfo.status : false],
-            time_cost: [this.repairInfo? this.repairInfo.time_cost : 0, [Validators.required, this.validateNumber]],
+            // time_cost: [this.repairInfo? this.repairInfo.time_cost : 0, [Validators.required, this.validateNumber]],
             consultant : [this.repairInfo? this.repairInfo.consultant : null],
-            entry_date : [this.repairInfo? this.repairInfo.entry_date : null],
+            entry_date : [this.repairInfo? this.repairInfo.entry_date : new Date()],
             return_date : [this.repairInfo? this.repairInfo.return_date : null],
             // type : [this.repairInfo? this.repairInfo.items : null],
             customer_comment : [this.repairInfo? this.repairInfo.customer_comment : null],
@@ -59,9 +61,10 @@ export class RepairInfoFormComponent implements OnInit {
             mileage : [this.repairInfo? this.repairInfo.mileage : null, [Validators.required, this.validateNumber]],
             next_mileage : [this.repairInfo? this.repairInfo.next_mileage : null, [this.validateNumber]],
             next_date : [this.repairInfo? this.repairInfo.next_date : null],
-            agent : [this.repairInfo? this.repairInfo.agent : null],
-            agent_mobile : [this.repairInfo? this.repairInfo.agent_mobile : null],
+            agent : [this.repairInfo? this.repairInfo.agent : (this.carMessage? this.carMessage.owner_name: null)],
+            agent_mobile : [this.repairInfo? this.repairInfo.agent_mobile : (this.carMessage? this.carMessage.phone_num: null)],
             parts_cost: this.fb.array([]),
+            time_cost: this.fb.array([]),
             // 车辆信息，仅作为显示
             carMessage_plate_num: [this.carMessage? this.carMessage.plate_num: null],
             carMessage_car_type: [this.carMessage? this.carMessage.car_type: null],
@@ -77,11 +80,21 @@ export class RepairInfoFormComponent implements OnInit {
         //     .map(model => {this.getSparepart()}).subscribe();
 
         if (op == 'update'){
-        this.repairInfo.parts_cost? this.repairInfo.parts_cost.forEach(i => {
-            const field = this.createPartsCost();
-            field.patchValue(i);
-            this.parts_cost.push(field);
-        }) : console.log("tihs contract has no parts_cost.");}
+
+            this.repairInfo.parts_cost? this.repairInfo.parts_cost.forEach(i => {
+                const field = this.createPartsCost();
+                field.patchValue(i);
+                this.parts_cost.push(field);
+            }) : console.log("no parts_cost.");
+
+            this.repairInfo.time_cost? this.repairInfo.time_cost.forEach(i => {
+                const field = this.createTimeCost();
+                field.patchValue(i);
+                this.time_cost.push(field);
+            }) : console.log("no time_cost.");
+        
+        }
+
 
     }
 
@@ -90,6 +103,13 @@ export class RepairInfoFormComponent implements OnInit {
             name: [ null, [ Validators.required ] ],
             amount: [ null, [ Validators.required, this.validateNumber ] ],
             unit_price: [ null, [ Validators.required, this.validateNumber ] ],
+            total: [ null, [ Validators.required, this.validateNumber ] ]
+        });
+    }
+
+    createTimeCost(): FormGroup {
+        return this.fb.group({
+            name: [ null, [ Validators.required ] ],
             total: [ null, [ Validators.required, this.validateNumber ] ]
         });
     }
@@ -108,6 +128,7 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     get parts_cost() { return this.form.controls.parts_cost as FormArray; }
+    get time_cost() { return this.form.controls.time_cost as FormArray; }
     
     add() {
         this.parts_cost.push(this.createPartsCost());
@@ -139,6 +160,38 @@ export class RepairInfoFormComponent implements OnInit {
             this.parts_cost.at(index).patchValue(this.editObj);
         }
         this.editIndex = -1;
+    }
+
+    add_time_cost() {
+        this.time_cost.push(this.createTimeCost());
+        this.edit_time_cost(this.time_cost.length - 1);
+    }
+
+    del_time_cost(index: number) {
+        this.time_cost.removeAt(index);
+    }
+
+    edit_time_cost(index: number) {
+        if (this.editIndex2 !== -1 && this.editObj2) {
+            this.time_cost.at(this.editIndex2).patchValue(this.editObj2);
+        }
+        this.editObj2 = { ...this.time_cost.at(index).value };
+        this.editIndex2 = index;
+    }
+
+    save_time_cost(index: number) {
+        this.time_cost.at(index).markAsDirty();
+        if (this.time_cost.at(index).invalid) return;
+        this.editIndex2 = -1;
+    }
+
+    cancel_time_cost(index: number) {
+        if (!this.time_cost.at(index).value.key) {
+            this.del_time_cost(index);
+        } else {
+            this.time_cost.at(index).patchValue(this.editObj2);
+        }
+        this.editIndex2 = -1;
     }
 
     // 明细中计算总价
@@ -199,6 +252,7 @@ export class RepairInfoFormComponent implements OnInit {
         this.reuseTabService.title ="修改维修信息"; 
         this.title = "修改维修信息"
         this.repairInfo = this.mrSrv.repairInfo;
+        console.log(this.repairInfo)
     }
 
     formatForm() {
@@ -212,6 +266,16 @@ export class RepairInfoFormComponent implements OnInit {
         }
         // this.form.controls["parts_cost"].setValue(parts_cost);
         this.form.value.parts_cost = parts_cost;
+
+        // 根据后端格式，重新组装time_cost参数
+        let time_cost = [];
+        let form_time_cost = this.form.controls["time_cost"].value;
+        for (const i in form_time_cost) {
+            let v = form_time_cost[i]
+            time_cost.push(v)
+        }
+        // this.form.controls["parts_cost"].setValue(parts_cost);
+        this.form.value.time_cost = time_cost;
     }
 
     //数字验证
@@ -262,8 +326,8 @@ export class RepairInfoFormComponent implements OnInit {
     init_sparepart_form() {
         this.sparepart_form = this.fb.group({
             name: [null, [Validators.required]],
-            specifications: [null, [Validators.required]],
-            attributes: [null, [Validators.required]]
+            specifications: [null],
+            attributes: [null]
         });
     }
     

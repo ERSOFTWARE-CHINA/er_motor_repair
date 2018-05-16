@@ -12,29 +12,33 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
 
   def create(conn, %{"repair_info" => repair_info_params}) do
     parts_cost_changesets = get_parts_cost_changesets(repair_info_params, conn)
+    time_cost_changesets = get_time_cost_changesets(repair_info_params, conn)
     car_message_changeset = get_car_message_changeset(repair_info_params, conn)
     info_changeset = RepairInfo.changeset(%RepairInfo{}, repair_info_params)
-      |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)
-      |> Ecto.Changeset.put_assoc(:car_message, car_message_changeset)
+    |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)
+    |> Ecto.Changeset.put_assoc(:time_cost, time_cost_changesets)
+    |> Ecto.Changeset.put_assoc(:car_message, car_message_changeset)
     with {:ok, %RepairInfo{} = ri} <- save_create(info_changeset, conn) do
       conn
-        |> put_status(:created)
-        |> put_resp_header("location", repair_info_path(conn, :show, ri))
-        |> render("show.json", repair_info: ri)
+      |> put_status(:created)
+      |> put_resp_header("location", repair_info_path(conn, :show, ri))
+      |> render("show.json", repair_info: ri)
     end
   end
 
   def show(conn, %{"id" => id}) do
-    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost]) do
+    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost, :time_cost]) do
       render(conn, "show.json", repair_info: ri)
     end
   end
 
   def update(conn, %{"id" => id, "repair_info" => repair_info_params}) do
-    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost, :project]) do
+    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost, :time_cost, :project]) do
       parts_cost_changesets = get_parts_cost_changesets(repair_info_params, conn)
+      time_cost_changesets = get_time_cost_changesets(repair_info_params, conn)
       ri_changeset = RepairInfo.changeset(ri, repair_info_params)
-        |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)
+      |> Ecto.Changeset.put_assoc(:parts_cost, parts_cost_changesets)
+      |> Ecto.Changeset.put_assoc(:time_cost, time_cost_changesets)
       with {:ok, %RepairInfo{} = ri} <- save_update(ri_changeset, conn) do
         render(conn, "show.json", repair_info: ri)
       end
@@ -57,10 +61,18 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
 
   defp get_parts_cost_changesets(params, conn) do
     params
-      |> Map.get("parts_cost", [])
-      |> Enum.map(fn(d)->
-        PartsCost.changeset(%PartsCost{}, d)
-      end)
+    |> Map.get("parts_cost", [])
+    |> Enum.map(fn(d)->
+      PartsCost.changeset(%PartsCost{}, d)
+    end)
+  end
+
+  defp get_time_cost_changesets(params, conn) do
+    params
+    |> Map.get("time_cost", [])
+    |> Enum.map(fn(d)->
+      TimeCost.changeset(%TimeCost{}, d)
+    end)
   end
 
   defp get_car_message_changeset(params, conn) do

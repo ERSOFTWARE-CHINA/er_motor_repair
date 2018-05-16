@@ -39,14 +39,14 @@
                             <!-- <nz-input formControlName="plate_num" nzPlaceHolder="请输入车牌号" nzSize="large"></nz-input> -->
                             <nz-input-group [nzSize]="'large'" [nzCompact]="true">
                                 
-                                <nz-select formControlName="plate_prefix" style="width: 25%;" [nzSize]="'large'" nzShowSearch>
+                                <nz-select formControlName="plate_prefix" style="width: 35%;" [nzSize]="'large'" nzShowSearch>
                                     <nz-option
                                         *ngFor="let option of provinces"
                                         [nzLabel]="option"
                                         [nzValue]="option">
                                     </nz-option>
                                 </nz-select>
-                                <input formControlName="plate_num" nz-input style="width: 75%;" [nzSize]="'large'">
+                                <nz-input formControlName="plate_num"  style="width: 65%;" [nzSize]="'large'" (nzBlur)="upcase_plate_num($event)"></nz-input>
                             </nz-input-group>
                             <ng-container *ngIf="form.controls['plate_num'].dirty || form.controls['plate_num'].touched">
                                 <p nz-form-explain *ngIf="form.controls['plate_num'].errors?.required">请输入车牌号</p>

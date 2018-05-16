@@ -103,12 +103,24 @@
                             <nz-table-sort [(nzValue)]="sortMap_repair.no" (nzValueChange)="sort_repair_info('no',$event)"></nz-table-sort>
                         </th>
                         <th nz-th>
+                            <span>进场时间</span>
+                            <nz-table-sort [(nzValue)]="sortMap_repair.entry_date" (nzValueChange)="sort_repair_info('entry_date',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
                             <span>类型</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.type" (nzValueChange)="sort_repair_info('type',$event)"></nz-table-sort>
                         </th>
                         <th nz-th>
                             <span>工时费用</span>
-                            <nz-table-sort [(nzValue)]="sortMap_repair.time_cost" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort>
+                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.time_totalt" (nzValueChange)="sort_repair_info('time_total',$event)"></nz-table-sort> -->
+                        </th>
+                        <th nz-th>
+                            <span>配件费用</span>
+                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.parts_total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
+                        </th>
+                        <th nz-th>
+                            <span>总费用</span>
+                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
                         </th>
                         
                         <th nz-th>
@@ -119,10 +131,7 @@
                             <span>送修人联系方式</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.agent_mobile" (nzValueChange)="sort_repair_info('agent_mobile',$event)"></nz-table-sort>
                         </th>
-                        <th nz-th>
-                            <span>进场时间</span>
-                            <nz-table-sort [(nzValue)]="sortMap_repair.entry_date" (nzValueChange)="sort_repair_info('entry_date',$event)"></nz-table-sort>
-                        </th>
+                        
                         <th nz-th>
                             <span>维修单状态</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.status" (nzValueChange)="sort_repair_info('status',$event)"></nz-table-sort>
@@ -135,21 +144,24 @@
                     <tr nz-tbody-tr *ngFor="let i of nzTable2.data">
 
                         <td nz-td>{{i.no}}</td>
+                        <td nz-td>{{i.entry_date}}</td>
                         <td nz-td>{{i.type}}</td>
-                        <td nz-td>{{i.time_cost}}</td>
-                        
+                        <td nz-td>{{i.time_total}}</td>
+                        <td nz-td>{{i.parts_total}}</td>
+                        <td nz-td>{{i.total}}</td>
                         <td nz-td>{{i.agent}}</td>
                         <td nz-td>{{i.agent_mobile}}</td>
-                        <td nz-td>{{i.entry_date}}</td>
+                        
                         <td nz-td>{{i.status | repairInfoStatusPipe}}</td>
                         <td nz-td>
                             <a (click)="update_repairinfo(i.id)">修改</a>
-                            <span nz-table-divider></span>
-                            <a (click)="remove_repairinfo(i)">删除</a>
                             <span nz-table-divider *ngIf="!i.status"></span>
                             <a (click)="complete(i)" *ngIf="!i.status">完工</a>
                             <span nz-table-divider *ngIf="i.status"></span>
                             <a (click)="dis_complete(i)" *ngIf="i.status">未完工</a>
+                            <span nz-table-divider></span>
+                            <a (click)="remove_repairinfo(i)">删除</a>
+                            
                         </td>
                     </tr>
                 </tbody>

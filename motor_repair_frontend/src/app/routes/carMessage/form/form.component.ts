@@ -48,7 +48,6 @@ export class CarMessageFormComponent implements OnInit {
         this.setTitle();
         if (this.carMessageSerivce.formOperation == 'create') {this.car_message=null;}
         if (this.carMessageSerivce.formOperation == 'update') {this.initUpdate();}
-        console.log("before init form")
         this.form = this.fb.group({
             owner_name : [this.car_message? this.car_message.owner_name : null, Validators.required ],
             phone_num : [this.car_message? this.car_message.phone_num : null, Validators.required],
@@ -71,7 +70,6 @@ export class CarMessageFormComponent implements OnInit {
             car_remark : [this.car_message? this.car_message.car_remark : null]
         });
         this.form.controls["owner_name"].setValue(this.car_message? this.car_message.owner_name : "")
-        console.log("after init form")
     }
 
     setTitle() {
@@ -97,7 +95,7 @@ export class CarMessageFormComponent implements OnInit {
             if (resp.error) { 
                 this.msg.error(resp.error);
             } else {
-                this.msg.success('车辆信息 ' + resp.data.name + ' 已创建！');
+                this.msg.success('车辆信息 ' + resp.data.plate_num + ' 已创建！');
                 this.goBack();
             }
             }).catch(error => this.msg.error(error));
@@ -105,7 +103,7 @@ export class CarMessageFormComponent implements OnInit {
             if (resp.error) { 
                 this.msg.error(resp.error);
             } else {
-                this.msg.success('车辆信息 ' + resp.data.name + ' 已更新！');
+                this.msg.success('车辆信息 ' + resp.data.plate_num + ' 已更新！');
                 this.goBack();
             }
             }).catch(error => this.msg.error(error));
@@ -120,6 +118,12 @@ export class CarMessageFormComponent implements OnInit {
         // 格式化form中的roles属性
         // this.car_message = this.form.value;
         this.form.value.plate_num = this.form.value.plate_prefix + this.form.value.plate_num
+    }
+
+    // 车牌号中输入的字母自动变换为大写
+    upcase_plate_num(e) {
+        let v = this.form.controls["plate_num"].value
+        this.form.controls["plate_num"].setValue(v.toUpperCase())
     }
 
     initUpdate() {

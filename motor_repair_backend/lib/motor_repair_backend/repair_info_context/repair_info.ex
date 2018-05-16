@@ -3,6 +3,7 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
   import Ecto.Changeset
 
   alias MotorRepairBackend.RepairInfoContext.PartsCost
+  alias MotorRepairBackend.RepairInfoContext.TimeCost
   alias MotorRepairBackend.ProjectContext.Project
   alias MotorRepairBackend.CarMessageContext.CarMessage
   alias MotorRepairBackend.Utils.GetDate
@@ -10,7 +11,7 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
   schema "repair_info" do
     field :no, :string                                      # 单号
     field :type, :string                                    # 类型
-    field :time_cost, :float, default: 0                    # 工时费用
+    # field :time_cost, :float, default: 0                    # 工时费用
     field :consultant, :string                              # 服务顾问
     field :entry_date, :date                                # 进场时间
     field :return_date, :date                               # 预交车时间
@@ -28,6 +29,8 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
     belongs_to :project, Project, on_replace: :nilify
     belongs_to :car_message, CarMessage, on_replace: :nilify
     has_many :parts_cost, PartsCost, on_delete: :delete_all, on_replace: :delete
+    has_many :time_cost, TimeCost, on_delete: :delete_all, on_replace: :delete
+    
 
     timestamps()
   end
@@ -35,7 +38,7 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
   @doc false
   def changeset(repair_info, attrs) do
     repair_info
-      |> cast(attrs, [:no, :type, :time_cost, :consultant, :entry_date, :return_date, :items, :customer_comment, :repairman_comment, :advise, :mileage, :next_mileage, :next_date, :agent, :agent_mobile, :status])
+      |> cast(attrs, [:no, :type, :consultant, :entry_date, :return_date, :items, :customer_comment, :repairman_comment, :advise, :mileage, :next_mileage, :next_date, :agent, :agent_mobile, :status])
       |> validate_required([:no, :type])
       |> validate_required(:status)
       |> validate_no_format()

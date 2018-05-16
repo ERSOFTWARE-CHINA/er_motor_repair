@@ -16,6 +16,6 @@ defmodule MotorRepairBackend.SparepartContext.Sparepart do
   def changeset(sparepart, attrs) do
     sparepart
     |> cast(attrs, [:name, :attributes, :specifications])
-    |> validate_required([:name, :attributes, :specifications])
+    |> validate_required([:name])
   end
 end
