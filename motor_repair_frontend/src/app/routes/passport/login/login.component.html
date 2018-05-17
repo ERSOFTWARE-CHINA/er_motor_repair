@@ -101,10 +101,10 @@
                 <span>自动登录</span>
             </label>
         </div>
-        <div nz-col [nzSpan]="12" class="text-right" *ngIf="forget_password">
+        <div nz-col [nzSpan]="12" class="text-right" *ngIf="!forget_password">
             <a class="forgot" (click)="forget()">忘记密码？</a>
         </div>
-        <div nz-col [nzSpan]="12" class="text-right" *ngIf="!forget_password">
+        <div nz-col [nzSpan]="12" class="text-right" *ngIf="forget_password">
             <a class="forgot" (click)="forget()">使用密码登陆</a>
         </div>
     </div>
