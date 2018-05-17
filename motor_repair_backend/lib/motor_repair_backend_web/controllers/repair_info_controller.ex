@@ -46,7 +46,7 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
   end
 
   def delete(conn, %{"id" => id}) do
-    with {:ok, %RepairInfo{} = ri} <- delete_by_id(RepairInfo, id, conn) do
+    with {:ok, %RepairInfo{} = ri} <- delete_by_id(RepairInfo, id, conn, [:time_cost, :parts_cost]) do
       render(conn, "show.json", repair_info: ri)
     end
   end

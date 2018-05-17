@@ -66,9 +66,9 @@ defmodule MotorRepairBackend.BaseContext do
     Repo.update(changeset |> set_belongs_to(conn))
   end
 
-  def delete_by_id(struct, id, conn) do
+  def delete_by_id(struct, id, conn, preload_list \\ []) do
     struct
-    |> get_by_id(id, conn)
+    |> get_by_id(id, conn, preload_list)
     |> case do
       {:error, :not_found} -> {:error, :not_found}
       {:ok, entity} -> Repo.delete(entity)

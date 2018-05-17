@@ -189,11 +189,11 @@ export class DashboardV1Component implements OnInit {
         if (this.del_obj == "carmessage") 
             this.carMsgService.delete(this.del_car.id)
                             .then(resp => this.msg.success("车辆信息:" + resp.data.plate_num + "已删除！")).then(resp => this.getCarMsg() )
-                            .catch((error) => {this.msg.error(error); this.loading_car = false;})
+                            .catch((error) => {this.msg.error("无法删除车辆信息！"); this.loading_car = false;})
         if (this.del_obj == "repairinfo") 
             this.repairInfoService.delete(this.del_repair.id)
                             .then(resp => this.msg.success("维修信息:" + resp.data.no + "已删除！")).then(resp => this.getRepairInfo() )
-                            .catch((error) => {this.msg.error(error); this.loading_repair = false;})
+                            .catch((error) => {this.msg.error("无法删除维修信息！"); this.loading_repair = false;})
     }
 
     update_carmessage(id){
