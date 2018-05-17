@@ -157,9 +157,9 @@
                             <a (click)="update_repairinfo(i.id)" *ngIf="!i.status">修改</a>
                             <span nz-table-divider *ngIf="!i.status"></span>
                             <a (click)="complete(i)" *ngIf="!i.status">完工</a>
-                            <span nz-table-divider *ngIf="i.status"></span>
+                            <span nz-table-divider *ngIf="!i.status"></span>
                             <a (click)="dis_complete(i)" *ngIf="i.status">未完工</a>
-                            <span nz-table-divider></span>
+                            <span nz-table-divider *ngIf="i.status"></span>
                             <a (click)="remove_repairinfo(i)">删除</a>
                             
                         </td>
