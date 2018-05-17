@@ -3,6 +3,7 @@ defmodule MotorRepairBackendWeb.Guardian do
 
   alias MotorRepairBackend.Repo
   alias MotorRepairBackend.UserContext.User
+  alias MotorRepairBackend.BaseContext
 
 
   def subject_for_token(resource, _claims) do
@@ -30,5 +31,13 @@ defmodule MotorRepairBackendWeb.Guardian do
 
   def resource_from_claims(_claims) do
     {:error, :reason_for_error}
+  end
+
+  def resource_with_project_from_conn(conn) do
+    # Here we'll look up our resource from the claims, the subject can be
+    claims = MotorRepairBackendWeb.Guardian.Plug.current_claims(conn)
+    id = claims["sub"]
+    BaseContext.get_by_id(User, id, conn, [:project])
+
   end
 end

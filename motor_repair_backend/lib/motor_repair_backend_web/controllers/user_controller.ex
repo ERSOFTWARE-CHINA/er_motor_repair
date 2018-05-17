@@ -2,10 +2,11 @@ defmodule MotorRepairBackendWeb.UserController do
   use MotorRepairBackendWeb, :controller
   use MotorRepairBackend.UserContext
   alias MotorRepairBackend.RoleContext.Role
+  alias MotorRepairBackendWeb.Guardian
 
   import MotorRepairBackendWeb.AuthPlugs, only: [project_active: 2, auth_root: 2, auth_admin: 2]
 
-  plug :project_active when action in [:index, :create, :show, :update, :delete]
+  plug :project_active when action in [:index, :create, :show, :update, :delete, :change_password]
   plug :auth_admin when action in [:index, :create, :show, :update, :delete]
   plug :auth_root when action in [:assign_to_project] 
 
@@ -48,8 +49,32 @@ defmodule MotorRepairBackendWeb.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    with {:ok, %User{} = user} <- delete_by_id(User, id, conn) do
+    with {:ok, _} <- can_delete(conn, id), {:ok, %User{} = user} <- delete_by_id(User, id, conn) do
       render(conn, "show.json", user: user)
+    end
+  end
+
+  # 修改密码
+  def change_password(conn, %{"old" => old, "new" => new}) do
+    {:ok, resource} = MotorRepairBackendWeb.Guardian.resource_with_project_from_conn(conn)
+    case Comeonin.Pbkdf2.checkpw(old, resource.password_hash) do
+      false -> json conn, %{error: "password error."}
+      true -> 
+        user_changeset = User.changeset(resource, %{"password" => new})
+        with {:ok, %User{} = user} <- save_update(user_changeset, conn) do
+          render(conn, "show.json", user: user)
+        end
+    end
+    
+  end
+
+  # 当前登陆用户无法删除
+  defp can_delete(conn, user_id) do
+    claims = Guardian.Plug.current_claims(conn)
+    id = claims["sub"]
+    case id == user_id do
+      true ->{:error, "can not delete yourself"}
+      false ->{:ok, "can delete"}
     end
   end
 

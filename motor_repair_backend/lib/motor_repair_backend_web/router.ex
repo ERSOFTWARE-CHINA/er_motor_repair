@@ -39,6 +39,7 @@ defmodule MotorRepairBackendWeb.Router do
     pipe_through [:api, :api_auth]
 
     resources "/users", UserController, except: [:new, :edit]
+    post "/users/changepassword", UserController, :change_password
     resources "/projects", ProjectController, except: [:new, :edit]
     
     resources "/roles", RoleController, except: [:new, :edit]

@@ -14,7 +14,7 @@
             </ng-container>
         </div>
     </div>
-    <div nz-form-item>
+    <!-- <div nz-form-item>
         <div nz-form-control [nzValidateStatus]="name">
             <nz-input formControlName="name" [nzPlaceHolder]="'用户名'" [nzSize]="'large'">
                 <ng-template #prefix>
@@ -23,6 +23,22 @@
             </nz-input>
             <ng-container *ngIf="name.dirty || name.touched">
                 <p nz-form-explain *ngIf="name.errors?.required">请输入用户名！</p>
+            </ng-container>
+        </div>
+    </div> -->
+    <div nz-form-item>
+        <div nz-form-control [nzValidateStatus]="mobile">
+            <nz-input-group [nzSize]="'large'" [nzCompact]="true">
+                <nz-select formControlName="mobilePrefix" style="width: 25%;">
+                    <nz-option [nzLabel]="'+86'" [nzValue]="'+86'"></nz-option>
+                    <nz-option [nzLabel]="'+87'" [nzValue]="'+87'"></nz-option>
+                </nz-select>
+                <input formControlName="mobile" id="'11位手机号码'" nz-input style="width: 75%;">
+            </nz-input-group>
+            <ng-container *ngIf="mobile.dirty || mobile.touched">
+                <p nz-form-explain *ngIf="mobile.errors?.required">请输入手机号！</p>
+                <p nz-form-explain *ngIf="mobile.errors?.pattern">手机号格式不正确！</p>
+                <p nz-form-explain *ngIf="form.controls['mobile'].errors?.checked">手机号已被注册！</p>
             </ng-container>
         </div>
     </div>
@@ -68,22 +84,7 @@
             </ng-container>
         </div>
     </div>
-    <div nz-form-item>
-        <div nz-form-control [nzValidateStatus]="mobile">
-            <nz-input-group [nzSize]="'large'" [nzCompact]="true">
-                <nz-select formControlName="mobilePrefix" style="width: 25%;">
-                    <nz-option [nzLabel]="'+86'" [nzValue]="'+86'"></nz-option>
-                    <nz-option [nzLabel]="'+87'" [nzValue]="'+87'"></nz-option>
-                </nz-select>
-                <input formControlName="mobile" id="'11位手机号码'" nz-input style="width: 75%;">
-            </nz-input-group>
-            <ng-container *ngIf="mobile.dirty || mobile.touched">
-                <p nz-form-explain *ngIf="mobile.errors?.required">请输入手机号！</p>
-                <p nz-form-explain *ngIf="mobile.errors?.pattern">手机号格式不正确！</p>
-                <p nz-form-explain *ngIf="form.controls['mobile'].errors?.checked">手机号已被注册！</p>
-            </ng-container>
-        </div>
-    </div>
+    
     <div nz-form-item>
         <div nz-form-control [nzValidateStatus]="captcha">
             <div nz-row [nzGutter]="8">

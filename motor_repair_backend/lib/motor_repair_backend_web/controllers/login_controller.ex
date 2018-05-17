@@ -38,8 +38,8 @@ defmodule MotorRepairBackendWeb.LoginController do
     Project.changeset(%Project{}, pm)
   end
       
-  def login(conn, %{"password" => pw, "userName" => un, "project" => proj} = params) do
-    case checkPassword(un, pw, proj) do
+  def login(conn, %{"password" => pw, "user_mobile" => m} = params) do
+    case checkPassword(m, pw) do
       {:ok, user, project_id} ->
         # 将权限和项目id编码进token
         perms_number = Permissions.get_perms_from_roles(user.roles)
@@ -49,7 +49,7 @@ defmodule MotorRepairBackendWeb.LoginController do
       {:error, _} ->
         conn
         |> put_status(200)
-        |> json(%{error: "Invalid username or password!"})
+        |> json(%{error: "Invalid mobile or password!"})
     end
   end
 
@@ -66,32 +66,33 @@ defmodule MotorRepairBackendWeb.LoginController do
       {:error, _} ->
         conn
         |> put_status(200)
-        |> json(%{error: "Invalid username or password!"})
+        |> json(%{error: "Invalid mobile!"})
     end
   end
 
-  defp checkPassword(username, password, project) do
-    Project
-    |> Repo.get_by(name: project)
-    |> case do
-      nil -> {:error, nil}
-      project -> 
+  # 手机号+密码登陆验证
+  defp checkPassword(mobile, password) do
+    # Project
+    # |> Repo.get_by(name: project)
+    # |> case do
+    #   nil -> {:error, nil}
+    #   project -> 
         user = User
-        |> preload([e], [:roles])
-        |> Repo.get_by(%{ name: username, project_id: project.id })
+        |> preload([e], [:roles, :project])
+        |> Repo.get_by(%{ mobile: mobile })
         cond do
           # 用户存在，且不为root，但用户未激活
           !is_nil(user) && !user.is_root && !user.actived ->
             {:error, nil}
           # 用户存在，且不为root，但项目已禁用
-          !is_nil(user) && !user.is_root && !project.actived ->
+          !is_nil(user) && !user.is_root && !user.project.actived ->
             {:error, nil}
           # 用户存在，且密码正确
           !is_nil(user) && Comeonin.Pbkdf2.checkpw(password, user.password_hash) ->
-            {:ok, user, project.id}
+            {:ok, user, user.project_id}
           true ->
             {:error, nil}
-        end
+        # end
     end
     
   end

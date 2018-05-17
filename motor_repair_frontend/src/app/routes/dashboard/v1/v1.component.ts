@@ -214,7 +214,7 @@ export class DashboardV1Component implements OnInit {
 
     // 维修单完工操作
     complete(i){
-        this.repairInfoService.set_status(i.id, true).then(resp =>  {
+        this.repairInfoService.set_status(i, true).then(resp =>  {
             if ('error' in resp) { 
                 this.msg.error(resp.error);
             } else {
@@ -227,7 +227,7 @@ export class DashboardV1Component implements OnInit {
     // 维修未完工操作
     dis_complete(i){
 
-            this.repairInfoService.set_status(i.id, false).then(resp =>  {
+            this.repairInfoService.set_status(i, false).then(resp =>  {
                 if ('error' in resp) { 
                     this.msg.error(resp.error);
                 } else {

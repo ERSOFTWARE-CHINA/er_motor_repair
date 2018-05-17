@@ -54,7 +54,7 @@ export class UserRegisterComponent implements OnDestroy {
         
         this.form = fb.group({
             project: [null, [Validators.required], this.nameValidator.bind(this)],
-            name: [null, [Validators.required]],
+            // name: [null, [Validators.required]],
             password: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.checkPassword.bind(this)]],
             confirm: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.passwordEquar]],
             mobilePrefix: [ '+86' ],
@@ -87,7 +87,7 @@ export class UserRegisterComponent implements OnDestroy {
 
     // region: fields
     get project() { return this.form.controls.project; }
-    get name() { return this.form.controls.name; }
+    // get name() { return this.form.controls.name; }
     get password() { return this.form.controls.password; }
     get confirm() { return this.form.controls.confirm; }
     get mobile() { return this.form.controls.mobile; }
@@ -136,7 +136,7 @@ export class UserRegisterComponent implements OnDestroy {
         this.registService.register(this.form.value)
             .then(resp => {
                 if (resp.ok) {
-                    this.registService.registeredName = resp.ok.name;
+                    this.registService.registeredName = resp.ok.mobile;
                     this.router.navigateByUrl('/passport/register-result');
                 }
                 if (resp.error) this.msg.error(resp.error)

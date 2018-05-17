@@ -4,7 +4,7 @@ defmodule MotorRepairBackend.UserContext.User do
 
 
   schema "users" do
-    field :name, :string
+    field :name, :string, default: "匿名用户"
     field :mobile, :string
     field :password, :string, virtual: true
     # 默认密码"admin123"
@@ -28,7 +28,7 @@ defmodule MotorRepairBackend.UserContext.User do
     user
       |> cast(attrs, [:name, :mobile, :password, :real_name, :position, :is_admin, :is_root, :actived])
       # |> cast_attachments(attrs, [:avatar])
-      |> validate_required([:name])
+      # |> validate_required([:name])
       |> validate_format(:mobile, ~r/^1\d{10}$/)
       |> unique_constraint(:mobile)
       |> validate_length(:name, min: 2)

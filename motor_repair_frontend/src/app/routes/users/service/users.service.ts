@@ -75,8 +75,8 @@ export class UsersService {
                .map(response => response.json()).toPromise();
   }
 
-  changePwd(pwd){
-    return this.http.post(this.url + `/changepwd/${pwd}`,"", getTokenOptions(null))
+  changePwd(obj){
+    return this.http.post(this.url + `/changepassword`,obj, getTokenOptions(null))
     .map(response => response.json()).toPromise();
   }
 

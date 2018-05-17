@@ -44,8 +44,8 @@ export class UserLoginComponent implements OnDestroy {
         this.reuseTabService.excludes = [reg]
 
         this.form = fb.group({
-            project: [null, [Validators.required, Validators.minLength(4)]],
-            userName: [null, [Validators.required, Validators.minLength(4)]],
+            // project: [null, [Validators.required, Validators.minLength(4)]],
+            user_mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
             password: [null, Validators.required],
             mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
             captcha: [null, [Validators.required]],
@@ -54,8 +54,8 @@ export class UserLoginComponent implements OnDestroy {
     }
 
     // region: fields
-    get project() { return this.form.controls.project; }
-    get userName() { return this.form.controls.userName; }
+    // get project() { return this.form.controls.project; }
+    get user_mobile() { return this.form.controls.user_mobile; }
     get password() { return this.form.controls.password; }
     get mobile() { return this.form.controls.mobile; }
     get captcha() { return this.form.controls.captcha; }
@@ -104,14 +104,14 @@ export class UserLoginComponent implements OnDestroy {
     submit() {
         this.error = '';
         if (this.type === 0) {
-            this.userName.markAsDirty();
+            this.user_mobile.markAsDirty();
             this.password.markAsDirty();
-            this.project.markAsDirty();
-            if (this.userName.invalid || this.password.invalid) return;
+            // this.project.markAsDirty();
+            if (this.user_mobile.invalid || this.password.invalid) return;
         } else {
             this.mobile.markAsDirty();
             this.captcha.markAsDirty();
-            delete this.form.value["userName"];
+            delete this.form.value["user_mobile"];
             if (this.mobile.invalid || this.captcha.invalid) return;
             if (this.captcha.value !== this.realCaptcha) {this.captchaInvalid = true;return};
         }

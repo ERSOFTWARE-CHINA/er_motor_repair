@@ -2,6 +2,7 @@ export class RepairInfo {
     id: number;
     no: string;
     type: string;
+    car_message_id: string;
     // time_cost: number;
     consultant: string;
     entry_date: Date;
@@ -15,7 +16,7 @@ export class RepairInfo {
     next_date: Date;
     agent: string;
     agent_mobile: string;
-    status: string;
+    status: boolean;
     parts_cost: PartsCost[];
     time_cost: TimeCost[];
     //工时费总计、配件配总计以及总计

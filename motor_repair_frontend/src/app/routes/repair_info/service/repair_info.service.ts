@@ -56,10 +56,10 @@ export class RepairInfoService {
                 .map(response => response.json()).toPromise();
     }
 
-    set_status(id, value):  Promise<any>{
-        let v = { status: value}
+    set_status(obj, value):  Promise<any>{
+        let v = { status: value, time_cost: obj.time_cost, parts_cost: obj.parts_cost}
         let param = { repair_info: v} 
-        return this.http.put(this.url + `/${id}`, param, getTokenOptions(null))
+        return this.http.put(this.url + `/${obj.id}`, param, getTokenOptions(null))
             .map(response => response.json())
             .toPromise();
     }

@@ -8,6 +8,7 @@ import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
 
 import { RepairInfoService } from '../service/repair_info.service';
 import { SparepartService } from '../../sparepart/service/sparepart.service';
+import { CarMessageService } from '../../carMessage/service/carMessage.service';
 import { RepairInfo } from '../domain/repair_info.domain'; 
 import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 // import { stringToDate} from '../../../../utils/utils';
@@ -35,12 +36,16 @@ export class RepairInfoFormComponent implements OnInit {
     parts_cost_i = null
     parts_name = null
 
+    // 是否可以修改
+    disabled = false
+
 
     constructor(
         private fb: FormBuilder, 
         private router: Router, 
         private mrSrv: RepairInfoService,
-        private spSrv: SparepartService, 
+        private spSrv: SparepartService,
+        private carMessageSrv: CarMessageService, 
         private msg: NzMessageService,
         private reuseTabService: ReuseTabService,
         private modalSrv: NzModalService) {}
@@ -243,6 +248,7 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     initCreate() {
+        this.disabled = false;
         this.reuseTabService.title ="创建维修信息"; 
         this.carMessage = this.mrSrv.carMessage;
         this.title = "创建维修信息"
@@ -254,8 +260,14 @@ export class RepairInfoFormComponent implements OnInit {
 
     initUpdate() {
         this.reuseTabService.title ="修改维修信息"; 
+        // this.carMessage = this.mrSrv.carMessage;
+        this.carMessageSrv.initUpdate(this.mrSrv.repairInfo.car_message_id)
+                          .then(resp => this.carMessage = resp.data)
+                          .then(resp => {console.log('geted carmessage');console.log(this.carMessage)})
+        
         this.title = "修改维修信息"
         this.repairInfo = this.mrSrv.repairInfo;
+        this.disabled = this.repairInfo.status
         console.log(this.repairInfo)
     }
 

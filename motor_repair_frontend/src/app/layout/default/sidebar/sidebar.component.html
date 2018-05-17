@@ -3,15 +3,63 @@
         <div nz-dropdown class="user-block-dropdown">
             <nz-avatar class="avatar" [nzIcon]="'user'" [nzSize]="'large'"></nz-avatar>
             <div class="info">
-                <strong>{{settings.user.name}}</strong>
-                <p class="text-truncate">{{settings.user.email}}</p>
+                <strong>{{username}}</strong>
+                <p class="text-truncate">{{mobile}}</p>
             </div>
         </div>
         <ul nz-menu>
             <li nz-menu-item (click)="msgSrv.success('profile')">{{ 'profile' | translate }}</li>
-            <li nz-menu-item (click)="msgSrv.success('settings')">{{ 'settings' | translate }}</li>
-            <li nz-menu-item (click)="msgSrv.success('logout')">{{ 'logout' | translate }}</li>
+            <li nz-menu-item (click)="changePassword()">{{ '修改密码' }}</li>
+            <li nz-menu-item (click)="logout()">{{ '登出' }}</li>
         </ul>
     </nz-dropdown>
     <sidebar-nav class="d-block py-lg"></sidebar-nav>
 </div>
+
+<nz-modal [nzVisible]="modalVisible" [nzTitle]="'修改密码'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <form nz-form [formGroup]="password_form" (ngSubmit)="_submitPasswordForm()" [nzLayout]="'vertical'">
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col><label nz-form-item-required>原密码</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="old">
+                    <nz-input formControlName="old" [nzPlaceHolder]="'输入原密码'" [nzType]="'password'" [nzSize]="'large'">
+                        <ng-template #prefix>
+                            <i class="anticon anticon-lock"></i>
+                        </ng-template>
+                    </nz-input>
+                    <ng-container *ngIf="password_form.controls['old'].dirty || password_form.controls['old'].touched">
+                        <p nz-form-explain *ngIf="password_form.controls['old'].errors?.required">请输入原密码</p>
+                    </ng-container>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col><label nz-form-item-required>新密码</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="new">
+                    <nz-input formControlName="new" [nzPlaceHolder]="'输入新密码'" [nzType]="'password'" [nzSize]="'large'">
+                        <ng-template #prefix>
+                            <i class="anticon anticon-lock"></i>
+                        </ng-template>
+                    </nz-input>
+                    <ng-container *ngIf="password_form.controls['new'].dirty || password_form.controls['new'].touched">
+                        <p nz-form-explain *ngIf="password_form.controls['new'].errors?.required">请输入新密码</p>
+                    </ng-container>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col><label nz-form-item-required>确认密码</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="check_new">
+                    <nz-input formControlName="check_new" [nzPlaceHolder]="'再次输入新密码'" [nzType]="'password'" [nzSize]="'large'">
+                        <ng-template #prefix>
+                            <i class="anticon anticon-lock"></i>
+                        </ng-template>
+                    </nz-input>
+                    <ng-container *ngIf="password_form.controls['check_new'].dirty || password_form.controls['check_new'].touched">
+                        <p nz-form-explain *ngIf="password_form.controls['check_new'].errors?.required">请再次输入新密码</p>
+                        <p nz-form-explain *ngIf="password_form.controls['check_new'].errors?.equar">再次输入的密码不匹配</p>
+                    </ng-container>
+                </div>
+            </div>
+        </form>
+
+    </ng-template>
+</nz-modal>

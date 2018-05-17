@@ -1,9 +1,9 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
     <nz-tabset [nzAnimated]="false" class="tabs" (nzSelectChange)="switch($event)">
         <nz-tab>
-            <ng-template #nzTabHeading>账户密码登录</ng-template>
+            <ng-template #nzTabHeading>密码登录</ng-template>
             <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
-            <div nz-form-item>
+            <!-- <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="poject">
                     <nz-input formControlName="project" [nzPlaceHolder]="'项目名称'" [nzSize]="'large'" (input)="onChange()">
                         <ng-template #prefix>
@@ -15,17 +15,17 @@
                         <p nz-form-explain *ngIf="project.errors?.minlength">至少四个字符</p>
                     </ng-container>
                 </div>
-            </div>
+            </div> -->
             <div nz-form-item>
-                <div nz-form-control [nzValidateStatus]="userName">
-                    <nz-input formControlName="userName" [nzPlaceHolder]="'用户名'" [nzSize]="'large'" (input)="onChange()">
+                <div nz-form-control [nzValidateStatus]="user_mobile">
+                    <nz-input formControlName="user_mobile" [nzPlaceHolder]="'手机号'" [nzSize]="'large'" (input)="onChange()">
                         <ng-template #prefix>
-                            <i class="anticon anticon-user"></i>
+                            <i class="anticon anticon-phone"></i>
                         </ng-template>
                     </nz-input>
-                    <ng-container *ngIf="userName.dirty || userName.touched">
-                        <p nz-form-explain *ngIf="userName.errors?.required">请输入账户名！</p>
-                        <p nz-form-explain *ngIf="userName.errors?.minlength">至少五个字符</p>
+                    <ng-container *ngIf="user_mobile.dirty || user_mobile.touched">
+                        <p nz-form-explain *ngIf="user_mobile.errors?.required">请输入手机号！</p>
+                        <p nz-form-explain *ngIf="user_mobile.errors?.pattern">手机号格式错误！</p>
                     </ng-container>
                 </div>
             </div>
@@ -42,18 +42,18 @@
             <div *ngIf = "invalidlogin">
                 <p >
                     <font color="red">
-                        登录失败，请输入正确的项目名称、用户名以及密码！
+                        登录失败，请输入正确的手机号以及密码！
                     </font>
                 </p>
             </div>
         </nz-tab>
         <nz-tab>
-            <ng-template #nzTabHeading>手机号登录</ng-template>
+            <ng-template #nzTabHeading>验证码登录</ng-template>
             <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="mobile">
                     <nz-input formControlName="mobile" [nzPlaceHolder]="'手机号'" [nzSize]="'large'">
                         <ng-template #prefix>
-                            <i class="anticon anticon-user"></i>
+                            <i class="anticon anticon-phone"></i>
                         </ng-template>
                     </nz-input>
                     <ng-container *ngIf="mobile.dirty || mobile.touched">
