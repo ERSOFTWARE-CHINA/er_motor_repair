@@ -208,10 +208,12 @@ export class UserLoginComponent implements OnDestroy {
     }
 
     forget(){
+        this.type = 1;
         this.forget_password = true;
     }
 
     not_forget(){
+        this.type = 0;
         this.forget_password = false;
     }
 
