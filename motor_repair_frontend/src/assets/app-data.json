@@ -45,11 +45,11 @@
                 {
                     "text": "系统设置",
                     "link": "",
+                    "acl": "admin",
                     "icon": "icon-settings",
                     "children": [
                         {
                             "text": "用户管理",
-                            "acl": "admin",
                             "link": "/users/page"
                         },
                         {
@@ -73,7 +73,6 @@
                   "children": [
                     {
                         "text": "车辆信息维护",
-                        "acl": "admin",
                         "link": "/carMessage/page"
                     }
                 ]

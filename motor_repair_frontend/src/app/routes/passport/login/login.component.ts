@@ -28,6 +28,9 @@ export class UserLoginComponent implements OnDestroy {
 
     realCaptcha = null;
 
+    // 默认显示用户名密码登陆的方式
+    forget_password = false;
+
     constructor(
         fb: FormBuilder,
         private router: Router,
@@ -202,6 +205,10 @@ export class UserLoginComponent implements OnDestroy {
 
     ngOnDestroy(): void {
         if (this.interval$) clearInterval(this.interval$);
+    }
+
+    forget(){
+        this.forget_password = !this.forget_password;
     }
 
     

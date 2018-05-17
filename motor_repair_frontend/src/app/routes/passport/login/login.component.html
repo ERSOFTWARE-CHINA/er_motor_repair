@@ -1,6 +1,6 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
     <nz-tabset [nzAnimated]="false" class="tabs" (nzSelectChange)="switch($event)">
-        <nz-tab>
+        <nz-tab *ngIf="!forget_password">
             <ng-template #nzTabHeading>密码登录</ng-template>
             <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
             <!-- <div nz-form-item>
@@ -47,7 +47,7 @@
                 </p>
             </div>
         </nz-tab>
-        <nz-tab>
+        <nz-tab *ngIf="forget_password">
             <ng-template #nzTabHeading>验证码登录</ng-template>
             <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="mobile">
@@ -101,8 +101,11 @@
                 <span>自动登录</span>
             </label>
         </div>
-        <div nz-col [nzSpan]="12" class="text-right">
-            <a class="forgot" (click)="msg.error('此功能正在开发中')">忘记密码？</a>
+        <div nz-col [nzSpan]="12" class="text-right" *ngIf="forget_password">
+            <a class="forgot" (click)="forget()">忘记密码？</a>
+        </div>
+        <div nz-col [nzSpan]="12" class="text-right" *ngIf="!forget_password">
+            <a class="forgot" (click)="forget()">使用密码登陆</a>
         </div>
     </div>
     <div nz-form-item>

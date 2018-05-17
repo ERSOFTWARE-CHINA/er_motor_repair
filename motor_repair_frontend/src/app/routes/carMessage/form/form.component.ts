@@ -46,7 +46,7 @@ export class CarMessageFormComponent implements OnInit {
     
     ngOnInit() {
         this.setTitle();
-        if (this.carMessageSerivce.formOperation == 'create') {this.car_message=null;}
+        if (this.carMessageSerivce.formOperation == 'create') {this.initCreate()}
         if (this.carMessageSerivce.formOperation == 'update') {this.initUpdate();}
         this.form = this.fb.group({
             owner_name : [this.car_message? this.car_message.owner_name : null, Validators.required ],
@@ -128,6 +128,10 @@ export class CarMessageFormComponent implements OnInit {
 
     initUpdate() {
         this.car_message = this.carMessageSerivce.carMessage;
+    }
+
+    initCreate() {
+        this.carMessageSerivce.carMessage = null;
     }
 
     get_plate_prefix(s){
