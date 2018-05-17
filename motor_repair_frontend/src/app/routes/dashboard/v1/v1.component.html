@@ -154,7 +154,7 @@
                         
                         <td nz-td>{{i.status | repairInfoStatusPipe}}</td>
                         <td nz-td>
-                            <a (click)="update_repairinfo(i.id)">修改</a>
+                            <a (click)="update_repairinfo(i.id)" *ngIf="!i.status">修改</a>
                             <span nz-table-divider *ngIf="!i.status"></span>
                             <a (click)="complete(i)" *ngIf="!i.status">完工</a>
                             <span nz-table-divider *ngIf="i.status"></span>
