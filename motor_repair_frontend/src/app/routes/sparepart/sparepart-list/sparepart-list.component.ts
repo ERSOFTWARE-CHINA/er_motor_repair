@@ -112,6 +112,14 @@ export class SparepartListComponent implements OnInit {
         if ((this.q.specifications == null)||(this.q.specifications == "")){delete this.q.specifications}
     }
 
+    reset(){
+        this.q.name = null
+        this.q.attributes = null
+        this.q.specifications = null
+        this.formatForm()
+        this.getData()
+    }
+
     // 删除确认框相关
     confirmContent = ""
     modalVisible = false;

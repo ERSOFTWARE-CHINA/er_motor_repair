@@ -28,52 +28,81 @@
           </button>
       </div>
 
-      <nz-table #nzTable [nzAjaxData]="data" [nzTotal]="total" [nzPageSize]="q.page_size" [nzLoading]="loading"
-                  (nzPageIndexChange)="pageChange($event)">
-          <thead nz-thead>
-              <tr>
-                  <th nz-th>
-                      <span>维修单号</span>
-                      <nz-table-sort [(nzValue)]="sortMap.no" (nzValueChange)="sort('no',$event)"></nz-table-sort>
-                  </th>
-                  <th nz-th>
-                      <span>类型</span>
-                      <nz-table-sort [(nzValue)]="sortMap.type" (nzValueChange)="sort('type',$event)"></nz-table-sort>
-                  </th>
-                  <th nz-th>
-                      <span>工时费用</span>
-                      <nz-table-sort [(nzValue)]="sortMap.time_cost" (nzValueChange)="sort('time_cost',$event)"></nz-table-sort>
-                  </th>
-                  <th nz-th>
-                      <span>项目</span>
-                      <nz-table-sort [(nzValue)]="sortMap.items" (nzValueChange)="sort('items',$event)"></nz-table-sort>
-                  </th>
-                  <th nz-th>
-                      <span>送修人</span>
-                      <nz-table-sort [(nzValue)]="sortMap.agent" (nzValueChange)="sort('agent',$event)"></nz-table-sort>
-                  </th>
+      <nz-table #nzTable2 [nzAjaxData]="data" [nzTotal]="total" [nzPageSize]="q.page_size" [nzLoading]="loading"
+            (nzPageIndexChange)="pageChange($event)" nzShowTotal="true" 
+            nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
+                <thead nz-thead>
+                    <tr>
+                        <th nz-th>
+                            <span>维修单号</span>
+                            <nz-table-sort [(nzValue)]="sortMap.no" (nzValueChange)="sort('no',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>进场时间</span>
+                            <nz-table-sort [(nzValue)]="sortMap.entry_date" (nzValueChange)="sort('entry_date',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>类型</span>
+                            <nz-table-sort [(nzValue)]="sortMap.type" (nzValueChange)="sort('type',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>工时费用</span>
+                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.time_totalt" (nzValueChange)="sort_repair_info('time_total',$event)"></nz-table-sort> -->
+                        </th>
+                        <th nz-th>
+                            <span>配件费用</span>
+                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.parts_total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
+                        </th>
+                        <th nz-th>
+                            <span>总费用</span>
+                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
+                        </th>
+                        
+                        <th nz-th>
+                            <span>送修人</span>
+                            <nz-table-sort [(nzValue)]="sortMap.agent" (nzValueChange)="sort('agent',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>送修人联系方式</span>
+                            <nz-table-sort [(nzValue)]="sortMap.agent_mobile" (nzValueChange)="sort('agent_mobile',$event)"></nz-table-sort>
+                        </th>
+                        
+                        <th nz-th>
+                            <span>维修单状态</span>
+                            <nz-table-sort [(nzValue)]="sortMap.status" (nzValueChange)="sort('status',$event)"></nz-table-sort>
+                        </th>
 
-                  
+                        <th nz-th><span>操作</span></th>
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr nz-tbody-tr *ngFor="let i of nzTable2.data">
 
-                  <th nz-th><span>操作</span></th>
-              </tr>
-          </thead>
-          <tbody nz-tbody>
-              <tr nz-tbody-tr *ngFor="let i of nzTable.data">
-
-                  <td nz-td>{{i.no}}</td>
-                  <td nz-td>{{i.type}}</td>
-                  <td nz-td>{{i.time_cost}}</td>
-                  <td nz-td>{{i.items}}</td>
-                  <td nz-td>{{i.agent}}</td>
-                  <td nz-td>
-                      <a (click)="update(i.id)">修改</a>
-                      <span nz-table-divider></span>
-                      <a (click)="remove(i)">删除</a>
-                  </td>
-              </tr>
-          </tbody>
-      </nz-table>
+                        <td nz-td>{{i.no}}</td>
+                        <td nz-td>{{i.entry_date}}</td>
+                        <td nz-td>{{i.type}}</td>
+                        <td nz-td>{{i.time_total}}</td>
+                        <td nz-td>{{i.parts_total}}</td>
+                        <td nz-td>{{i.total}}</td>
+                        <td nz-td>{{i.agent}}</td>
+                        <td nz-td>{{i.agent_mobile}}</td>
+                        
+                        <td nz-td>{{i.status | repairInfoStatusPipe}}</td>
+                        <td nz-td>
+                            <a (click)="update_repairinfo(i.id)" *ngIf="!i.status">修改</a>
+                            <span nz-table-divider *ngIf="!i.status"></span>
+                            <a (click)="update_repairinfo(i.id)" *ngIf="i.status">查看</a>
+                            <span nz-table-divider *ngIf="i.status"></span>
+                            <a (click)="complete(i)" *ngIf="!i.status">完工</a>
+                            <span nz-table-divider *ngIf="!i.status"></span>
+                            <a (click)="dis_complete(i)" *ngIf="i.status">未完工</a>
+                            <span nz-table-divider *ngIf="i.status"></span>
+                            <a (click)="remove_repairinfo(i)">删除</a>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
   </nz-card>
 </div>
 <nz-modal [nzVisible]="modalVisible" [nzTitle]="'删除确认'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">

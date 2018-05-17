@@ -284,7 +284,7 @@
                                 <a (click)="add_sparepart(i)">新增配件</a>
                                 <span nz-table-divider></span>
                           </span>
-                          <span *ngIf="editIndex!==i">
+                          <span *ngIf="editIndex!==i && !disabled">
                               <a (click)="edit(i)">编辑</a>
                               <span nz-table-divider></span>
                               <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
@@ -341,7 +341,7 @@
                     </td>
                         
                     <td nz-td>
-                        <span *ngIf="editIndex2!==i">
+                        <span *ngIf="editIndex2!==i && !disabled">
                             <a (click)="edit_time_cost(i)">编辑</a>
                             <span nz-table-divider></span>
                             <nz-popconfirm (nzOnConfirm)="del_time_cost(i)" [nzTitle]="'是否要删除此行？'">

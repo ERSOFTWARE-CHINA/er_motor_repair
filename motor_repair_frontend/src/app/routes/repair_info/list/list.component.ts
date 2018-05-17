@@ -7,6 +7,8 @@ import { tap } from 'rxjs/operators';
 
 import { RepairInfoService } from '../service/repair_info.service';
 
+import { RepairInfoStatusPipe } from '../../../pipes/pipes'; 
+
 @Component({
     selector: 'repair_info-list',
     templateUrl: './list.component.html'
@@ -71,16 +73,17 @@ export class RepairInfoListComponent implements OnInit {
         this.delObj = obj;
     }
 
-    delete() {
-        this.mrSrv.delete(this.delObj.id)
-                         .then(resp => this.msg.success("领料单:" + resp.data.name + "已删除！")).then(resp => this.getData() )
-                         .catch((error) => {this.msg.error(error); this.loading = false;})
-    }
+    // delete() {
+    //     this.mrSrv.delete(this.delObj.id)
+    //                      .then(resp => this.msg.success("领料单:" + resp.data.name + "已删除！")).then(resp => this.getData() )
+    //                      .catch((error) => {this.msg.error(error); this.loading = false;})
+    // }
 
     add() {
-        this.mrSrv.formOperation = 'create';
-        this.mrSrv.isUpdate=false;
-        this.router.navigateByUrl('/repair_info/form');
+        // this.mrSrv.formOperation = 'create';
+        // this.mrSrv.isUpdate=false;
+        this.msg.success("请在首页选择客户再执行开单操作^_^")
+        this.router.navigateByUrl('/dashboard/v1');
     }
 
     update(id) {
@@ -121,6 +124,58 @@ export class RepairInfoListComponent implements OnInit {
             order: null
         };
         this.getData()
+    }
+
+    // add_repair_info(){
+    //   this.mrSrv.formOperation = 'create';
+    //   this.mrSrv.isUpdate=false;
+    //   this.router.navigateByUrl('/repair_info/form');
+    // }
+
+    remove_repairinfo(obj) {
+      this.confirmContent = "确定要删除维修信息?";
+      this.modalVisible = true;
+      this.delObj = obj;
+    } 
+
+    delete(){
+        this.mrSrv.delete(this.delObj.id)
+                  .then(resp => this.msg.success("维修信息:" + resp.data.no + "已删除！")).then(resp => this.getData() )
+                  .catch((error) => {this.msg.error("无法删除维修信息！"); this.loading = false;})
+    }
+
+    update_repairinfo(id) {
+      this.mrSrv.formOperation='update';
+      this.mrSrv.initUpdate(id)
+          .then(result => { console.log(result);this.mrSrv.repairInfo = result.data;})
+          .then(() => this.router.navigateByUrl('/repair_info/form')).catch((error)=>
+          this.msg.error(error)); 
+    }
+
+    // 维修单完工操作
+    complete(i){
+      this.mrSrv.set_status(i, true).then(resp =>  {
+          if ('error' in resp) { 
+              this.msg.error(resp.error);
+          } else {
+              this.msg.success('维修单：'+resp.data.no + '已设置为完成状态！');
+          }
+          this.getData()}).catch(error => this.msg.error(error));
+
+    }
+
+    // 维修未完工操作
+    dis_complete(i){
+
+      this.mrSrv.set_status(i, false).then(resp =>  {
+          if ('error' in resp) { 
+              this.msg.error(resp.error);
+          } else {
+              this.msg.success('维修单：'+resp.data.no + '已设置为未完成状态！');
+          }
+          this.getData()}).catch(error => this.msg.error(error));
+  
+      
     }
 
     // 删除确认框相关

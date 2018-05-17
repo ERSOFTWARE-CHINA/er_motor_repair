@@ -66,6 +66,7 @@ export class SparepartFormComponent implements OnInit {
         if (this.form.invalid) return ;
 
         let op = this.sparepartService.formOperation;
+        console.log(op)
         if (op == 'create') this.sparepartService.add(this.form.value).then(resp => {
             if (resp.error) { 
                 this.msg.error(resp.error);
@@ -86,7 +87,7 @@ export class SparepartFormComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigateByUrl('/dashboard/v1');
+        this.router.navigateByUrl('/spareparts/page');
     }
 
     //用户名name异步验证

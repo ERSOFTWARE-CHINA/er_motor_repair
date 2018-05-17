@@ -31,7 +31,7 @@
 
                 <div nz-col [nzSpan]="expandForm ? 24 : 8" class="mb-md" [class.text-right]="expandForm">
                     <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading" [nzSize]="'large'" >查询</button>
-                    <button nz-button type="reset" (click)="getData()" [nzSize]="'large'" class="mx-sm">重置</button>
+                    <button nz-button type="reset" (click)="reset()" [nzSize]="'large'" class="mx-sm">重置</button>
                     <a (click)="expandForm=!expandForm">
                         {{expandForm ? '收起' : '展开'}}
                         <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>

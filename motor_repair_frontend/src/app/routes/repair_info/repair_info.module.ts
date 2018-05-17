@@ -8,8 +8,10 @@ import { RepairInfoComponent } from './repair_info.component';
 import { RepairInfoListComponent } from './list/list.component';
 import { RepairInfoFormComponent } from './form/form.component';
 
+import { MainPipe } from '../../pipes/pipes.module';
+
 @NgModule({
-  imports: [ SharedModule, RepairInfoRoutingModule ],
+  imports: [ SharedModule, RepairInfoRoutingModule, MainPipe ],
   declarations: [
     RepairInfoComponent,
     RepairInfoListComponent,
