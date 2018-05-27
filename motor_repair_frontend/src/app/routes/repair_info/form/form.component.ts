@@ -323,10 +323,11 @@ export class RepairInfoFormComponent implements OnInit {
                     this.msg.success('创建备件 ' + resp.data.name + ' 成功！');
                     this.modalVisible = false;
                     this.init_sparepart_form();
-                    console.log("push and set value")
-                    console.log(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
+                    // console.log("push and set value")
+                    // console.log(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
                     this.spareparts.push(resp.data);
                     this.parts_cost.controls[this.parts_cost_i]["controls"]["name"].setValue(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
+                    this.parts_cost.controls[this.parts_cost_i]["controls"]["unit_price"].setValue(resp.data.price)
                 }}).then(resp => this.getSparepart()).catch(error => this.msg.error(error));
         }
     }
@@ -345,8 +346,8 @@ export class RepairInfoFormComponent implements OnInit {
     init_sparepart_form() {
         this.sparepart_form = this.fb.group({
             name: [null, [Validators.required]],
-            specifications: [null],
-            attributes: [null]
+            specifications: [null, [Validators.required]],
+            price: [null, [Validators.required, this.validateNumber]]
         });
     }
     

@@ -39,6 +39,9 @@ export class AuthenticationService {
                 let mobile = response.json() && response.json().user && response.json().user.mobile;
                 let perms = response.json() && response.json().perms;
                 let avatar = response.json() && response.json().user && response.json().user.avatar;
+                let project_name = response.json() && response.json().project && response.json().project.name
+                let project_province = response.json() && response.json().project && response.json().project.province
+                let project_city = response.json() && response.json().project && response.json().project.city
 
               
                  if (!error && token && username && perms) {
@@ -48,8 +51,11 @@ export class AuthenticationService {
                     localStorage.setItem('currentUsername', username);
                     localStorage.setItem('currentPerms', perms);
                     localStorage.setItem('username', username);
-                    localStorage.setItem('mobile', mobile)
-                    localStorage.setItem('avatar', avatar)
+                    localStorage.setItem('mobile', mobile);
+                    localStorage.setItem('avatar', avatar);
+                    localStorage.setItem('project_name', project_name)
+                    localStorage.setItem('project_province', project_province)
+                    localStorage.setItem('project_city', project_city)
                     this.setACL(response.json());
                     return true;
                 } else {

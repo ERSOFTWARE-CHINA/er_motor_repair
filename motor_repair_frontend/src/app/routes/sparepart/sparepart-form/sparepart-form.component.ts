@@ -39,10 +39,9 @@ export class SparepartFormComponent implements OnInit {
         if (this.sparepartService.formOperation == 'create') {this.sparepart=null;}
         if (this.sparepartService.formOperation == 'update') {this.initUpdate();}
         this.form = this.fb.group({
-            name : [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$')])],
-            attributes : [this.sparepart? this.sparepart.attributes : null],
-            specifications : [this.sparepart? this.sparepart.specifications : null, ],
-            // type : [this.sparepart? this.sparepart.type : null],
+            name : [null, Validators.compose([Validators.required, Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$')])],
+            specifications : [this.sparepart? this.sparepart.specifications : null, [Validators.required]],
+            price : [this.sparepart? this.sparepart.price : 0, [Validators.required, this.validateNumber]],
         });
         this.form.controls["name"].setValue(this.sparepart? this.sparepart.name : "")
     }
@@ -66,7 +65,6 @@ export class SparepartFormComponent implements OnInit {
         if (this.form.invalid) return ;
 
         let op = this.sparepartService.formOperation;
-        console.log(op)
         if (op == 'create') this.sparepartService.add(this.form.value).then(resp => {
             if (resp.error) { 
                 this.msg.error(resp.error);
@@ -74,7 +72,7 @@ export class SparepartFormComponent implements OnInit {
                 this.msg.success('零配件 ' + resp.data.name + ' 已创建！');
                 this.goBack();
             }
-            }).catch(error => this.msg.error(error));
+            }).catch(error => this.msg.error("创建配件失败！"));
         if (op == 'update') this.sparepartService.update(this.sparepart.id, this.form.value).then(resp => {
             if (resp.error) { 
                 this.msg.error(resp.error);
@@ -82,7 +80,7 @@ export class SparepartFormComponent implements OnInit {
                 this.msg.success('零配件 ' + resp.data.name + ' 已更新！');
                 this.goBack();
             }
-            }).catch(error => this.msg.error(error));
+            }).catch(error => this.msg.error("修改配件失败！"));
 
     }
 
@@ -106,4 +104,10 @@ export class SparepartFormComponent implements OnInit {
     initUpdate() {
         this.sparepart = this.sparepartService.sparepart;
     }
+
+    //数字验证
+    validateNumber(c: FormControl) {
+        if (c.value == null || c.value == "") return null
+        return c.value > 0 ? null : {validateNumber: true}
+    };
 }

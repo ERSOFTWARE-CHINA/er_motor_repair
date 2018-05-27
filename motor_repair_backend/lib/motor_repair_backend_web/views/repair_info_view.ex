@@ -1,6 +1,7 @@
 defmodule MotorRepairBackendWeb.RepairInfoView do
   use MotorRepairBackendWeb, :view
   alias MotorRepairBackendWeb.RepairInfoView
+  alias Decimal
 
   def render("index.json", %{page: page}) do
     %{
@@ -23,23 +24,25 @@ defmodule MotorRepairBackendWeb.RepairInfoView do
 
   # 维修单需要工时价格总计和配件价格总计以及总计三个字段
   defp add_price_to_repair_info(repair_info) do
+    acc = Decimal.new(".00")
+    d = Decimal.new(".0000")
     time_cost = 
     case repair_info.time_cost do
-      [] -> 0
+      [] -> acc
       list -> 
         list
-        |> Enum.reduce(0, fn(r,acc) -> r.total + acc end)
+        |> Enum.reduce(Decimal.new(".00"), fn(r,acc) -> Decimal.add(r.total, acc) |> Decimal.add(d) |> Decimal.round(2) end)
     end
     parts_cost = 
     case repair_info.parts_cost do
-      [] -> 0
+      [] -> acc
       list -> 
         list
-        |> Enum.reduce(0, fn(r,acc) -> r.total + acc end)
+        |> Enum.reduce(Decimal.new(".00"), fn(r,acc) -> Decimal.add(r.total, acc) |> Decimal.add(d) |> Decimal.round(2) end)
     end
     repair_info
     |> Map.put_new(:time_total, time_cost)
     |> Map.put_new(:parts_total, parts_cost)
-    |> Map.put_new(:total, time_cost + parts_cost)
+    |> Map.put_new(:total, Decimal.add(time_cost, parts_cost) |> Decimal.add(d) |> Decimal.round(2))
   end
 end

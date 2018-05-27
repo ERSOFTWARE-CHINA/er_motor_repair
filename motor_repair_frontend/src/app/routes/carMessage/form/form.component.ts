@@ -13,6 +13,7 @@ import { CarMessageService } from '../service/carMessage.service';
 import { CarMessage } from '../domain/carMessage.domain'; 
 import { RolesService } from '../../roles/service/roles.service'; 
 import { ProjectsService } from '../../projects/service/projects.service';
+import { getShortProvinces } from '../../../utils/province_and_city';
 
 @Component({
     selector: 'car_message-form',
@@ -34,15 +35,7 @@ export class CarMessageFormComponent implements OnInit {
         ) {
     }
 
-    provinces: any[] = [
-        "京","津","冀","晋","内",
-        "辽","吉","黑","沪","苏",
-        "浙","皖","闽","赣","鲁",
-        "豫","鄂","湘","粤","桂",
-        "琼","蜀","黔","滇","渝",
-        "藏","陕","甘","青","宁",
-    ];
-    // default_province: any = {value:"皖", label:"皖"};
+    provinces: any[] = getShortProvinces();
     
     ngOnInit() {
         this.setTitle();
@@ -51,8 +44,8 @@ export class CarMessageFormComponent implements OnInit {
         this.form = this.fb.group({
             owner_name : [this.car_message? this.car_message.owner_name : null, Validators.required ],
             phone_num : [this.car_message? this.car_message.phone_num : null, Validators.required],
-            plate_prefix : [this.car_message? this.car_message.plate_num[0] : "皖", Validators.required],
-            plate_num : [this.car_message? this.car_message.plate_num.slice(1,8) : null, Validators.required],
+            plate_prefix : [this.car_message? this.car_message.plate_num[0] : localStorage.getItem("project_province"), Validators.required],
+            plate_num : [this.car_message? this.car_message.plate_num.slice(1,8) : localStorage.getItem("project_city"), Validators.required],
             car_color : [this.car_message? this.car_message.car_color : null],
             vin : [this.car_message? this.car_message.vin : null],
             car_type : [this.car_message? this.car_message.car_type : null],

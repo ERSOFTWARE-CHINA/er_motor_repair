@@ -14,6 +14,7 @@ import { ProjectsService } from '../../projects/service/projects.service';
 import { UsersService } from '../../users/service/users.service';
 
 import { getMsgUrl, getMsgHashUrl } from '../../../utils/sms';
+import { getProvinces, getCities } from '../../../utils/province_and_city';
 
 @Component({
     selector: 'passport-register',
@@ -22,6 +23,8 @@ import { getMsgUrl, getMsgHashUrl } from '../../../utils/sms';
     providers:[ProjectsService, UsersService]
 })
 export class UserRegisterComponent implements OnDestroy {
+
+  // ngmodeltest={name: "安徽", short: "皖"}
 
     form: FormGroup;
     error = '';
@@ -39,6 +42,10 @@ export class UserRegisterComponent implements OnDestroy {
     realCaptcha=null;
     captchaInvalid=false;
 
+    provinces = null;
+    cities = null;
+    provinces_and_cities = null;
+
     constructor(fb: FormBuilder, 
                 private router: Router, 
                 public msg: NzMessageService,
@@ -54,13 +61,17 @@ export class UserRegisterComponent implements OnDestroy {
         
         this.form = fb.group({
             project: [null, [Validators.required], this.nameValidator.bind(this)],
-            // name: [null, [Validators.required]],
+            province: [null, [Validators.required]],
+            city: [null],
             password: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.checkPassword.bind(this)]],
             confirm: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.passwordEquar]],
             mobilePrefix: [ '+86' ],
             mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)], this.mobileValidator.bind(this)],
             captcha: [null, [Validators.required]]
         });
+
+        this.provinces = getProvinces();
+        this.provinces_and_cities = getCities();
     }
 
     static checkPassword(control: FormControl) {
@@ -87,7 +98,8 @@ export class UserRegisterComponent implements OnDestroy {
 
     // region: fields
     get project() { return this.form.controls.project; }
-    // get name() { return this.form.controls.name; }
+    get province() { return this.form.controls.province; }
+    get city() { return this.form.controls.city; }
     get password() { return this.form.controls.password; }
     get confirm() { return this.form.controls.confirm; }
     get mobile() { return this.form.controls.mobile; }
@@ -192,5 +204,10 @@ export class UserRegisterComponent implements OnDestroy {
                 if (result.error) {control.setErrors({ checked: true, error: true })} else if (!control.value){control.setErrors({ required: true })}  else {control.setErrors(null);};})   
             })
         )
+    }
+
+    onProvinceChange(e) {
+      this.cities = this.provinces_and_cities[e]
+      this.form.controls["city"].setValue(null)
     }
 }

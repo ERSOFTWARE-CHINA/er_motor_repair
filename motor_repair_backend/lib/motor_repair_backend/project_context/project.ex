@@ -4,6 +4,8 @@ defmodule MotorRepairBackend.ProjectContext.Project do
 
   schema "projects" do
     field :name, :string
+    field :province, :string
+    field :city, :string
     field :actived, :boolean, default: true
     field :deadline, :date
     field :perms_number, :integer, default: 0
@@ -14,8 +16,8 @@ defmodule MotorRepairBackend.ProjectContext.Project do
   @doc false
   def changeset(project, attrs) do
     project
-    |> cast(attrs, [:name, :actived, :deadline, :perms_number])
-    |> validate_required([:name, :actived])
+    |> cast(attrs, [:name, :actived, :deadline, :perms_number, :province, :city])
+    |> validate_required([:name, :province, :actived])
     |> unique_constraint(:name)
     |> validate_length(:name, min: 4)
   end

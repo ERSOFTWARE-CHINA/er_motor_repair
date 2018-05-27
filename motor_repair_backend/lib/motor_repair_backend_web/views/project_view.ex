@@ -20,6 +20,8 @@ defmodule MotorRepairBackendWeb.ProjectView do
     %{
       id: project.id,
       name: project.name,
+      province: project.province,
+      city: project.city,
       acitived: project.actived,
       deadline: project.deadline,
       perms_number: project.perms_number,

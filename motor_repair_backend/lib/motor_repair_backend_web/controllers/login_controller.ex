@@ -19,6 +19,7 @@ defmodule MotorRepairBackendWeb.LoginController do
       |> case do
         {:ok, user} -> json conn, %{ok: user}
         {:error, changeset} -> 
+          IO.puts inspect changeset
           json conn, %{error: translate_changeset_error(changeset)}
     end
   end
@@ -33,7 +34,9 @@ defmodule MotorRepairBackendWeb.LoginController do
   defp get_project_changeset(user_params) do
     project_params = Map.get(user_params, "project", %{})
     pm = %{
-      name: Map.get(project_params, "name")
+      name: Map.get(project_params, "name"),
+      province: Map.get(project_params, "province"),
+      city: Map.get(project_params, "city")
     }
     Project.changeset(%Project{}, pm)
   end
@@ -45,7 +48,7 @@ defmodule MotorRepairBackendWeb.LoginController do
         perms_number = Permissions.get_perms_from_roles(user.roles)
         {:ok, token, claims} = Guardian.encode_and_sign(user, %{pem: %{"default" => perms_number}, project: project_id, is_root: user.is_root})
         perms = Permissions.get_permissions(claims)
-        json conn, %{user: get_user_map(user), jwt: token, perms: perms}
+        json conn, %{user: get_user_map(user), project: user.project, jwt: token, perms: perms}
       {:error, _} ->
         conn
         |> put_status(200)
@@ -54,15 +57,13 @@ defmodule MotorRepairBackendWeb.LoginController do
   end
 
   def login(conn, %{"mobile" => mb} = params) do
-    IO.puts inspect checkMobile(mb)
-
     case checkMobile(mb) do
       {:ok, user} ->
         # 将权限和项目id编码进token
         perms_number = Permissions.get_perms_from_roles(user.roles)
         {:ok, token, claims} = Guardian.encode_and_sign(user, %{pem: %{"default" => perms_number}, project: user.project_id, is_root: user.is_root})
         perms = Permissions.get_permissions(claims)
-        json conn, %{user: get_user_map(user), jwt: token, perms: perms}
+        json conn, %{user: get_user_map(user), project: user.project, jwt: token, perms: perms}
       {:error, _} ->
         conn
         |> put_status(200)

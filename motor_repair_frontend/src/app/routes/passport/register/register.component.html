@@ -14,18 +14,34 @@
             </ng-container>
         </div>
     </div>
-    <!-- <div nz-form-item>
-        <div nz-form-control [nzValidateStatus]="name">
-            <nz-input formControlName="name" [nzPlaceHolder]="'用户名'" [nzSize]="'large'">
-                <ng-template #prefix>
-                    <i class="anticon anticon-user"></i>
-                </ng-template>
-            </nz-input>
-            <ng-container *ngIf="name.dirty || name.touched">
-                <p nz-form-explain *ngIf="name.errors?.required">请输入用户名！</p>
+
+    <div nz-form-item>
+        <div nz-form-control [nzValidateStatus]="province">
+            <nz-select formControlName="province" (ngModelChange)="onProvinceChange($event)" nzSize="large" nzPlaceHolder="请选择省份" nzShowSearch>
+                <nz-option
+                  *ngFor="let option of provinces"
+                  [nzLabel]="option.name"
+                  [nzValue]="option.short">
+                </nz-option>
+            </nz-select>
+            <ng-container *ngIf="province.dirty || province.touched">
+                <p nz-form-explain *ngIf="province.errors?.required">请选择省份！</p>
             </ng-container>
         </div>
-    </div> -->
+    </div>
+
+    <div nz-form-item>
+        <div nz-form-control [nzValidateStatus]="city">
+            <nz-select formControlName="city" nzSize="large" nzPlaceHolder="请选择地市" nzShowSearch>
+                <nz-option
+                  *ngFor="let option of cities"
+                  [nzLabel]="option.name"
+                  [nzValue]="option.short">
+                </nz-option>
+            </nz-select>
+        </div>
+    </div>
+
     <div nz-form-item>
         <div nz-form-control [nzValidateStatus]="mobile">
             <nz-input-group [nzSize]="'large'" [nzCompact]="true">

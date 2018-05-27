@@ -14,7 +14,7 @@ export class RegisterService {
     registeredName = null;
 
     register(v) {
-        v.project = {name: v.project}
+        v.project = {name: v.project, province: v.province, city: v.city}
         let params = {user: v}
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');

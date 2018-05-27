@@ -24,7 +24,8 @@ config :logger, :console,
 
 config :motor_repair_backend, MotorRepairBackendWeb.Guardian,
   issuer: "motor_repair_backend",
-  secret_key: "j0/ssJf0441VW/25glbSth1H85SFj7PfmbRGpeH+AbXmmHkGDtmuTnw3HXu+kJxz"
+  secret_key: "j0/ssJf0441VW/25glbSth1H85SFj7PfmbRGpeH+AbXmmHkGDtmuTnw3HXu+kJxz",
+  ttl: {180, :day}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

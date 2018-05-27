@@ -241,8 +241,8 @@
                   <tr>
                       <th nz-th [nzWidth]="'20%'"><span>配件名称</span></th>
                       <th nz-th [nzWidth]="'20%'"><span>数量</span></th>
-                      <th nz-th [nzWidth]="'20%'"><span>单价</span></th>
-                      <th nz-th [nzWidth]="'20%'"><span>总价</span></th>
+                      <th nz-th [nzWidth]="'20%'"><span>单价(元)</span></th>
+                      <th nz-th [nzWidth]="'20%'"><span>总价(元)</span></th>
                       <th nz-th [nzWidth]="'20%'"><span>操作</span></th>
                   </tr>
               </thead>
@@ -320,7 +320,7 @@
             <thead nz-thead>
                 <tr>
                     <th nz-th [nzWidth]="'33%'"><span>项目</span></th>
-                    <th nz-th [nzWidth]="'33%'"><span>总价</span></th>
+                    <th nz-th [nzWidth]="'33%'"><span>总价(元)</span></th>
                     <th nz-th [nzWidth]="'33%'"><span>操作</span></th>
                 </tr>
             </thead>
@@ -393,21 +393,22 @@
                 </div>
             </div>
             <div nz-form-item nz-row>
-                <div nz-form-label nz-col><label>规格</label></div>
+                <div nz-form-label nz-col><label nz-form-item-required>规格型号</label></div>
                 <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="specifications">
                     <nz-input formControlName="specifications" nzSize="large"></nz-input>
-                    <!-- <ng-container *ngIf="sparepart_form.controls['specifications'].dirty || sparepart_form.controls['specifications'].touched">
-                        <p nz-form-explain *ngIf="sparepart_form.controls['specifications'].errors?.required">请输入规格</p>
-                    </ng-container> -->
+                    <ng-container *ngIf="sparepart_form.controls['specifications'].dirty || sparepart_form.controls['specifications'].touched">
+                        <p nz-form-explain *ngIf="sparepart_form.controls['specifications'].errors?.required">请输入规格型号</p>
+                    </ng-container>
                 </div>
             </div>
             <div nz-form-item nz-row>
-                <div nz-form-label nz-col><label>类型</label></div>
-                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="attributes">
-                    <nz-input formControlName="attributes" nzSize="large"></nz-input>
-                    <!-- <ng-container *ngIf="sparepart_form.controls['attributes'].dirty || sparepart_form.controls['attributes'].touched">
-                        <p nz-form-explain *ngIf="sparepart_form.controls['attributes'].errors?.required">请输入类型</p>
-                    </ng-container> -->
+                <div nz-form-label nz-col><label nz-form-item-required>单价</label></div>
+                <div nz-form-control nz-col nzHasFeedback [nzValidateStatus]="price">
+                    <nz-input formControlName="price" nzSize="large"></nz-input>
+                    <ng-container *ngIf="sparepart_form.controls['price'].dirty || sparepart_form.controls['price'].touched">
+                        <p nz-form-explain *ngIf="sparepart_form.controls['price'].errors?.required">请输入单价</p>
+                        <p nz-form-explain *ngIf="sparepart_form.controls['price'].errors?.validateNumber">请输入有效数字</p>
+                    </ng-container>
                 </div>
             </div>
         </form>

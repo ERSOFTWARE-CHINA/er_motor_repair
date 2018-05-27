@@ -13,7 +13,7 @@ import { UsersService } from '../../../routes//users/service/users.service';
 })
 export class SidebarComponent implements OnInit{
     // 左侧边栏用户资料信息
-    username: string = localStorage.getItem('username')
+    project_name: string = localStorage.getItem('project_name')
     mobile: string = localStorage.getItem('mobile')
 
     constructor(

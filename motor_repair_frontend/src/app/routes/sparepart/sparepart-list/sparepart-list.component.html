@@ -13,21 +13,21 @@
                 
                 <div nz-col [nzSpan]="8" class="mb-md">
                     <div nz-form-item class="d-flex">
-                        <div nz-form-label><label for="specifications">型号</label></div>
+                        <div nz-form-label><label for="specifications">规格型号</label></div>
                         <div nz-form-control class="flex-1">
                             <nz-input [(ngModel)]="q.specifications" name="specifications" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="name"></nz-input>
                         </div>
                     </div>
                 </div>
 
-                <div *ngIf="expandForm" nz-col [nzSpan]="8" class="mb-md">
+                <!-- <div *ngIf="expandForm" nz-col [nzSpan]="8" class="mb-md">
                     <div nz-form-item class="d-flex">
                         <div nz-form-label><label for="attributes">类型</label></div>
                         <div nz-form-control class="flex-1">
                             <nz-input [(ngModel)]="q.attributes" name="attributes" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="name"></nz-input>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div nz-col [nzSpan]="expandForm ? 24 : 8" class="mb-md" [class.text-right]="expandForm">
                     <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading" [nzSize]="'large'" >查询</button>
@@ -55,12 +55,12 @@
                         <nz-table-sort [(nzValue)]="sortMap.name" (nzValueChange)="sort('name',$event)"></nz-table-sort>
                     </th>
                     <th nz-th>
-                        <span>型号</span>
+                        <span>规格型号</span>
                         <nz-table-sort [(nzValue)]="sortMap.specifications" (nzValueChange)="sort('specifications',$event)"></nz-table-sort>
                     </th>
                     <th nz-th>
-                        <span>类型</span>
-                        <nz-table-sort [(nzValue)]="sortMap.attributes" (nzValueChange)="sort('attributes',$event)"></nz-table-sort>
+                        <span>单价</span>
+                        <nz-table-sort [(nzValue)]="sortMap.price" (nzValueChange)="sort('price',$event)"></nz-table-sort>
                     </th>
 
 
@@ -72,7 +72,7 @@
 
                     <td nz-td>{{i.name}}</td>
                     <td nz-td>{{i.specifications}}</td>
-                    <td nz-td>{{i.attributes}}</td>
+                    <td nz-td>{{i.price}}</td>
                     <td nz-td>
                         <a (click)="update(i.id)">修改</a>
                         <span nz-table-divider></span>
