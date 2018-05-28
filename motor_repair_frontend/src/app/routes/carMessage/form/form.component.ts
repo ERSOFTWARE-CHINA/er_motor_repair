@@ -45,7 +45,7 @@ export class CarMessageFormComponent implements OnInit {
             owner_name : [this.car_message? this.car_message.owner_name : null, Validators.required ],
             phone_num : [this.car_message? this.car_message.phone_num : null, Validators.required],
             plate_prefix : [this.car_message? this.car_message.plate_num[0] : localStorage.getItem("project_province"), Validators.required],
-            plate_num : [this.car_message? this.car_message.plate_num.slice(1,8) : localStorage.getItem("project_city"), Validators.required],
+            plate_num : [this.car_message? this.car_message.plate_num.slice(1,8) : (localStorage.getItem("project_city") ? localStorage.getItem("project_city") : null), Validators.required],
             car_color : [this.car_message? this.car_message.car_color : null],
             vin : [this.car_message? this.car_message.vin : null],
             car_type : [this.car_message? this.car_message.car_type : null],
