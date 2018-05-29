@@ -27,8 +27,8 @@ export class StartupService {
         private injector: Injector,
         private reuseTabService: ReuseTabService) { 
             // 设置reusetab，对URL有效，且不重用以form结尾的URL
-            this.reuseTabService.mode=ReuseTabMatchMode.URL
-            this.reuseTabService.excludes = [/form$/]
+            // this.reuseTabService.mode=ReuseTabMatchMode.URL
+            // this.reuseTabService.excludes = [/form$/]
         }
 
     load(): Promise<any> {

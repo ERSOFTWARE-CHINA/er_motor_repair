@@ -35,6 +35,7 @@ export class SparepartFormComponent implements OnInit {
     }
     
     ngOnInit() {
+        console.log("init this form")
         this.setTitle();
         if (this.sparepartService.formOperation == 'create') {this.sparepart=null;}
         if (this.sparepartService.formOperation == 'update') {this.initUpdate();}
@@ -102,6 +103,8 @@ export class SparepartFormComponent implements OnInit {
     // }
 
     initUpdate() {
+        console.log("at init form")
+        console.log(this.sparepartService.sparepart)
         this.sparepart = this.sparepartService.sparepart;
     }
 

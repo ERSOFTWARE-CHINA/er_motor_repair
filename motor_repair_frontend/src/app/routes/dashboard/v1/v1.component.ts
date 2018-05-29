@@ -47,7 +47,7 @@ export class DashboardV1Component implements OnInit {
     q_car: any = {
         page_index: 1,
         page_size: 5,
-        sort_field: "owner_name",
+        sort_field: "inserted_at",
         sort_direction: "desc"
     };
     // 车辆记录总数
@@ -207,7 +207,7 @@ export class DashboardV1Component implements OnInit {
     update_repairinfo(id) {
         this.repairInfoService.formOperation='update';
         this.repairInfoService.initUpdate(id)
-            .then(result => { console.log(result);this.repairInfoService.repairInfo = result.data;})
+            .then(result => { this.repairInfoService.repairInfo = result.data;})
             .then(() => this.router.navigateByUrl('/repair_info/form')).catch((error)=>
             this.msg.error(error)); 
     }

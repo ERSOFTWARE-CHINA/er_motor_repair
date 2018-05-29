@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import { ArrayObservable } from 'rxjs/observable/ArrayObservable';
 import { map, delay, debounceTime } from 'rxjs/operators';
 
-import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
 
 import { CarMessageService } from '../service/carMessage.service';
@@ -27,7 +26,7 @@ export class CarMessageFormComponent implements OnInit {
     multi_roles: any[];
 
     constructor(
-        private reuseTabService: ReuseTabService,
+        // private reuseTabService: ReuseTabService,
         private fb: FormBuilder,
         private router: Router,
         private carMessageSerivce: CarMessageService,
@@ -67,11 +66,11 @@ export class CarMessageFormComponent implements OnInit {
 
     setTitle() {
         if (this.carMessageSerivce.formOperation == "create") { 
-            this.reuseTabService.title ="创建车辆信息"; 
+            // this.reuseTabService.title ="创建车辆信息"; 
             this.card_title = "创建车辆信息";
         }
         if (this.carMessageSerivce.formOperation == "update") { 
-            this.reuseTabService.title ="修改车辆信息";
+            // this.reuseTabService.title ="修改车辆信息";
             this.card_title = "修改车辆信息";
         }
     }

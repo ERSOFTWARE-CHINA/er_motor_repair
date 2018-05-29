@@ -25,7 +25,7 @@ defmodule MotorRepairBackend.UserContext do
     |> query_like(params, "position")
     |> query_equal(params, "is_admin")
     |> query_equal(params, "actived")
-    |> query_order_by(params, "name")
+    |> query_order_desc_by(params, "inserted_at")
     |> query_preload(:roles)
     |> get_pagination(params, conn)
   end

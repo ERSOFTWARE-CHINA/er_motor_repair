@@ -19,7 +19,6 @@ defmodule MotorRepairBackendWeb.LoginController do
       |> case do
         {:ok, user} -> json conn, %{ok: user}
         {:error, changeset} -> 
-          IO.puts inspect changeset
           json conn, %{error: translate_changeset_error(changeset)}
     end
   end

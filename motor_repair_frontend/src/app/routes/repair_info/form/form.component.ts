@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { Subject }           from 'rxjs/Subject';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
-import { ReuseTabService,ReuseTabMatchMode } from '@delon/abc';
-
 import { RepairInfoService } from '../service/repair_info.service';
 import { SparepartService } from '../../sparepart/service/sparepart.service';
 import { CarMessageService } from '../../carMessage/service/carMessage.service';
@@ -47,7 +45,7 @@ export class RepairInfoFormComponent implements OnInit {
         private spSrv: SparepartService,
         private carMessageSrv: CarMessageService, 
         private msg: NzMessageService,
-        private reuseTabService: ReuseTabService,
+        // private reuseTabService: ReuseTabService,
         private modalSrv: NzModalService) {}
 
     ngOnInit() {
@@ -249,7 +247,7 @@ export class RepairInfoFormComponent implements OnInit {
 
     initCreate() {
         this.disabled = false;
-        this.reuseTabService.title ="创建维修信息"; 
+        // this.reuseTabService.title ="创建维修信息"; 
         this.carMessage = this.mrSrv.carMessage;
         this.title = "创建维修信息"
         this.mrSrv.generateNo().then(resp => {
@@ -259,7 +257,7 @@ export class RepairInfoFormComponent implements OnInit {
     }
 
     initUpdate() {
-        this.reuseTabService.title ="修改维修信息"; 
+        // this.reuseTabService.title ="修改维修信息"; 
         // this.carMessage = this.mrSrv.carMessage;
         this.carMessageSrv.initUpdate(this.mrSrv.repairInfo.car_message_id)
                           .then(resp => this.carMessage = resp.data)

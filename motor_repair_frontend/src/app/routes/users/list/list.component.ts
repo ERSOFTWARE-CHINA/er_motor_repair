@@ -17,7 +17,7 @@ export class UsersListComponent implements OnInit {
     q: any = {
         page_index: 1,
         page_size: 15,
-        sort_field: "name",
+        sort_field: "inserted_at",
         sort_direction: "desc",
         name: null,
         actived: null,

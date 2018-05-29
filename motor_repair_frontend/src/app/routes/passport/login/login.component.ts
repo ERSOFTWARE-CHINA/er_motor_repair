@@ -42,9 +42,9 @@ export class UserLoginComponent implements OnDestroy {
         @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
         
         // 不路由复用
-        this.reuseTabService.mode = ReuseTabMatchMode.URL
-        let reg: RegExp = /.*passport.*/
-        this.reuseTabService.excludes = [reg]
+        // this.reuseTabService.mode = ReuseTabMatchMode.URL
+        // let reg: RegExp = /.*passport.*/
+        // this.reuseTabService.excludes = [reg]
 
         this.form = fb.group({
             // project: [null, [Validators.required, Validators.minLength(4)]],
@@ -119,19 +119,16 @@ export class UserLoginComponent implements OnDestroy {
             if (this.captcha.value !== this.realCaptcha) {this.captchaInvalid = true;return};
         }
         
-        console.log(this.form.value)
-        // mock http
+
         this.loading = true;
         this.loginService.login(this.form.value)
             .subscribe(result => {
                 if (result) {
-                    console.log(result)
                     this.loading = false;
-                    this.reuseTabService.clear();
-                    this.reuseTabService.clearTitleCached();
+                    // this.reuseTabService.clear();
+                    // this.reuseTabService.clearTitleCached();
                     this.router.navigate(['dashboard/v1']);
                 } else{
-                    console.log(result)
                     this.loading = false;
                     this.invalidlogin = true;
                 }

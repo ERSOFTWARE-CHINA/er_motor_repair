@@ -88,7 +88,7 @@ export class SparepartListComponent implements OnInit {
     update(id) {
         this.sparepartService.formOperation='update';
         this.sparepartService.initUpdate(id)
-            .then(result => { this.sparepartService.sparepart = result.data;})
+            .then(result => { this.sparepartService.sparepart = result.data; console.log("at update clicked"); console.log(this.sparepartService.sparepart)})
             .then(() => this.router.navigateByUrl('/spareparts/form')).catch((error)=>
             this.msg.error(error)); 
     }
