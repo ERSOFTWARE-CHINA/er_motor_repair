@@ -54,14 +54,17 @@
                         },
                         {
                             "text": "职务管理",
+                            "acl": "hidden",
                             "link": "/positions/page"
                         },
                         {
                           "text": "员工管理",
+                          "acl": "hidden",
                           "link": "/staffs/page"
                         },
                         {
                           "text": "操作日志",
+                          "acl": "hidden",
                           "link": "/logs/page"
                         }
 
@@ -90,6 +93,7 @@
                 {
                   "text": "增值业务",
                   "icon": "icon-present",
+                  "acl": "hidden",
                   "link": "/others/page"
                 }
 

@@ -57,18 +57,6 @@ export class SidebarComponent implements OnInit{
                             if (resp.data) {this.msgSrv.success("密码修改成功"); this.modalVisible = false}
                         })
                         .catch(error => this.msgSrv.error(error))
-            // this.spSrv.add(this.sparepart_form.value).then(resp => {
-            //     if (resp.error) { 
-            //         this.msg.error(resp.error);
-            //     } else {
-            //         this.msg.success('创建备件 ' + resp.data.name + ' 成功！');
-            //         this.modalVisible = false;
-            //         this.init_sparepart_form();
-            //         console.log("push and set value")
-            //         console.log(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
-            //         this.spareparts.push(resp.data);
-            //         this.parts_cost.controls[this.parts_cost_i]["controls"]["name"].setValue(resp.data.name + (resp.data.specifications? ':'+resp.data.specifications : ''))
-            //     }}).then(resp => this.getSparepart()).catch(error => this.msg.error(error));
         }
     }
 
@@ -86,8 +74,7 @@ export class SidebarComponent implements OnInit{
 
     static passwordEquar(control: FormControl) {
         if (!control || !control.parent) return null;
-        console.log(control.value)
-        console.log( control.parent.get('new').value)
+
         if (control.value !== control.parent.get('new').value) {
             return { equar: true };
         }
