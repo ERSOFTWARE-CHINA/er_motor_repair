@@ -2,6 +2,7 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
   use MotorRepairBackendWeb, :controller
 
   use MotorRepairBackend.RepairInfoContext
+  alias MotorRepairBackend.CarMessageContext.CarMessage
 
   action_fallback MotorRepairBackendWeb.FallbackController
 
@@ -56,6 +57,17 @@ defmodule MotorRepairBackendWeb.RepairInfoController do
     case GenServer.call(NoGenerator, {:get_no,conn}) do
       {:ok, value} -> json conn, %{ok: value}
       {_, error} -> json conn, %{error: error}
+    end
+  end
+
+  # 下载xlsx文件（维修结算单）
+  def get_repair_info_bill(conn, %{"id" => id}) do
+    with {:ok, ri} <- get_by_id(RepairInfo, id, conn, [:parts_cost, :time_cost]) do
+      {:ok, cm} = get_by_id(CarMessage, ri.car_message_id, conn)
+      conn
+      |> put_resp_content_type("text/xlsx")
+      |> put_resp_header("content-disposition", "attachment; filename=posts_report")
+      |> render("report_repair_info_bill.xlsx", %{repair_info: ri, car_message: cm})
     end
   end
 

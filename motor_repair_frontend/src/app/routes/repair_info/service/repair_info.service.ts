@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
+import { Http, URLSearchParams, RequestOptions, Headers, ResponseContentType } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import { RepairInfo } from '../domain/repair_info.domain';
 import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 import { baseUrl } from '../../../shared/shared.service';
-import { getTokenOptions } from '../../pages/login/login.service';
+import { getTokenOptions,getDownloadTokenOptions } from '../../pages/login/login.service';
 
 @Injectable()
 export class RepairInfoService {
@@ -62,6 +62,33 @@ export class RepairInfoService {
         return this.http.put(this.url + `/${obj.id}`, param, getTokenOptions(null))
             .map(response => response.json())
             .toPromise();
+    }
+
+    downloadFile(id) {
+      return this.http
+        .get(this.url + `/print_repair_info_bill/${id}`, getDownloadTokenOptions(null))
+        .map(res => {
+          return {
+            filename: '维修结算单.xlsx',
+            data: res.blob()
+          };
+        })
+        .subscribe(res => {
+            console.log('start download:',res);
+            var url = window.URL.createObjectURL(res.data);
+            var a = document.createElement('a');
+            document.body.appendChild(a);
+            a.setAttribute('style', 'display: none');
+            a.href = url;
+            a.download = res.filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove(); // remove the element
+          }, error => {
+            console.log('download error:', JSON.stringify(error));
+          }, () => {
+            console.log('Completed file download.')
+          });
     }
 
 

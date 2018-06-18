@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
@@ -15,6 +15,15 @@ export function getTokenOptions(paramsobj): RequestOptions{
     headers.append('Content-Type', 'application/json');
     let options = new RequestOptions({ headers: headers, params: paramsobj });
     return options;
+}
+
+export function getDownloadTokenOptions(paramsobj): RequestOptions{
+  let headers = new Headers();
+  let jwt = 'Bearer ' + localStorage.getItem('currentToken');
+  headers.append('Authorization', jwt);
+  headers.append('Content-Type', 'application/json');
+  let options = new RequestOptions({ headers: headers, params: paramsobj, responseType: ResponseContentType.Blob, });
+  return options;
 }
  
 @Injectable()

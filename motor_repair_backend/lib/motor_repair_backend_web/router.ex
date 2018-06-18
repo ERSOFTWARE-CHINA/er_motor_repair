@@ -45,6 +45,7 @@ defmodule MotorRepairBackendWeb.Router do
     resources "/roles", RoleController, except: [:new, :edit]
     resources "/repair_info", RepairInfoController, except: [:new, :edit]
     get "/repair_info_gen_no", RepairInfoController, :get_next_no
+    get "/repair_info/print_repair_info_bill/:id", RepairInfoController, :get_repair_info_bill
 
     resources "/carMessage", CarMessageController, except: [:new, :edit]
     #员工信息

@@ -238,7 +238,10 @@ export class DashboardV1Component implements OnInit {
         
     }
 
-
+    // 打印维修结算单
+    download_repair_info_bill(repair_info_id){
+      this.repairInfoService.downloadFile(repair_info_id);
+    }
 
 
 

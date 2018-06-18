@@ -50,7 +50,8 @@ defmodule MotorRepairBackend.Mixfile do
       {:arc, "~> 0.8.0"},
       {:arc_ecto, "~> 0.7.0"},
       {:quantum, ">= 2.2.0"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:elixlsx, "~> 0.4.0"}
     ]
   end
 

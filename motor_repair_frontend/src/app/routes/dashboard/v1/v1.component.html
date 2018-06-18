@@ -160,7 +160,9 @@
                             <span nz-table-divider *ngIf="i.status"></span>
                             <a (click)="complete(i)" *ngIf="!i.status">完工</a>
                             <span nz-table-divider *ngIf="!i.status"></span>
-                            <a (click)="dis_complete(i)" *ngIf="i.status">未完工</a>
+                            <a (click)="dis_complete(i)" *ngIf="i.status">重置</a>
+                            <span nz-table-divider *ngIf="i.status"></span>
+                            <a (click)="download_repair_info_bill(i.id)" *ngIf="i.status">打印</a>
                             <span nz-table-divider *ngIf="i.status"></span>
                             <a (click)="remove_repairinfo(i)">删除</a>
                             
