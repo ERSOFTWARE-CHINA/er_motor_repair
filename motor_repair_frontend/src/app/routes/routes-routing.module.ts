@@ -44,7 +44,9 @@ const routes: Routes = [
             {path : 'purchases',loadChildren: './purchase/purchase.module#PurchaseModule'},
             {path : 'carMessage',loadChildren: './carMessage/carMessage.module#CarMessageModule'},
             {path : 'repair_info',loadChildren: './repair_info/repair_info.module#RepairInfoModule'},
-            { path: 'staffs', loadChildren: './staffs/staffs.module#StaffModule' }
+            { path: 'staffs', loadChildren: './staffs/staffs.module#StaffModule' },
+            {path : 'vin_sparepart',loadChildren: './vin_sparepart/vin_sparepart.module#VinSparePartModule'},
+
         ],
         canActivate: [AuthGuard]
     },

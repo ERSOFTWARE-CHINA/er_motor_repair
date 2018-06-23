@@ -91,10 +91,9 @@
                   "link": "/spareparts/page"
                 },
                 {
-                  "text": "增值业务",
+                  "text": "VIN码配件",
                   "icon": "icon-present",
-                  "acl": "hidden",
-                  "link": "/others/page"
+                  "link": "/vin_sparepart/page"
                 }
 
             ]
