@@ -8,6 +8,13 @@ import { VinSparePart } from '../domain/vin_sparepart.domain';
 import { baseUrl } from '../../../shared/shared.service';
 import { getTokenOptions } from '../../pages/login/login.service';
 
+function urlencode (str) {  
+  str = (str + '').toString();   
+
+  return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+  replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+').replace(/%/g, "%25");  
+} 
+
 @Injectable()
 export class VinSparePartService {
 
@@ -55,7 +62,8 @@ export class VinSparePartService {
 
   getSparePart(category_name, mikey) {
       // encodeStr = URLEncoder.encode(fname, "utf-8");
-      return this.http.post(this.vin_sparepart_url+`?userid=${this.user_id}&mikey=${mikey}&like_name=${category_name}`, null)
+      console.log(urlencode("滤清器"))
+      return this.http.post(this.vin_sparepart_url+`?userid=${this.user_id}&mikey=${mikey}&like_name=${urlencode(category_name)}`, null)
           .map(response => response.json()).toPromise();   
   }
 

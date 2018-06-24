@@ -17,8 +17,10 @@ export class VinSparePartListComponent implements OnInit {
     category_two: any;
     category_three: any;
 
+    car_type = null;
+
     total: number;
-    page_size = 20;
+    page_size = 3;
     data: any[] = [];
 
     loading = false;
@@ -31,12 +33,19 @@ export class VinSparePartListComponent implements OnInit {
 
     ngOnInit() {
         this.getCategoryOne();
-        // this.getData();
+    }
+
+    clearCarType(){
+        this.car_type = null;
+        this.category_one = null;
+        this.category_two = null;
+        this.category_three = null;
     }
 
     getMikey(){
         this.vsService.getMikey(this.vin)
-            .then(resp => this.mikey = resp.list[0].mikey).then(resp => console.log(this.mikey))
+            .then(resp => {this.mikey = resp.list[0].mikey; this.car_type = resp.list[0].Manufacture_CN + "-" + resp.list[0].Vehicle_Name_CN})
+            .then(()=> console.log(this.mikey))
             .catch(error => this.msg.error(error));
     } 
 
@@ -62,12 +71,12 @@ export class VinSparePartListComponent implements OnInit {
 
     getData() {
         this.vsService.getSparePart(this.category_three,this.mikey)
-            .then(resp => {console.log(resp); this.data = resp.list})
+            .then(resp => {this.total = resp.list.length; this.data = resp.list})
             .catch(error => this.msg.error(error));
     }
 
     pageChange(pi: number) {
-        this.getData();
+        // this.data = this.data.slice(pi-1, pi+this.page_size-1)
     }
 
 }

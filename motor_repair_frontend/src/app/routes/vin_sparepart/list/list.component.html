@@ -6,7 +6,7 @@
                   <div nz-form-item class="d-flex">
                       <div nz-form-label><label for="vin">识别代号</label></div>
                       <div nz-form-control class="flex-1">
-                          <nz-input [(ngModel)]="vin" name="vin" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="vin" (nzBlur)="getMikey()"></nz-input>
+                          <nz-input [(ngModel)]="vin" (ngModelChange)="clearCarType()" name="vin" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="vin" (nzBlur)="getMikey()"></nz-input>
                       </div>
                   </div>
               </div>
@@ -15,7 +15,7 @@
                   <div nz-form-item class="d-flex">
                       <div nz-form-label><label for="category_one">一级分类</label></div>
                       <div nz-form-control class="flex-1">
-                          <nz-select [(ngModel)]="category_one" (ngModelChange)="getCategoryTwo()" name="category_one" nzId="actived" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'">
+                          <nz-select [(ngModel)]="category_one" (ngModelChange)="getCategoryTwo()" name="category_one" nzId="actived" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzDisabled]="!car_type">
                               <nz-option *ngFor="let i of category_one_data" [nzLabel]="i.category_name" [nzValue]="i.category_id"></nz-option>
                           </nz-select>
                       </div>
@@ -26,7 +26,7 @@
                 <div nz-form-item class="d-flex">
                     <div nz-form-label><label for="category_two">二级分类</label></div>
                     <div nz-form-control class="flex-1">
-                        <nz-select [(ngModel)]="category_two" (ngModelChange)="getCategoryThree()" name="category_two" nzId="actived" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'">
+                        <nz-select [(ngModel)]="category_two" (ngModelChange)="getCategoryThree()" name="category_two" nzId="actived" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzDisabled]="!car_type">
                             <nz-option *ngFor="let i of category_two_data" [nzLabel]="i.category_name" [nzValue]="i.category_id"></nz-option>
                         </nz-select>
                     </div>
@@ -37,7 +37,7 @@
               <div nz-form-item class="d-flex">
                   <div nz-form-label><label for="category_three">三级分类</label></div>
                   <div nz-form-control class="flex-1">
-                      <nz-select [(ngModel)]="category_three" (ngModelChange)="getData()" name="category_three" nzId="actived" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'">
+                      <nz-select [(ngModel)]="category_three" (ngModelChange)="getData()" name="category_three" nzId="actived" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true" [nzSize]="'large'" [nzDisabled]="!car_type">
                           <nz-option *ngFor="let i of category_three_data" [nzLabel]="i.category_name" [nzValue]="i.category_name"></nz-option>
                       </nz-select>
                   </div>
@@ -57,14 +57,13 @@
           </div>
       </form>
 
-      <!-- <div class="mb-md">
-          <button nz-button (click)="add()" [nzType]="'primary'" [nzSize]="'large'">
-              <i class="anticon anticon-plus"></i><span>新建</span>
-          </button>
-      </div> -->
+      <div class="mb-md">
+          <h3>{{ car_type? car_type : "未获得车型信息" }}</h3>
+      </div>
 
       <nz-table #nzTable [nzAjaxData]="data" [nzTotal]="total" [nzPageSize]="page_size" [nzLoading]="loading"
-                  (nzPageIndexChange)="pageChange($event)">
+      (nzPageIndexChange)="pageChange($event)" nzShowTotal="true" 
+      [nzPageSizeSelectorValues]="page_size">
           <thead nz-thead>
               <tr>
                   <th nz-th>
@@ -97,7 +96,6 @@
                   <td nz-td>{{i.parent_name}}</td>
                   <td nz-td>{{i.category_name}}</td>
                   <td nz-td>{{i.system_market_price}}</td>
-                  <td nz-td>{{i.position}}</td>
                   <td nz-td>{{i.oe_numbers}}</td>
                   <!-- <td nz-td>
                       <a (click)="activate(i.id)" *ngIf="!i.actived">激活</a>
