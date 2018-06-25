@@ -20,8 +20,9 @@ export class VinSparePartListComponent implements OnInit {
     car_type = null;
 
     total: number;
-    page_size = 3;
+    page_size = 15;
     data: any[] = [];
+    page_data: any[] = [];
 
     loading = false;
 
@@ -71,12 +72,14 @@ export class VinSparePartListComponent implements OnInit {
 
     getData() {
         this.vsService.getSparePart(this.category_three,this.mikey)
-            .then(resp => {this.total = resp.list.length; this.data = resp.list})
+            .then(resp => {this.total = resp.list.length; this.data = resp.list; this.pageChange(1);})
             .catch(error => this.msg.error(error));
     }
 
     pageChange(pi: number) {
-        // this.data = this.data.slice(pi-1, pi+this.page_size-1)
+        let start_index = this.page_size * (pi-1);
+        let end_index = start_index + this.page_size -1;
+        this.page_data = this.data.slice(start_index, end_index+1);
     }
 
 }

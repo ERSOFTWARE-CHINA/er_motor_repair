@@ -44,14 +44,14 @@
               </div>
           </div>
 
-          <div nz-col [nzSpan]="expandForm ? 24 : 8" class="mb-md" [class.text-right]="expandForm">
+          <!-- <div nz-col [nzSpan]="expandForm ? 24 : 8" class="mb-md" [class.text-right]="expandForm">
             <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading" [nzSize]="'large'" >查询</button>
             <button nz-button type="reset" (click)="getData()" [nzSize]="'large'" class="mx-sm">重置</button>
             <a (click)="expandForm=!expandForm">
                 {{expandForm ? '收起' : '展开'}}
                 <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>
             </a>
-          </div>
+          </div> -->
 
               
           </div>
@@ -61,7 +61,7 @@
           <h3>{{ car_type? car_type : "未获得车型信息" }}</h3>
       </div>
 
-      <nz-table #nzTable [nzAjaxData]="data" [nzTotal]="total" [nzPageSize]="page_size" [nzLoading]="loading"
+      <nz-table #nzTable [nzAjaxData]="page_data" [nzTotal]="total" [nzPageSize]="page_size" [nzLoading]="loading"
       (nzPageIndexChange)="pageChange($event)" nzShowTotal="true" 
       [nzPageSizeSelectorValues]="page_size">
           <thead nz-thead>
