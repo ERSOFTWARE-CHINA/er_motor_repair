@@ -19,7 +19,7 @@ export class VinSparePartListComponent implements OnInit {
 
     car_type = null;
 
-    total: number;
+    total: number = 0;
     page_size = 15;
     data: any[] = [];
     page_data: any[] = [];
@@ -45,7 +45,12 @@ export class VinSparePartListComponent implements OnInit {
 
     getMikey(){
         this.vsService.getMikey(this.vin)
-            .then(resp => {this.mikey = resp.list[0].mikey; this.car_type = resp.list[0].Manufacture_CN + "-" + resp.list[0].Vehicle_Name_CN})
+            .then(resp => {
+                if ((resp.list[0]) && (resp.list[0].mikey)){
+                    this.mikey = resp.list[0].mikey; 
+                    this.car_type = resp.list[0].Manufacture_CN + "-" + resp.list[0].Vehicle_Name_CN;
+                }
+            })
             .then(()=> console.log(this.mikey))
             .catch(error => this.msg.error(error));
     } 
@@ -72,7 +77,14 @@ export class VinSparePartListComponent implements OnInit {
 
     getData() {
         this.vsService.getSparePart(this.category_three,this.mikey)
-            .then(resp => {this.total = resp.list.length; this.data = resp.list; this.pageChange(1);})
+            .then(resp => {
+                console.log(resp)
+                if ((resp.list) && (resp.list.length)){
+                    this.total = resp.list.length; 
+                    this.data = resp.list; 
+                    this.pageChange(1);
+                }
+            })
             .catch(error => this.msg.error(error));
     }
 
