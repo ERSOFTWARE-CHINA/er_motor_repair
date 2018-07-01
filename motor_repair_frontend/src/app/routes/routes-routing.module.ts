@@ -17,6 +17,7 @@ import { UserRegisterResultComponent } from './passport/register-result/register
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
+import { BillComponent } from './pages/bill/bill.component';
 
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
@@ -66,6 +67,7 @@ const routes: Routes = [
     { path: '403', component: Exception403Component },
     { path: '404', component: Exception404Component },
     { path: '500', component: Exception500Component },
+    { path: 'bill', component: BillComponent },
     // { path: '**', redirectTo: 'dashboard' },
 
     {

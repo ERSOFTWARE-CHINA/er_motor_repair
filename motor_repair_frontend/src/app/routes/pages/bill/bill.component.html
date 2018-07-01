@@ -1,2 +1,10 @@
-<h1>this is bill {{ repair_info }}</h1>
+<h1>this is bill {{ repair_info }} and car {{ carMessage }}</h1>
 <hr style="height:5px;border:none;border-top:5px ridge black;" />
+
+<div>
+  <h1>客户名：{{ carMessage.owner_name}} </h1>
+</div>
+
+<li *ngFor="let item of repair_info.parts_cost;">
+  配件名称:{{ item.name}}  配件价格:{{ item.unit_price }}
+</li>

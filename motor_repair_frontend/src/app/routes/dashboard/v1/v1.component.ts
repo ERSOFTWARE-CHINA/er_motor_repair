@@ -238,11 +238,19 @@ export class DashboardV1Component implements OnInit {
         
     }
 
-    // 打印维修结算单
+    // 打印维修结算单，下载文件的方式
     download_repair_info_bill(repair_info_id){
       this.repairInfoService.downloadFile(repair_info_id);
     }
 
+    // 打印维修结算单（新开网页，在浏览器中打印）
+    print_repair_info_bill(id){
+        this.repairInfoService.initUpdate(id)
+            .then(result => { this.repairInfoService.repairInfo = result.data;})
+            .then(() => {this.router.navigateByUrl('/bill');}).catch((error)=>
+            this.msg.error(error)); 
+        // var newWindow = window.open('#/bill');
+    }
 
 
 

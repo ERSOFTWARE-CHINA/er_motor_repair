@@ -76,6 +76,7 @@ export class VinSparePartListComponent implements OnInit {
     }
 
     getData() {
+        this.page_data = [];
         this.vsService.getSparePart(this.category_three,this.mikey)
             .then(resp => {
                 console.log(resp)

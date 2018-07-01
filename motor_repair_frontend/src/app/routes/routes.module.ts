@@ -13,6 +13,7 @@ import { UserRegisterResultComponent } from './passport/register-result/register
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
+import { BillComponent } from './pages/bill/bill.component';
 // import { UsersListComponent } from './users/list/list.component';
 import { UserLoginComponent } from './passport/login/login.component';
 import { AuthenticationService } from './passport/service/login.service';
@@ -39,7 +40,8 @@ import { MainPipe } from '../pipes/pipes.module';
         // CallbackComponent,
         Exception403Component,
         Exception404Component,
-        Exception500Component
+        Exception500Component,
+        BillComponent
         // LoginComponent
         // UsersListComponent
     ],
