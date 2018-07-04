@@ -1,10 +1,114 @@
-<h1>this is bill {{ repair_info }} and car {{ carMessage }}</h1>
-<hr style="height:5px;border:none;border-top:5px ridge black;" />
 
-<div>
-  <h1>客户名：{{ carMessage.owner_name}} </h1>
+<h3>汽车配件结算单</h3>
+<p>结算方式：</p>
+<p>单号：</p>
+<p>打印时间：</p>
+<br><br>
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-sm-6" style="text-align: center">客户信息</div>
+    <div class="col-sm-6" style="text-align: center">车辆信息</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 noborder">
+      <div class="row">
+        <div class="col-sm-3">客户名称</div>
+        <div class="col-sm-9">{{ carMessage.owner_name }}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">主联系人</div>
+        <div class="col-sm-9">{{ carMessage.owner_name }}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">联系地址</div>
+        <div class="col-sm-9"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">联系电话</div>
+        <div class="col-sm-9">{{ carMessage.phone_num }}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">提车时间</div>
+        <div class="col-sm-9">{{ repair_info.return_date }}</div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 noborder">
+      <div class="row">
+        <div class="col-sm-3">汽车类型</div>
+        <div class="col-sm-9">{{carMessage.car_type}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">车牌号码</div>
+        <div class="col-sm-9">{{carMessage.plate_num}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">总里程数</div>
+        <div class="col-sm-9">{{carMessage.latest_mileage}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">本单里程</div>
+        <div class="col-sm-9">{{repair_info.mileage}}</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">备注信息</div>
+        <div class="col-sm-9">{{carMessage.car_remark}}</div>
+      </div>
+    </div>
+  </div>
+  <!--零配件编码开始，动态替换掉就行了-->
+  <div class="row">
+    <div class="col-sm-1">序号</div>
+    <div class="col-sm-2">零件编码</div>
+    <div class="col-sm-3">配件项目</div>
+    <div class="col-sm-1">数量</div>
+    <div class="col-sm-1">单价</div>
+    <div class="col-sm-2">总金额</div>
+    <div class="col-sm-2">服务员工</div>
+  </div>
+  <div class="row" *ngFor="let item of repair_info.parts_cost; let i = index">
+    <div class="col-sm-1">{{ i+1 }}</div>
+    <div class="col-sm-2">{{item.name}}</div>
+    <div class="col-sm-3">{{item.name}}</div>
+    <div class="col-sm-1">{{item.amount}}</div>
+    <div class="col-sm-1">{{item.unit_price}}</div>
+    <div class="col-sm-2">{{item.total}}</div>
+    <div class="col-sm-2"></div>
+  </div>
+
+  <!--零配件编码结束-->
+  <div class="row">
+    <div class="col-sm-7"><span>人民币大写：</span><span>{{statistics_info.total_dx}}</span></div>
+    <div class="col-sm-1">配件金额合计</div>
+    <div class="col-sm-4">{{statistics_info.total}}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-7"></div>
+    <div class="col-sm-1">配件打折率</div>
+    <div class="col-sm-4">{{statistics_info.discount}}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-7"><span>人民币大写：</span><span>{{statistics_info.total_dx}}</span></div>
+    <div class="col-sm-1">配件应付金额</div>
+    <div class="col-sm-4">{{statistics_info.total_payment}}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5"><span>总金额合计：</span><span>{{statistics_info.total}}</span></div>
+    <div class="col-sm-7"><span>优惠金额：</span><span>{{statistics_info.discount_total}}</span></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5"><span>应付金额：</span><span>{{statistics_info.total_payment}}</span></div>
+    <div class="col-sm-7"><span>人民币大写：</span><span>{{statistics_info.total_dx}}</span></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5"><span>实付金额：</span><span>{{statistics_info.payment}}</span></div>
+    <div class="col-sm-7"><span>欠款金额：</span><span>{{statistics_info.remain}}</span></div>
+  </div>
 </div>
-
-<li *ngFor="let item of repair_info.parts_cost;">
-  配件名称:{{ item.name}}  配件价格:{{ item.unit_price }}
-</li>
+<br>
+<p>公司名称：</p>
+<p>公司地址：</p>
+<p>公司电话：</p>
+<p>客户签署：</p>
+<p>制单：</p>
+<p>操作员：</p>

@@ -1,0 +1,50 @@
+/*h1{
+  color:red;
+}
+p{
+  font-size: 26px;
+  color: purple;
+}*/
+h3{
+  text-align: center;
+}
+p{
+  display: block;
+  float: left;
+  width: 33.3%;
+  text-align: center;
+}
+li{
+  list-style:none;
+}
+img{
+  vertical-align:top;
+}
+.clear{
+  zoom:1;
+}
+.clear:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+.container-fluid{
+  width: 90%;
+}
+.container-fluid[_ngcontent-c0]{
+  border: 1px solid #000;
+  border-top: 0;
+  border-left: 0;
+}
+div{
+  border-top:1px solid #000;
+  border-left:1px solid #000;
+  line-height:30px;
+}
+.noborder,.container-fluid,.row{
+  border:none;
+}
+.container-fluid{
+  border-bottom:1px solid #000;
+  border-right:1px solid #000;
+}
