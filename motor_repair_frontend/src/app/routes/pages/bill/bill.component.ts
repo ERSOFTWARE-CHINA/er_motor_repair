@@ -19,6 +19,8 @@ export class BillComponent {
     repair_info: any;
     carMessage: any = new CarMessage();
 
+    company_name = localStorage.getItem("project_name")
+
     statistics_info: any = {
         date: getDate(),
         total_dx: 0,   //总金额大写
