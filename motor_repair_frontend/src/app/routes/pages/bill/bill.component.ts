@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '@delon/theme';
 import { RepairInfoService } from '../../repair_info/service/repair_info.service';
 import { CarMessageService } from '../../carMessage/service/carMessage.service';
-import {CarMessage} from '../../carMessage/domain/carMessage.domain';
+import { CarMessage } from '../../carMessage/domain/carMessage.domain';
+import { getDate } from '../../../utils/date';
 
 @Component({
   selector: 'app-pages-bill',
@@ -19,13 +20,16 @@ export class BillComponent {
     carMessage: any = new CarMessage();
 
     statistics_info: any = {
+        date: getDate(),
         total_dx: 0,   //总金额大写
         total: 0,      //总金额
-        discount: 1,   //打折率
+        discount: 1,   //配件打折率
         payment: 0,    //实付金额
-        total_payment: 0, //应付金额
+        total_payment: 0, //配件应付金额
         discount_total: 0,  //优惠金额
-        remain: 0 //欠款金额
+        remain: 0, //欠款金额
+        time_total: 0,  //工时费用合计
+        parts_total:0,  //配件费用合计
 
     }
 
@@ -42,21 +46,29 @@ export class BillComponent {
     }
 
     getStatisticsInfo(){
-        let total = 0;
-        console.log("$$$$$$$$")
-        console.log(this.repair_info.parts_cost.length)
+        let parts_total: number = 0;
         for (var i=0; i<this.repair_info.parts_cost.length; i++){
-            console.log("###############")
-            console.log(this.repair_info.parts_cost[i].total)
-            total += this.repair_info.parts_cost[i].total;
+            parts_total = parts_total + Number(this.repair_info.parts_cost[i].total);
         }
-        this.statistics_info.total = total;
+        let time_total: number = 0;
+        for (var i=0; i<this.repair_info.time_cost.length; i++){
+            time_total = time_total +  Number(this.repair_info.time_cost[i].total);
+        }
+        // console.log(parts_total)
+        // console.log(time_total)
+        
+        this.statistics_info.time_total = time_total;
+        this.statistics_info.parts_total = parts_total;
+
         this.statistics_info.discount = 1;
-        this.statistics_info.payment = total;
-        this.statistics_info.total_payment = total;
+        this.statistics_info.payment = this.statistics_info.total;
+        this.statistics_info.total_payment = this.statistics_info.parts_total * this.statistics_info.discount;
         this.statistics_info.discount_total = 0;
         this.statistics_info.remain = 0;
-        this.statistics_info.total_dx = smalltoBIG(total);
+
+        this.statistics_info.total = parts_total + time_total;
+        this.statistics_info.payment = this.statistics_info.total;
+        this.statistics_info.total_dx = smalltoBIG(this.statistics_info.total);
     }
 
     

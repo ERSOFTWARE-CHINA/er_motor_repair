@@ -2,7 +2,7 @@
 <h3>汽车配件结算单</h3>
 <p>结算方式：</p>
 <p>单号：</p>
-<p>打印时间：</p>
+<p>打印时间：{{ statistics_info.date }}</p>
 <br><br>
 <div class="container-fluid">
     <div class="row">
@@ -58,6 +58,9 @@
   </div>
   <!--零配件编码开始，动态替换掉就行了-->
   <div class="row">
+    <div class="col-sm-12">配件费用明细</div>
+  </div>
+  <div class="row">
     <div class="col-sm-1">序号</div>
     <div class="col-sm-2">零件编码</div>
     <div class="col-sm-3">配件项目</div>
@@ -75,12 +78,28 @@
     <div class="col-sm-2">{{item.total}}</div>
     <div class="col-sm-2"></div>
   </div>
-
   <!--零配件编码结束-->
+
+  <!--工时费用-->
   <div class="row">
-    <div class="col-sm-7"><span>人民币大写：</span><span>{{statistics_info.total_dx}}</span></div>
+    <div class="col-sm-12">工时费用明细</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">序号</div>
+    <div class="col-sm-5">项目</div>
+    <div class="col-sm-5">价格</div>
+  </div>
+  <div class="row" *ngFor="let item of repair_info.time_cost; let i = index">
+    <div class="col-sm-2">{{ i+1 }}</div>
+    <div class="col-sm-5">{{item.name}}</div>
+    <div class="col-sm-5">{{item.total}}</div>
+  </div>
+  <!--工时费用结束-->
+
+  <div class="row">
+    <div class="col-sm-7"><span></span><span></span></div>
     <div class="col-sm-1">配件金额合计</div>
-    <div class="col-sm-4">{{statistics_info.total}}</div>
+    <div class="col-sm-4">{{statistics_info.parts_total}}</div>
   </div>
   <div class="row">
     <div class="col-sm-7"></div>
@@ -88,7 +107,7 @@
     <div class="col-sm-4">{{statistics_info.discount}}</div>
   </div>
   <div class="row">
-    <div class="col-sm-7"><span>人民币大写：</span><span>{{statistics_info.total_dx}}</span></div>
+    <div class="col-sm-7"><span>工时费用合计: </span><span>{{statistics_info.time_total}}</span></div>
     <div class="col-sm-1">配件应付金额</div>
     <div class="col-sm-4">{{statistics_info.total_payment}}</div>
   </div>
@@ -97,7 +116,7 @@
     <div class="col-sm-7"><span>优惠金额：</span><span>{{statistics_info.discount_total}}</span></div>
   </div>
   <div class="row">
-    <div class="col-sm-5"><span>应付金额：</span><span>{{statistics_info.total_payment}}</span></div>
+    <div class="col-sm-5"><span>应付金额：</span><span>{{statistics_info.total}}</span></div>
     <div class="col-sm-7"><span>人民币大写：</span><span>{{statistics_info.total_dx}}</span></div>
   </div>
   <div class="row">
