@@ -55,6 +55,11 @@ defmodule MotorRepairBackendWeb.ProjectController do
     end
   end
 
+  # 查询当前项目使用的配件接口使用次数信息
+  def get_resource_count(conn,params) do
+    json conn, %{count: get_resource_counter(conn, params)}
+  end
+
   defp convert_perms_to_number(params) do
     %{default: perms_number} = %{ default: params
     |> Map.get("perms", []) }

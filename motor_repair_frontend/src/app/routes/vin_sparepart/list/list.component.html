@@ -69,9 +69,9 @@
           </div>
       </form>
 
-      <!-- <div class="mb-md">
-          <h3>{{ car_type? car_type : "未获得车型信息" }}</h3>
-      </div> -->
+      <div class="mb-md">
+        <h3>您今天的剩余查询次数为：{{ times >0 ? times : 0  }}</h3>
+      </div>
 
       <nz-table #nzTable [nzAjaxData]="page_data" [nzTotal]="total" [nzPageSize]="page_size" [nzLoading]="loading"
       (nzPageIndexChange)="pageChange($event)" nzShowTotal="true" 

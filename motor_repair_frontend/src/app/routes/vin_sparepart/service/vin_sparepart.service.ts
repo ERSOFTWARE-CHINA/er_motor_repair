@@ -28,9 +28,10 @@ export class VinSparePartService {
 
 
   test_url = "http://www.51macc.com:8080/Mattrio/VinInterface/query_vin?userid=a04d19d2-fdd4-45de-9fe7-b6ffd67eb71e&vin=LVSFDFAB2BN230620"
+  resource_check_url = baseUrl + "projects/resource/count"
 
   categoryOne = [
-    {category_id: "A", category_name: "地盘部分"},
+    {category_id: "A", category_name: "底盘部分"},
     {category_id: "B", category_name: "发动机与变速器"},
     {category_id: "C", category_name: "车身部分"},
     {category_id: "D", category_name: "电器及照照明系统"},
@@ -67,11 +68,13 @@ export class VinSparePartService {
           .map(response => response.json()).toPromise();   
   }
 
-  // setUTF8(): RequestOptions{
-  //   let headers = new Headers();
-  //   headers.append('Content-Transfer-Encoding', 'utf-8');
-  //   let options = new RequestOptions({ headers: headers, params: null });
-  //   return options;
-  // }
+  getResourceCount(is_use) {
+    if (is_use) 
+        return this.http.get(this.resource_check_url + `?is_use=true`, getTokenOptions(null))
+            .toPromise().then(res => {return res.json()}) 
+    else
+        return this.http.get(this.resource_check_url + `?is_use=false`, getTokenOptions(null))
+            .toPromise().then(res => {return res.json()})
+  }
   
 }

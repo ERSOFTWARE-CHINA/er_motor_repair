@@ -26,6 +26,10 @@ export class VinSparePartListComponent implements OnInit {
 
     loading = false;
 
+    times = 0;
+    is_use = false;
+
+
     constructor(
         public msg: NzMessageService,
         private vsService: VinSparePartService,
@@ -34,6 +38,7 @@ export class VinSparePartListComponent implements OnInit {
 
     ngOnInit() {
         this.getCategoryOne();
+        this.getResourceCount();
     }
 
     clearCarType(){
@@ -43,7 +48,25 @@ export class VinSparePartListComponent implements OnInit {
         this.category_three = null;
     }
 
+    getResourceCount() {
+        this.is_use = false;
+        this.vsService.getResourceCount(this.is_use)
+            .then(resp => {console.log(Math.floor(resp.count/2));this.times = 10 - Math.floor(resp.count/2)})
+    }
+
     getMikey(){
+        this.is_use = true;
+        this.vsService.getResourceCount(this.is_use).then(resp => {
+            
+            if (this.times >= 1) {
+                this.searchMikey()
+            } else this.msg.error("非常抱歉！当天接口使用次数已用完。")
+            this.times = 10 - Math.floor(resp.count/2)
+        });
+    }
+
+    searchMikey(){
+        
         this.vsService.getMikey(this.vin)
             .then(resp => {
                 if ((resp.list[0]) && (resp.list[0].mikey)){
@@ -75,7 +98,18 @@ export class VinSparePartListComponent implements OnInit {
         this.getData();
     }
 
-    getData() {
+    getData(){
+        this.is_use = true;
+        this.vsService.getResourceCount(this.is_use).then(resp => {
+            
+            if (this.times >= 1) {
+                this.searchData();
+            } else this.msg.error("非常抱歉！当天接口使用次数已用完。")
+            this.times = 10 - Math.floor(resp.count/2)
+        });
+    }
+
+    searchData() {
         this.page_data = [];
         this.vsService.getSparePart(this.category_three,this.mikey)
             .then(resp => {

@@ -41,6 +41,7 @@ defmodule MotorRepairBackendWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     post "/users/changepassword", UserController, :change_password
     resources "/projects", ProjectController, except: [:new, :edit]
+    get "/projects/resource/count", ProjectController, :get_resource_count
     
     resources "/roles", RoleController, except: [:new, :edit]
     resources "/repair_info", RepairInfoController, except: [:new, :edit]

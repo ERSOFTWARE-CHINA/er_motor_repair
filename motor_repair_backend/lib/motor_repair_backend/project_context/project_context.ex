@@ -7,6 +7,7 @@ defmodule MotorRepairBackend.ProjectContext do
   use MotorRepairBackend.BaseContext
   alias MotorRepairBackend.ProjectContext.Project
   alias MotorRepairBackend.RoleContext.Role
+  alias MotorRepairBackendWeb.Guardian
   use Bitwise
 
   defmacro __using__(_opts) do
@@ -23,6 +24,27 @@ defmodule MotorRepairBackend.ProjectContext do
     |> query_equal(params, "actived")
     |> query_order_by(params, "name")
     |> get_pagination(params, conn)
+  end
+
+  # 查询当前项目的配件接口使用次数，查询后，如果为使用接口(带参数)则使用次数加1
+  def get_resource_counter(conn,params) do
+    resource = Guardian.Plug.current_resource(conn)
+    project = Repo.get(Project, resource.project_id)
+    case Map.get(params, "is_use") do
+      "false" -> nil
+      "true" ->
+        param = %{resource_counter: project.resource_counter + 1}
+        Project.changeset(project, param)
+        |>Repo.update
+    end
+    project.resource_counter
+  end
+
+  # 每天晚上刷新接口使用次数
+  def flush_count() do
+    qry = "SELECT * FROM projects"
+    res = Ecto.Adapters.SQL.query!(Repo, qry, []) 
+    IO.puts inspect res
   end
 
   def check_name_exists(%{"id" => id, "name" => name}) do
