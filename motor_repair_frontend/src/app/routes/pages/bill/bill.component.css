@@ -40,6 +40,7 @@ div{
   border-top:1px solid #000;
   border-left:1px solid #000;
   line-height:30px;
+  font-size: 20px;
 }
 .noborder,.container-fluid,.row{
   border:none;

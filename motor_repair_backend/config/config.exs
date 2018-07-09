@@ -33,7 +33,7 @@ jobs: [
   # Every minute
   # {"* * * * *",      fn -> 0 end},
   # Every 15 minutes
-  {"59 23 * * *",   fn ->  MotorRepairBackend.ProjectContext.flush_count; IO.puts("####call me every 15 minute####") end},
+  {"59 23 * * *",   fn ->  MotorRepairBackend.ProjectContext.flush_count; end},
   # Runs on 18, 20, 22, 0, 2, 4, 6:
   # {"0 18-6/2 * * *", fn -> 0 end}
 ]
