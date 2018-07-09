@@ -40,9 +40,9 @@ defmodule MotorRepairBackend.ProjectContext do
     project.resource_counter
   end
 
-  # 每天晚上刷新接口使用次数
+  # 每天晚上刷新接口使用次数,每天12点调用
   def flush_count() do
-    qry = "SELECT * FROM projects"
+    qry = "UPDATE projects SET resource_counter=0"
     res = Ecto.Adapters.SQL.query!(Repo, qry, []) 
     IO.puts inspect res
   end

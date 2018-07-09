@@ -16,6 +16,8 @@ defmodule MotorRepairBackend.Application do
       # worker(MotorRepairBackend.Worker, [arg1, arg2, arg3]),
       # 自动生成单号的服务
       worker(MotorRepairBackend.GenServer.NoGenerator, []),
+      # 定时任务的服务
+      worker(MotorRepairBackend.Scheduler, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

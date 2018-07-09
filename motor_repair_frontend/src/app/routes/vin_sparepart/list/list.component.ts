@@ -29,7 +29,6 @@ export class VinSparePartListComponent implements OnInit {
     times = 0;
     is_use = false;
 
-
     constructor(
         public msg: NzMessageService,
         private vsService: VinSparePartService,

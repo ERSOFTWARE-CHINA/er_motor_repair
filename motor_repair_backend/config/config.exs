@@ -31,11 +31,11 @@ config :motor_repair_backend, MotorRepairBackendWeb.Guardian,
 config :motor_repair_backend, MotorRepairBackend.Scheduler,
 jobs: [
   # Every minute
-  {"* * * * *",      fn -> 0 end},
+  # {"* * * * *",      fn -> 0 end},
   # Every 15 minutes
-  {"*/15 * * * *",   fn -> MotorRepairBackend.ProjectContext.flush_count; IO.puts("####call me every 15 minute####") end},
+  {"59 23 * * *",   fn ->  MotorRepairBackend.ProjectContext.flush_count; IO.puts("####call me every 15 minute####") end},
   # Runs on 18, 20, 22, 0, 2, 4, 6:
-  {"0 18-6/2 * * *", fn -> 0 end}
+  # {"0 18-6/2 * * *", fn -> 0 end}
 ]
 
 # Import environment specific config. This must remain at the bottom
