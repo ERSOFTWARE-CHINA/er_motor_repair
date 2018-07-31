@@ -77,6 +77,10 @@
                     {
                         "text": "车辆信息维护",
                         "link": "/carMessage/page"
+                    },
+                    {
+                        "text": "维护保养提醒",
+                        "link": "/carMessage/reminding_list"
                     }
                 ]
                 },

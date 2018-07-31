@@ -20,14 +20,13 @@ export class CarMessageListComponent implements OnInit {
         sort_field: "owner_name",
         sort_direction: "desc",
         owner_name: null,
-        phone_num: null
+        phone_num: null,
+        // time_difference: null
     };
     // 记录总数
     total: number;
     // 车辆信息列表
     data: any[] = [];
-    // 机构树
-    tree: any[] = [];
     // 删除对象
     delObj = null;
 
@@ -51,6 +50,7 @@ export class CarMessageListComponent implements OnInit {
     }
 
     getData() {
+        console.log(this.q)
         this.formatForm()
         this.loading = true;
         this.carMessageService.listOnePage(this.q)

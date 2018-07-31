@@ -25,6 +25,12 @@ export class CarMessageService {
                    .toPromise().then(res => {return res.json()})           
     }
 
+    // 列出所有提醒的车主信息
+    listAllReminding(q) {
+      return this.http.get(this.url+`/reminding/list`, getTokenOptions(q))
+                 .toPromise().then(res => {return res.json()})           
+    }
+
     add(v): Promise<any>{ 
         let param = { car_message: v} 
         return this.http.post(this.url, param, getTokenOptions(null))

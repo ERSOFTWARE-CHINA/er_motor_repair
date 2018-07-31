@@ -13,7 +13,7 @@
 
                 <div nz-col [nzSpan]="8" class="mb-md">
                     <div nz-form-item class="d-flex">
-                        <div nz-form-label><label for="name">电话</label></div>
+                        <div nz-form-label><label for="name">联系电话</label></div>
                         <div nz-form-control class="flex-1">
                             <nz-input [(ngModel)]="q.phone_num" name="phone_num" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="phone_num"></nz-input>
                         </div>
@@ -22,7 +22,7 @@
 
                 <div *ngIf="expandForm" nz-col [nzSpan]="8" class="mb-md">
                     <div nz-form-item class="d-flex">
-                        <div nz-form-label><label for="plate_num">车牌号</label></div>
+                        <div nz-form-label><label for="plate_num">车牌号码</label></div>
                         <div nz-form-control class="flex-1">
                             <nz-input [(ngModel)]="q.plate_num" name="plate_num" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="plate_num"></nz-input>
                         </div>
@@ -31,12 +31,25 @@
 
                 <div *ngIf="expandForm" nz-col [nzSpan]="8" class="mb-md">
                     <div nz-form-item class="d-flex">
-                        <div nz-form-label><label for="car_brand">品牌</label></div>
+                        <div nz-form-label><label for="car_brand">车辆品牌</label></div>
                         <div nz-form-control class="flex-1">
                             <nz-input [(ngModel)]="q.car_brand" name="car_brand" [nzSize]="'large'" [nzPlaceHolder]="'请输入'" nzId="car_brand"></nz-input>
                         </div>
                     </div>
                 </div>
+
+                <!-- <div nz-col [nzSpan]="8" class="mb-md">
+                    <div nz-form-item class="d-flex">
+                        <div nz-form-label><label for="name">最后进场</label></div>
+                        <div nz-form-control class="flex-1">
+                            <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择最后进场时间" name="time_difference" [(ngModel)]="q.time_difference">
+                                <nz-option nzLabel="3个月以前" nzValue="90"></nz-option>
+                                <nz-option nzLabel="半年以前" nzValue="182"></nz-option>
+                                <nz-option nzLabel="一年以前" nzValue="365"></nz-option>
+                            </nz-select>
+                        </div>
+                    </div>
+                </div> -->
 
                 <div nz-col [nzSpan]="expandForm ? 24 : 8" class="mb-md" [class.text-right]="expandForm">
                     <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading" [nzSize]="'large'" >查询</button>

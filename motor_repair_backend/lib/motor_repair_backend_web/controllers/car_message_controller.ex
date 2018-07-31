@@ -53,7 +53,11 @@ defmodule MotorRepairBackendWeb.CarMessageController do
     end
   end
 
-
+  def list_reminding(conn, params) do
+    IO.puts("#######参数是：###############")
+    IO.puts inspect params
+    json conn, query_reminder(params, conn)
+  end
 
   defp convert_perms_to_number(params) do
     %{default: perms_number} = %{ default: params

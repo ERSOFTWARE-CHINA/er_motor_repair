@@ -1,8 +1,10 @@
 defmodule MotorRepairBackendWeb.CarMessageView do
   use MotorRepairBackendWeb, :view
   alias MotorRepairBackendWeb.CarMessageView
+  alias MotorRepairBackend.CarMessageContext.CarMessage
 
   def render("index.json", %{page: page}) do
+
     %{
       data: render_many(page.entries, CarMessageView, "car_message.json"),
       page_number: page.page_number,
@@ -18,6 +20,9 @@ defmodule MotorRepairBackendWeb.CarMessageView do
 
 
   def render("car_message.json", %{car_message: car_message}) do
+    if not Map.has_key?(car_message, :__struct__) do
+      car_message = struct(CarMessage, car_message)
+    end
     %{
        id: car_message.id,
        owner_name: car_message.owner_name,

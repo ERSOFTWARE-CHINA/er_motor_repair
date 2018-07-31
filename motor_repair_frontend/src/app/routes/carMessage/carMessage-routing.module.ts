@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CarMessageComponent } from './carMessage.component';
 import { CarMessageListComponent } from './list/list.component';
+import { CarMessageRemindingListComponent } from './reminding_list/list.component';
 import { CarMessageFormComponent } from './form/form.component';
 
 const routes: Routes = [{
@@ -12,6 +13,7 @@ const routes: Routes = [{
 		{ path: '', redirectTo: 'page', pathMatch: 'full' },
 		{ path: 'page', component: CarMessageListComponent },
 		{ path: 'form', component: CarMessageFormComponent },
+		{ path: 'reminding_list', component: CarMessageRemindingListComponent },
 	]
 }];
 

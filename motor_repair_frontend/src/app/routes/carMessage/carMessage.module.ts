@@ -6,6 +6,7 @@ import { CarMessageRoutingModule } from './carMessage-routing.module';
 
 import { CarMessageComponent } from './carMessage.component';
 import { CarMessageListComponent } from './list/list.component';
+import { CarMessageRemindingListComponent } from './reminding_list/list.component';
 import { CarMessageFormComponent } from './form/form.component';
 import { MainPipe } from '../../pipes/pipes.module';
 
@@ -14,7 +15,8 @@ import { MainPipe } from '../../pipes/pipes.module';
   declarations: [
     CarMessageComponent,
     CarMessageListComponent,
-    CarMessageFormComponent
+    CarMessageFormComponent,
+    CarMessageRemindingListComponent
   ],
   providers: [
     

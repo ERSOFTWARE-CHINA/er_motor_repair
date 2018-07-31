@@ -49,6 +49,7 @@ defmodule MotorRepairBackendWeb.Router do
     get "/repair_info/print_repair_info_bill/:id", RepairInfoController, :get_repair_info_bill
 
     resources "/carMessage", CarMessageController, except: [:new, :edit]
+    get "/carMessage/reminding/list", CarMessageController, :list_reminding
     #员工信息
     resources "/staffs", StaffController, except: [:new, :edit]
     resources "/spareparts", SparepartController, except: [:new, :edit]
