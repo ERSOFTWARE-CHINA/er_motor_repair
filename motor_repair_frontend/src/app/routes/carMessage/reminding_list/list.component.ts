@@ -15,13 +15,14 @@ import { UserStatusPipe } from '../../../pipes/pipes';
 export class CarMessageRemindingListComponent implements OnInit {
 
     q: any = {
-        time_difference: "182"
+        page_index: 1,
+        page_size: 15,
+        time_difference: "180"
     };
     
     // 车辆信息列表
     data: any[] = [];
-    
-
+    total = 0;
     loading = false;
 
     
@@ -53,16 +54,20 @@ export class CarMessageRemindingListComponent implements OnInit {
                                 this.msg.error(resp.error);
                                 this.loading = false;
                              } else {
-
-                                this.data = resp; 
+                                this.data = resp.data; 
+                                this.total = resp.total;
                                 this.loading = false;
                              }
                          })
                          .catch((error) => {this.msg.error(error); this.loading = false;})
     }
 
+    pageChange(pi: number) {
+        this.q.page_index = pi;
+        this.getData();
+    }
+
     formatForm() {
-        
         if ((this.q.time_difference == null)||(this.q.time_difference == "")){delete this.q.time_difference}
     }
 }

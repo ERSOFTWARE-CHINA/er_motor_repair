@@ -28,7 +28,7 @@ defmodule MotorRepairBackend.CarMessageContext do
     |> query_or_like(oneKey, "owner_name")
     |> query_or_like(oneKey, "phone_num")
     |> query_or_like(oneKey, "plate_num")
-    |> query_order_by(params, "owner_name")
+    |> query_order_desc_by(params, "inserted_at")
     |> get_pagination(params, conn)
     
   end
@@ -55,21 +55,45 @@ defmodule MotorRepairBackend.CarMessageContext do
     # 未进场天数
     time_difference = params |> Map.get("time_difference", "0") |> String.to_integer
     time = Timex.today
-    begin_time = Date.add(time, -5 - time_difference)
-    end_time = Date.add(time, 5 - time_difference)
+    # begin_time = Date.add(time, - time_difference)
+    end_time = Date.add(time, - time_difference)
+
+    # 分页参数
+    pi = Map.get(params, "page_index", "1") |> String.to_integer
+    ps = Map.get(params, "page_size", "20") |> String.to_integer
+
+    # 查询总条数
+    qry_count = "SELECT COUNT(*) FROM (SELECT MAX(r.entry_date)
+                 FROM car_message AS c 
+                 JOIN repair_info as r on c.id = r.car_message_id 
+                 WHERE c.project_id = $1
+                 GROUP BY c.id
+                 HAVING MAX(r.entry_date) <= $2::date) AS t1;"
+    res_count = Ecto.Adapters.SQL.query!(Repo, qry_count, [project_id, Date.to_erl(end_time)])
+    [[total]] = res_count.rows
+
+    # 查询语句
     qry = "SELECT c.owner_name, c.phone_num, MAX(r.entry_date) last_time
            FROM car_message AS c 
            JOIN repair_info as r on c.id = r.car_message_id 
            WHERE c.project_id = $1
            GROUP BY c.id
-           HAVING MAX(r.entry_date) > $2::date
-           AND MAX(r.entry_date) < $3::date;"
-    res = Ecto.Adapters.SQL.query!(Repo, qry, [project_id, Date.to_erl(begin_time), Date.to_erl(end_time)])
-    res.rows
-    |> Enum.map(fn(r)-> 
-      [a, b, c] = r
-      {:ok, d} = c |> Date.from_erl
-      %{owner_name: a, phone_num: b, last_date: d} end)
+           HAVING MAX(r.entry_date) <= $2::date
+           ORDER BY MAX(r.entry_date) DESC
+           LIMIT $3
+           OFFSET $4;"
+
+    res = Ecto.Adapters.SQL.query!(Repo, qry, [project_id, Date.to_erl(end_time),ps,ps*(pi-1)])
+
+    %{
+      data: res.rows
+      |> Enum.map(fn(r)-> 
+        [a, b, c] = r
+        {:ok, d} = c |> Date.from_erl
+        %{owner_name: a, phone_num: b, last_date: d} end),
+
+      total: total
+    }
   end
 
 end

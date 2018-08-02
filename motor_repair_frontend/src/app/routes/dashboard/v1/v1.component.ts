@@ -46,7 +46,7 @@ export class DashboardV1Component implements OnInit {
     // 车辆信息
     q_car: any = {
         page_index: 1,
-        page_size: 5,
+        page_size: 10,
         sort_field: "inserted_at",
         sort_direction: "desc"
     };
@@ -61,8 +61,8 @@ export class DashboardV1Component implements OnInit {
 
     q_repair: any = {
         page_index: 1,
-        page_size: 5,
-        sort_field: "date",
+        page_size: 10,
+        sort_field: "entry_date",
         sort_direction: "desc"
     };
     // 记录总数

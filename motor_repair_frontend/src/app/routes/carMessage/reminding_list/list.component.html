@@ -8,10 +8,10 @@
                         <div nz-form-label><label for="name">最后进场</label></div>
                         <div nz-form-control class="flex-1">
                             <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择最后进场时间" name="time_difference" [(ngModel)]="q.time_difference">
-                                <nz-option nzLabel="一天左右" nzValue="1"></nz-option>
-                                <nz-option nzLabel="3个月左右" nzValue="90"></nz-option>
-                                <nz-option nzLabel="半年左右" nzValue="182"></nz-option>
-                                <nz-option nzLabel="一年左右" nzValue="365"></nz-option>
+                                <nz-option nzLabel="1天以前" nzValue="0"></nz-option>
+                                <nz-option nzLabel="3个月以前" nzValue="90"></nz-option>
+                                <nz-option nzLabel="半年以前" nzValue="180"></nz-option>
+                                <nz-option nzLabel="一年以前" nzValue="365"></nz-option>
                             </nz-select>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
             </div>
         </form>
 
-        <nz-table #nzTable [nzAjaxData]="data" [nzIsPagination]="false" [nzLoading]="loading">
+        <nz-table #nzTable [nzAjaxData]="data" [nzTotal]="total" [nzPageSize]="q.page_size" [nzLoading]="loading" (nzPageIndexChange)="pageChange($event)">
             <thead nz-thead>
                 <tr>
                     <th nz-th>
