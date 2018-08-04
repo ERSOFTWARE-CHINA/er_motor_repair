@@ -18,7 +18,7 @@ export class RepairInfoListComponent implements OnInit {
     q: any = {
         page_index: 1,
         page_size: 15,
-        sort_field: "date",
+        sort_field: "entry_date",
         sort_direction: "desc",
         no: null,
         date: null,
