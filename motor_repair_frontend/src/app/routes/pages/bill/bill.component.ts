@@ -4,6 +4,8 @@ import { RepairInfoService } from '../../repair_info/service/repair_info.service
 import { CarMessageService } from '../../carMessage/service/carMessage.service';
 import { CarMessage } from '../../carMessage/domain/carMessage.domain';
 import { getDate } from '../../../utils/date';
+import * as jsPDF from 'jspdf'
+import * as html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-pages-bill',
@@ -44,6 +46,7 @@ export class BillComponent {
         this.carMessageSrv.initUpdate(this.repairInfoService.repairInfo.car_message_id)
                           .then(resp => this.carMessage = resp.data)
                           .then(() => this.getStatisticsInfo())
+                          .then(() => this.downloadPDF())
                           .catch(error => console.log(error))
     }
 
@@ -72,6 +75,32 @@ export class BillComponent {
         this.statistics_info.payment = this.statistics_info.total;
         this.statistics_info.total_dx = smalltoBIG(this.statistics_info.total);
     }
+
+    downloadPDF() {
+      // console.log("downloading.....")
+      // let doc = new jsPDF();
+
+      // // Add a title to your PDF
+      // doc.setFontSize(30); 
+      // doc.text(12, 10, "Your Title");
+
+      // // Create your table here (The dynamic table needs to be converted to canvas).
+      // let element = <HTMLScriptElement>document.getElementById("hahaha");
+      // html2canvas(element)
+      // .then((canvas: any) => {
+      //     doc.addImage(canvas.toDataURL("image/jpeg"), "JPEG", 0, 50, doc.internal.pageSize.width, element.offsetHeight / 5 );
+      //     doc.save(`Report-${Date.now()}.pdf`);
+      // })
+
+      html2canvas(document.body).then(function(canvas) {
+        var img = canvas.toDataURL("image/png");
+        var doc = new jsPDF();
+        doc.addImage(img,'JPEG',5,5,200,170);
+        doc.save('testCanvas.pdf');
+        });
+
+    }
+    
 
     
 
