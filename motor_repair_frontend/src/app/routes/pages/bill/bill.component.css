@@ -8,13 +8,6 @@ p{
 /* div{font-family:"黑体"}
 p{font-family:"黑体"} */
 
-/* @media print
-{
-  div{
-    font-size:15pt;
-  } 
-} */
-
 body{
 	width:2500px
 }
@@ -46,20 +39,20 @@ img{
   width: 90%;
 }
 .container-fluid[_ngcontent-c0]{
-  border: 1px solid #000;
+  border: 2px solid #000;
   border-top: 0;
   border-left: 0;
 }
 div{
-  border-top:1px solid #000;
-  border-left:1px solid #000;
-  line-height:30px;
-  font-size: 20px;
+  border-top:2px solid #000;
+  border-left:2px solid #000;
+  line-height:50px;
+  font-size: 48px;
 }
 .noborder,.container-fluid,.row{
   border:none;
 }
 .container-fluid{
-  border-bottom:1px solid #000;
-  border-right:1px solid #000;
+  border-bottom:2px solid #000;
+  border-right:2px solid #000;
 }
