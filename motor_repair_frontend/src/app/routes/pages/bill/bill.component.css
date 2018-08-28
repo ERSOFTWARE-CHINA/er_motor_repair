@@ -1,63 +1,49 @@
-/*h1{
-  color:red;
+@media print{
+  div{color:rgba(0,0,0,1);}
 }
-p{
-  font-size: 26px;
-  color: purple;
-}*/
-/* div{font-family:"黑体"}
-p{font-family:"黑体"} */
-
-html,body{
-  font-family:"黑体";
-  color:rgba(0,0,0,1);
-}
-
-body{
-	width:2500px
-}
-
 h3{
-  text-align: center;
+text-align: center;
 }
 p{
-  display: block;
-  float: left;
-  width: 33.3%;
-  text-align: center;
+display: block;
+float: left;
+width: 33.3%;
+text-align: center;
 }
 li{
-  list-style:none;
+list-style:none;
 }
 img{
-  vertical-align:top;
+vertical-align:top;
 }
 .clear{
-  zoom:1;
+zoom:1;
 }
 .clear:after{
-  content:"";
-  display:block;
-  clear:both;
+content:"";
+display:block;
+clear:both;
 }
 .container-fluid{
-  width: 90%;
+width: 90%;
 }
 .container-fluid[_ngcontent-c0]{
-  border: 2px solid #000;
-  border-top: 0;
-  border-left: 0;
+border: 1px solid #000;
+border-top: 0;
+border-left: 0;
 }
 div{
-  border-top:2px solid #000;
-  border-left:2px solid #000;
-  line-height:50px;
-  font-size: 48px;
+border-top:1px solid #000;
+border-left:1px solid #000;
+line-height:30px;
+font-size: 20px;
+font-family:"黑体";
+color:rgba(0,0,0,1);
 }
 .noborder,.container-fluid,.row{
-  border:none;
+border:none;
 }
 .container-fluid{
-  border-bottom:2px solid #000;
-  border-right:2px solid #000;
+border-bottom:1px solid #000;
+border-right:1px solid #000;
 }
