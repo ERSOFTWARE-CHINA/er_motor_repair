@@ -46,7 +46,7 @@ export class BillComponent {
         this.carMessageSrv.initUpdate(this.repairInfoService.repairInfo.car_message_id)
                           .then(resp => this.carMessage = resp.data)
                           .then(() => this.getStatisticsInfo())
-                          .then(() => this.downloadPDF())
+                        //   .then(() => this.downloadPDF())
                           .catch(error => console.log(error))
     }
 

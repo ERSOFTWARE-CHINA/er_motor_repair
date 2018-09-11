@@ -1,8 +1,9 @@
 @media print{
-  div,p{color:rgba(0,0,0,1);}
+  div,p,h3[_ngcontent-c19]{color:rgba(0,0,0,1);}
 }
 h3{
 text-align: center;
+/* color:rgba(0,0,0,1); */
 }
 p{
 display: block;
@@ -32,7 +33,7 @@ border: 1px solid #000;
 border-top: 0;
 border-left: 0;
 }
-div,p{
+div{
 border-top:1px solid #000;
 border-left:1px solid #000;
 line-height:30px;
