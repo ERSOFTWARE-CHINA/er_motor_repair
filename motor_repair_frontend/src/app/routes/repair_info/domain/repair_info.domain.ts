@@ -2,6 +2,7 @@ export class RepairInfo {
     id: number;
     no: string;
     type: string;
+    pay_type: string;
     car_message_id: string;
     // time_cost: number;
     consultant: string;

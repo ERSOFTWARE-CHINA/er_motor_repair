@@ -55,6 +55,7 @@ export class CarMessageRemindingListComponent implements OnInit {
                                 this.loading = false;
                              } else {
                                 this.data = resp.data; 
+                                console.log(this.data)
                                 this.total = resp.total;
                                 this.loading = false;
                              }

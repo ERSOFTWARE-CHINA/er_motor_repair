@@ -42,6 +42,8 @@ export class AuthenticationService {
                 let project_name = response.json() && response.json().project && response.json().project.name
                 let project_province = response.json() && response.json().project && response.json().project.province
                 let project_city = response.json() && response.json().project && response.json().project.city
+                let project_address = response.json() && response.json().project && response.json().project.address
+                let project_tel = response.json() && response.json().project && response.json().project.tel
 
               
                  if (!error && token && username && perms) {
@@ -56,6 +58,8 @@ export class AuthenticationService {
                     localStorage.setItem('project_name', project_name)
                     localStorage.setItem('project_province', project_province)
                     localStorage.setItem('project_city', project_city)
+                    localStorage.setItem('project_address', project_address)
+                    localStorage.setItem('project_tel', project_tel)
                     this.setACL(response.json());
                     return true;
                 } else {

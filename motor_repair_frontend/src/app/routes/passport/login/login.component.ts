@@ -136,26 +136,7 @@ export class UserLoginComponent implements OnDestroy {
             err => {
                 this.msg.error(err);
             });
-        // setTimeout(() => {
-        //     this.loading = false;
-        //     if (this.type === 0) {
-        //         if (this.userName.value !== 'admin' || this.password.value !== '888888') {
-        //             this.error = `账户或密码错误`;
-        //             return;
-        //         }
-        //     }
-
-        //     // 清空路由复用信息
-        //     this.reuseTabService.clear();
-        //     this.tokenService.set({
-        //         token: '123456789',
-        //         name: this.userName.value,
-        //         email: `cipchk@qq.com`,
-        //         id: 10000,
-        //         time: +new Date
-        //     });
-        //     this.router.navigate(['/']);
-        // }, 1000);
+        
     }
 
     // region: social

@@ -27,6 +27,7 @@ export class RepairInfoFormComponent implements OnInit {
     title: string = '';
 
     options: string[] = ["保养","维修"]
+    pay_types = [{label: "现金", value: "现金"},{label: "第三方支付", value: "第三方支付"},{label: "挂账", value: "挂账"}]
 
     status_options: any[] = [{label: "已开单", value: false}, {label: "已完结", value: true}]
 
@@ -56,6 +57,7 @@ export class RepairInfoFormComponent implements OnInit {
             no: [this.repairInfo? this.repairInfo.no : '', [Validators.required, ,Validators.minLength(4),
                                                               Validators.pattern('[\u4E00-\u9FA5-a-zA-Z0-9_]*$') ]],
             type: [this.repairInfo? this.repairInfo.type : null, [Validators.required]],
+            pay_type: [this.repairInfo? this.repairInfo.pay_type : "现金", [Validators.required]],
             status: [this.repairInfo? this.repairInfo.status : false],
             // time_cost: [this.repairInfo? this.repairInfo.time_cost : 0, [Validators.required, this.validateNumber]],
             consultant : [this.repairInfo? this.repairInfo.consultant : null],

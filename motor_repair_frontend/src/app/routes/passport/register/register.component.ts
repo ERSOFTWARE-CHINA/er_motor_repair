@@ -61,6 +61,8 @@ export class UserRegisterComponent implements OnDestroy {
         
         this.form = fb.group({
             project: [null, [Validators.required], this.nameValidator.bind(this)],
+            address: [null, [Validators.required]],
+            tel: [null, [Validators.required]],
             province: [null, [Validators.required]],
             city: [null],
             password: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.checkPassword.bind(this)]],
@@ -98,6 +100,8 @@ export class UserRegisterComponent implements OnDestroy {
 
     // region: fields
     get project() { return this.form.controls.project; }
+    get address() { return this.form.controls.address; }
+    get tel() { return this.form.controls.tel; }
     get province() { return this.form.controls.province; }
     get city() { return this.form.controls.city; }
     get password() { return this.form.controls.password; }
@@ -145,6 +149,7 @@ export class UserRegisterComponent implements OnDestroy {
         }
 
         this.loading = true;
+        console.log(this.form.value)
         this.registService.register(this.form.value)
             .then(resp => {
                 if (resp.ok) {

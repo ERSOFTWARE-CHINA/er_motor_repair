@@ -73,7 +73,7 @@ defmodule MotorRepairBackend.CarMessageContext do
     [[total]] = res_count.rows
 
     # 查询语句
-    qry = "SELECT c.owner_name, c.phone_num, MAX(r.entry_date) last_time
+    qry = "SELECT c.car_brand, c.car_series, c.owner_name, c.phone_num, MAX(r.entry_date) last_time, c.latest_mileage
            FROM car_message AS c 
            JOIN repair_info as r on c.id = r.car_message_id 
            WHERE c.project_id = $1
@@ -88,9 +88,9 @@ defmodule MotorRepairBackend.CarMessageContext do
     %{
       data: res.rows
       |> Enum.map(fn(r)-> 
-        [a, b, c] = r
-        {:ok, d} = c |> Date.from_erl
-        %{owner_name: a, phone_num: b, last_date: d} end),
+        [a, b, c, d, e, f] = r
+        {:ok, g} = e |> Date.from_erl
+        %{car_brand: a, car_series: b, owner_name: c, phone_num: d, last_date: g, latest_mileage: f} end),
 
       total: total
     }

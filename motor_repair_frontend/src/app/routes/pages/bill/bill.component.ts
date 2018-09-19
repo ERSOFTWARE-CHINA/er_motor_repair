@@ -22,6 +22,9 @@ export class BillComponent {
     carMessage: any = new CarMessage();
 
     company_name = localStorage.getItem("project_name")
+    company_address = localStorage.getItem("project_address")
+    company_tel = localStorage.getItem("project_tel")
+    pay_type = ""
 
     statistics_info: any = {
         date: getDate(),
@@ -43,6 +46,7 @@ export class BillComponent {
 
     initInfo() {
         this.repair_info = this.repairInfoService.repairInfo;
+        this.pay_type = this.repair_info.pay_type;
         this.carMessageSrv.initUpdate(this.repairInfoService.repairInfo.car_message_id)
                           .then(resp => this.carMessage = resp.data)
                           .then(() => this.getStatisticsInfo())

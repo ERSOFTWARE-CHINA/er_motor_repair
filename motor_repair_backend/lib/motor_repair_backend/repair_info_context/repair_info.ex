@@ -24,6 +24,7 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
     field :next_date, :date                                 # 下次保养日期
     field :agent, :string                                   # 送修人
     field :agent_mobile, :string                            # 送修人手机
+    field :pay_type, :string                                # 结算方式
     field :status, :boolean, default: false                 # 维修单状态
 
     belongs_to :project, Project, on_replace: :nilify
@@ -38,7 +39,7 @@ defmodule MotorRepairBackend.RepairInfoContext.RepairInfo do
   @doc false
   def changeset(repair_info, attrs) do
     repair_info
-      |> cast(attrs, [:no, :type, :consultant, :entry_date, :return_date, :items, :customer_comment, :repairman_comment, :advise, :mileage, :next_mileage, :next_date, :agent, :agent_mobile, :status])
+      |> cast(attrs, [:no, :type, :consultant, :entry_date, :return_date, :items, :customer_comment, :repairman_comment, :advise, :mileage, :next_mileage, :next_date, :agent, :agent_mobile, :status, :pay_type])
       |> validate_required([:no, :type])
       |> validate_required(:status)
       |> validate_no_format()

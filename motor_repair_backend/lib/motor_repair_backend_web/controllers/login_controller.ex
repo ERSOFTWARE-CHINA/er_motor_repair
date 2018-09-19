@@ -35,7 +35,9 @@ defmodule MotorRepairBackendWeb.LoginController do
     pm = %{
       name: Map.get(project_params, "name"),
       province: Map.get(project_params, "province"),
-      city: Map.get(project_params, "city")
+      city: Map.get(project_params, "city"),
+      address: Map.get(project_params, "address"),
+      tel: Map.get(project_params, "tel")
     }
     Project.changeset(%Project{}, pm)
   end

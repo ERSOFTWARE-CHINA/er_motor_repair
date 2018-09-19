@@ -42,20 +42,29 @@
                             <nz-table-sort [(nzValue)]="sortMap.entry_date" (nzValueChange)="sort('entry_date',$event)"></nz-table-sort>
                         </th>
                         <th nz-th>
+                            <span>品牌</span> 
+                        </th>
+                        <th nz-th>
+                            <span>车系</span>
+                        </th>
+
+
+                        <th nz-th>
                             <span>类型</span>
                             <nz-table-sort [(nzValue)]="sortMap.type" (nzValueChange)="sort('type',$event)"></nz-table-sort>
                         </th>
-                        <th nz-th>
+                        <!-- <th nz-th>
                             <span>工时费用(元)</span>
-                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.time_totalt" (nzValueChange)="sort_repair_info('time_total',$event)"></nz-table-sort> -->
                         </th>
                         <th nz-th>
                             <span>配件费用(元)</span>
-                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.parts_total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
-                        </th>
+                        </th> -->
                         <th nz-th>
                             <span>总费用(元)</span>
-                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
+                        </th>
+
+                        <th nz-th>
+                            <span>结算方式</span>
                         </th>
                         
                         <th nz-th>
@@ -80,10 +89,13 @@
 
                         <td nz-td>{{i.no}}</td>
                         <td nz-td>{{i.entry_date}}</td>
+                        <td nz-td>{{i.car_message.car_brand}}</td>
+                        <td nz-td>{{i.car_message.car_series}}</td>
                         <td nz-td>{{i.type}}</td>
-                        <td nz-td>{{i.time_total}}</td>
-                        <td nz-td>{{i.parts_total}}</td>
+                        <!-- <td nz-td>{{i.time_total}}</td>
+                        <td nz-td>{{i.parts_total}}</td> -->
                         <td nz-td>{{i.total}}</td>
+                        <td nz-td>{{i.pay_type}}</td>
                         <td nz-td>{{i.agent}}</td>
                         <td nz-td>{{i.agent_mobile}}</td>
                         

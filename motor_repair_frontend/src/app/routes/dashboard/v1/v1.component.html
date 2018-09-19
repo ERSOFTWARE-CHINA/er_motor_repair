@@ -28,23 +28,6 @@
             nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
                 <thead nz-thead>
                     <tr>
-                        
-                        <th nz-th>
-                            <span>车主名称</span>
-                            <nz-table-sort [(nzValue)]="sortMap_car.owner_name" (nzValueChange)="sort_car_message('owner_name',$event)"></nz-table-sort>
-                        </th>
-                        <th nz-th>
-                            <span>VIN码</span>
-                            <nz-table-sort [(nzValue)]="sortMap_car.vin" (nzValueChange)="sort_car_message('vin',$event)"></nz-table-sort>
-                        </th>
-                        <th nz-th>
-                            <span>车牌号</span>
-                            <nz-table-sort [(nzValue)]="sortMap_car.plate_num" (nzValueChange)="sort_car_message('plate_num',$event)"></nz-table-sort>
-                        </th>
-                        <th nz-th>
-                            <span>发动机号</span>
-                            <nz-table-sort [(nzValue)]="sortMap_car.engine_num" (nzValueChange)="sort_car_message('engine_num',$event)"></nz-table-sort>
-                        </th>
                         <th nz-th>
                             <span>品牌名称</span>
                             <nz-table-sort [(nzValue)]="sortMap_car.car_brand" (nzValueChange)="sort_car_message('car_brand',$event)"></nz-table-sort>
@@ -53,20 +36,40 @@
                             <span>车系名称</span>
                             <nz-table-sort [(nzValue)]="sortMap_car.car_series" (nzValueChange)="sort_car_message('car_series',$event)"></nz-table-sort>
                         </th>
-                        <th nz-th><span>操作</span></th>
                     
-                        
+                        <th nz-th>
+                            <span>车主名称</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.owner_name" (nzValueChange)="sort_car_message('owner_name',$event)"></nz-table-sort>
+                        </th>
+                        <th nz-th>
+                            <span>电话号码</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.phone_num" (nzValueChange)="sort_car_message('phone_num',$event)"></nz-table-sort>
+                        </th>
+                        <!-- <th nz-th>
+                            <span>VIN码</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.vin" (nzValueChange)="sort_car_message('vin',$event)"></nz-table-sort>
+                        </th> -->
+                        <th nz-th>
+                            <span>车牌号</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.plate_num" (nzValueChange)="sort_car_message('plate_num',$event)"></nz-table-sort>
+                        </th>
+                        <!-- <th nz-th>
+                            <span>发动机号</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.engine_num" (nzValueChange)="sort_car_message('engine_num',$event)"></nz-table-sort>
+                        </th> -->
+                        <th nz-th><span>操作</span></th>
+
                     </tr>
                 </thead>
                 <tbody nz-tbody>
                     <tr nz-tbody-tr *ngFor="let i of nzTable.data" (click)="clickOnRow(i)">
-                        
-                        <td nz-td>{{i.owner_name}}</td>
-                        <td nz-td>{{i.vin}}</td>
-                        <td nz-td>{{i.plate_num}}</td>
-                        <td nz-td>{{i.engine_num}}</td>
                         <td nz-td>{{i.car_brand}}</td>
                         <td nz-td>{{i.car_series}}</td>
+                        <td nz-td>{{i.owner_name}}</td>
+                        <td nz-td>{{i.phone_num}}</td>
+                        <!-- <td nz-td>{{i.vin}}</td> -->
+                        <td nz-td>{{i.plate_num}}</td>
+                        <!-- <td nz-td>{{i.engine_num}}</td> -->
                         <td nz-td>
                             <a (click)="update_carmessage(i.id)">修改</a>
                             <span nz-table-divider></span>
@@ -106,21 +109,34 @@
                             <span>进场时间</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.entry_date" (nzValueChange)="sort_repair_info('entry_date',$event)"></nz-table-sort>
                         </th>
+
+                        <th nz-th>
+                            <span>品牌</span> 
+                        </th>
+                        <th nz-th>
+                            <span>车系</span>
+                        </th>
+
                         <th nz-th>
                             <span>类型</span>
                             <nz-table-sort [(nzValue)]="sortMap_repair.type" (nzValueChange)="sort_repair_info('type',$event)"></nz-table-sort>
                         </th>
-                        <th nz-th>
+                        <!-- <th nz-th>
                             <span>工时费用(元)</span>
-                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.time_totalt" (nzValueChange)="sort_repair_info('time_total',$event)"></nz-table-sort> -->
+                           
                         </th>
                         <th nz-th>
                             <span>配件费用(元)</span>
-                            <!-- <nz-table-sort [(nzValue)]="sortMap_repair.parts_total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
-                        </th>
+                           
+                        </th> -->
                         <th nz-th>
                             <span>总费用(元)</span>
                             <!-- <nz-table-sort [(nzValue)]="sortMap_repair.total" (nzValueChange)="sort_repair_info('time_cost',$event)"></nz-table-sort> -->
+                        </th>
+
+                        <th nz-th>
+                            <span>结算方式</span>
+                               
                         </th>
                         
                         <th nz-th>
@@ -145,10 +161,13 @@
 
                         <td nz-td>{{i.no}}</td>
                         <td nz-td>{{i.entry_date}}</td>
+                        <td nz-td>{{i.car_message.car_brand}}</td>
+                        <td nz-td>{{i.car_message.car_series}}</td>
                         <td nz-td>{{i.type}}</td>
-                        <td nz-td>{{i.time_total}}</td>
-                        <td nz-td>{{i.parts_total}}</td>
+                        <!-- <td nz-td>{{i.time_total}}</td>
+                        <td nz-td>{{i.parts_total}}</td> -->
                         <td nz-td>{{i.total}}</td>
+                        <td nz-td>{{i.pay_type}}</td>
                         <td nz-td>{{i.agent}}</td>
                         <td nz-td>{{i.agent_mobile}}</td>
                         

@@ -26,7 +26,7 @@ defmodule MotorRepairBackend.RepairInfoContext do
     RepairInfo
     |> query_like(params, "no")
     |> query_equal(params, "car_message_id")
-    |> query_preload([:parts_cost, :time_cost])
+    |> query_preload([:parts_cost, :time_cost, :car_message])
     |> query_order_desc_by(params, "inserted_at")
     |> get_pagination(params, conn)
   end

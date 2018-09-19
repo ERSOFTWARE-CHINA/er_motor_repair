@@ -1,6 +1,6 @@
 
 <h3>{{company_name}}结算单</h3>
-<p>结算方式：</p>
+<p>结算方式：{{ pay_type }}</p>
 <p id="hahaha">单号：</p>
 <p>打印时间：{{ statistics_info.date }}</p>
 <br><br>
@@ -136,8 +136,8 @@
 </div>
 <br>
 <p>公司名称：{{company_name}}</p>
-<p>公司地址：</p>
-<p>公司电话：</p>
+<p>公司地址：{{company_address}}</p>
+<p>公司电话：{{company_tel}}</p>
 <p>客户签署：</p>
 <p>制单：</p>
 <p>操作员：</p>

@@ -1,4 +1,4 @@
-<h3>注册</h3>
+<p>请务必准确填写以下信息，否则系统相关打印单据中的数据会不正确。</p>
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
     <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
     <div nz-form-item>
@@ -11,6 +11,32 @@
             <ng-container *ngIf="project.dirty || project.touched">
                 <p nz-form-explain *ngIf="project.errors?.required">请输入公司名！</p>
                 <p nz-form-explain *ngIf="form.controls['project'].errors?.checked">公司名称已被注册！</p>
+            </ng-container>
+        </div>
+    </div>
+
+    <div nz-form-item>
+        <div nz-form-control [nzValidateStatus]="address">
+            <nz-input formControlName="address" [nzPlaceHolder]="'公司地址'" [nzSize]="'large'">
+                <ng-template #prefix>
+                    <i class="anticon anticon-home"></i>
+                </ng-template>
+            </nz-input>
+            <ng-container *ngIf="address.dirty || address.touched">
+                <p nz-form-explain *ngIf="address.errors?.required">请输入公司地址！</p>
+            </ng-container>
+        </div>
+    </div>
+
+    <div nz-form-item>
+        <div nz-form-control [nzValidateStatus]="tel">
+            <nz-input formControlName="tel" [nzPlaceHolder]="'联系电话'" [nzSize]="'large'">
+                <ng-template #prefix>
+                    <i class="anticon anticon-phone"></i>
+                </ng-template>
+            </nz-input>
+            <ng-container *ngIf="tel.dirty || tel.touched">
+                <p nz-form-explain *ngIf="project.errors?.required">请输入公司联系电话！</p>
             </ng-container>
         </div>
     </div>
@@ -116,7 +142,6 @@
                 </div>
             </div>
             <div nz-form-explain *ngIf="(captcha.dirty || captcha.touched) && captcha.errors?.required">请输入验证码！</div>
-            <!-- <div nz-form-explain *ngIf="captchaInvalid">验证码错误,请重新生成验证码！</div> -->
             <div *ngIf = "captchaInvalid">
                 <p >
                     <font color="red">

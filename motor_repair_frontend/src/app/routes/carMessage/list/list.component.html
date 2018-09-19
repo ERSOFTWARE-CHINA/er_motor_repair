@@ -72,23 +72,7 @@
                     (nzPageIndexChange)="pageChange($event)">
             <thead nz-thead>
                 <tr>
-                    <th nz-th><span>操作</span></th>
-                    <th nz-th>
-                        <span>车主名称</span>
-                        <nz-table-sort [(nzValue)]="sortMap.owner_name" (nzValueChange)="sort('owner_name',$event)"></nz-table-sort>
-                    </th>
-                    <th nz-th>
-                        <span>VIN码</span>
-                        <nz-table-sort [(nzValue)]="sortMap.vin" (nzValueChange)="sort('vin',$event)"></nz-table-sort>
-                    </th>
-                    <th nz-th>
-                        <span>车牌号</span>
-                        <nz-table-sort [(nzValue)]="sortMap.plate_num" (nzValueChange)="sort('plate_num',$event)"></nz-table-sort>
-                    </th>
-                    <th nz-th>
-                        <span>发动机号</span>
-                        <nz-table-sort [(nzValue)]="sortMap.engine_num" (nzValueChange)="sort('engine_num',$event)"></nz-table-sort>
-                    </th>
+                    
                     <th nz-th>
                         <span>品牌名称</span>
                         <nz-table-sort [(nzValue)]="sortMap.car_brand" (nzValueChange)="sort('car_brand',$event)"></nz-table-sort>
@@ -97,23 +81,46 @@
                         <span>车系名称</span>
                         <nz-table-sort [(nzValue)]="sortMap.car_series" (nzValueChange)="sort('car_series',$event)"></nz-table-sort>
                     </th>
-                   
-                    
+                    <th nz-th>
+                        <span>车主名称</span>
+                        <nz-table-sort [(nzValue)]="sortMap.owner_name" (nzValueChange)="sort('owner_name',$event)"></nz-table-sort>
+                    </th>
+                    <th nz-th>
+                        <span>电话号码</span>
+                        <nz-table-sort [(nzValue)]="sortMap.phone_num" (nzValueChange)="sort('phone_num',$event)"></nz-table-sort>
+                    </th>
+                    <!-- <th nz-th>
+                        <span>VIN码</span>
+                        <nz-table-sort [(nzValue)]="sortMap.vin" (nzValueChange)="sort('vin',$event)"></nz-table-sort>
+                    </th> -->
+                    <th nz-th>
+                        <span>车牌号</span>
+                        <nz-table-sort [(nzValue)]="sortMap.plate_num" (nzValueChange)="sort('plate_num',$event)"></nz-table-sort>
+                    </th>
+                    <!-- <th nz-th>
+                        <span>发动机号</span>
+                        <nz-table-sort [(nzValue)]="sortMap.engine_num" (nzValueChange)="sort('engine_num',$event)"></nz-table-sort>
+                    </th> -->
+                    <th nz-th><span>操作</span></th>
+   
                 </tr>
             </thead>
             <tbody nz-tbody>
                 <tr nz-tbody-tr *ngFor="let i of nzTable.data">
+                    
+                    <td nz-td>{{i.car_brand}}</td>
+                    <td nz-td>{{i.car_series}}</td>
+                    <td nz-td>{{i.owner_name}}</td>
+                    <td nz-td>{{i.phone_num}}</td>
+                    <!-- <td nz-td>{{i.vin}}</td> -->
+                    <td nz-td>{{i.plate_num}}</td>
+                    <!-- <td nz-td>{{i.engine_num}}</td> -->
                     <td nz-td>
                         <a (click)="update(i.id)">修改</a>
                         <span nz-table-divider></span>
                         <a (click)="remove(i)">删除</a>
                     </td>
-                    <td nz-td>{{i.owner_name}}</td>
-                    <td nz-td>{{i.vin}}</td>
-                    <td nz-td>{{i.plate_num}}</td>
-                    <td nz-td>{{i.engine_num}}</td>
-                    <td nz-td>{{i.car_brand}}</td>
-                    <td nz-td>{{i.car_series}}</td>
+                    
                 </tr>
             </tbody>
         </nz-table>
