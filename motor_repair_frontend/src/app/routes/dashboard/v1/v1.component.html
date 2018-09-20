@@ -23,7 +23,7 @@
                 </button>
             </div>
 
-            <nz-table #nzTable [nzAjaxData]="data_car" [nzTotal]="total_car" [nzPageSize]="q_car.page_size" [nzLoading]="loading_car"
+            <nz-table class="table" #nzTable [nzAjaxData]="data_car" [nzTotal]="total_car" [nzPageSize]="q_car.page_size" [nzLoading]="loading_car"
             (nzPageIndexChange)="pageChange_car_message($event)" nzShowTotal="true" 
             nzShowSizeChanger="true" [nzPageSizeSelectorValues]="page_size">
                 <thead nz-thead>
@@ -35,6 +35,11 @@
                         <th nz-th>
                             <span>车系名称</span>
                             <nz-table-sort [(nzValue)]="sortMap_car.car_series" (nzValueChange)="sort_car_message('car_series',$event)"></nz-table-sort>
+                        </th>
+
+                        <th nz-th>
+                            <span>车牌号</span>
+                            <nz-table-sort [(nzValue)]="sortMap_car.plate_num" (nzValueChange)="sort_car_message('plate_num',$event)"></nz-table-sort>
                         </th>
                     
                         <th nz-th>
@@ -49,10 +54,7 @@
                             <span>VIN码</span>
                             <nz-table-sort [(nzValue)]="sortMap_car.vin" (nzValueChange)="sort_car_message('vin',$event)"></nz-table-sort>
                         </th> -->
-                        <th nz-th>
-                            <span>车牌号</span>
-                            <nz-table-sort [(nzValue)]="sortMap_car.plate_num" (nzValueChange)="sort_car_message('plate_num',$event)"></nz-table-sort>
-                        </th>
+                        
                         <!-- <th nz-th>
                             <span>发动机号</span>
                             <nz-table-sort [(nzValue)]="sortMap_car.engine_num" (nzValueChange)="sort_car_message('engine_num',$event)"></nz-table-sort>
@@ -62,13 +64,14 @@
                     </tr>
                 </thead>
                 <tbody nz-tbody>
-                    <tr nz-tbody-tr *ngFor="let i of nzTable.data" (click)="clickOnRow(i)">
+                    <tr nz-tbody-tr *ngFor="let i of nzTable.data" (click)="clickOnRow(i)" [class.active]="i == selectedRow">
                         <td nz-td>{{i.car_brand}}</td>
                         <td nz-td>{{i.car_series}}</td>
+                        <td nz-td>{{i.plate_num}}</td>
                         <td nz-td>{{i.owner_name}}</td>
                         <td nz-td>{{i.phone_num}}</td>
                         <!-- <td nz-td>{{i.vin}}</td> -->
-                        <td nz-td>{{i.plate_num}}</td>
+                        
                         <!-- <td nz-td>{{i.engine_num}}</td> -->
                         <td nz-td>
                             <a (click)="update_carmessage(i.id)">修改</a>

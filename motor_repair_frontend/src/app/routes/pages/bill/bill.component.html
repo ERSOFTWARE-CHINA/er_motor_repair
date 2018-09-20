@@ -29,7 +29,7 @@
       </div>
       <div class="row">
         <div class="col-sm-3">提车时间</div>
-        <div class="col-sm-9">{{ repair_info.return_date }}</div>
+        <div class="col-sm-9">{{ statistics_info.date }}</div>
       </div>
     </div>
 
@@ -43,12 +43,12 @@
         <div class="col-sm-9">{{carMessage.plate_num}}</div>
       </div>
       <div class="row">
-        <div class="col-sm-3">总里程数</div>
-        <div class="col-sm-9">{{carMessage.latest_mileage}}</div>
+        <div class="col-sm-3">进场里程</div>
+        <div class="col-sm-9">{{repair_info.mileage}}</div>
       </div>
       <div class="row">
-        <div class="col-sm-3">本单里程</div>
-        <div class="col-sm-9">{{repair_info.mileage}}</div>
+        <div class="col-sm-3">下次保养里程</div>
+        <div class="col-sm-9">{{repair_info.next_mileage}}</div>
       </div>
       <div class="row">
         <div class="col-sm-3">备注信息</div>

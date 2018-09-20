@@ -21,9 +21,12 @@ import { RepairInfoStatusPipe } from '../../../pipes/pipes';
 
 @Component({
     selector: 'app-dashboard-v1',
-    templateUrl: './v1.component.html'
+    templateUrl: './v1.component.html',
+    styleUrls: ['./v1.component.css']
 })
 export class DashboardV1Component implements OnInit {
+
+    selectedRow: any;
 
     constructor(public msg: NzMessageService,
                 private carMsgService: CarMessageService,
@@ -123,6 +126,9 @@ export class DashboardV1Component implements OnInit {
     }
 
     clickOnRow(i){
+        // 高亮显示选中行
+        this.selectedRow = i;
+
         this.sub_title = "(车牌号为："+i.plate_num+" 的车辆)";
         this.q_repair.car_message_id = i.id;
         this.repairInfoService.carMessage = i;
