@@ -195,6 +195,10 @@ export class UserLoginComponent implements OnDestroy {
         this.forget_password = false;
     }
 
+    onNavigate(){
+        window.open("http://111.38.56.61:4201", "_blank");
+    }
+
     
 
     
